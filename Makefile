@@ -6,13 +6,14 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/23 16:01:53 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/09/23 16:13:35 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            =   minishell
 SRCS            =   main.c \
 					ft_token.c \
+					shellbuiltins.c \
 					utils.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)

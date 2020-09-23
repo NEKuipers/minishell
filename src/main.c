@@ -6,86 +6,42 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 16:02:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/23 16:23:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*shell_fnames[] =
+char	*shell_bnames[] =
 {
 	"cd",
+	"env",
+	"help",
 	"pwd",
 	"exit"
 };
 
-int		(*shell_functions[]) (char **, char **) =
+int		(*shell_builtins[]) (char **, char **) =
 {
 	&shell_cd,
+	&shell_env,
+	&shell_help,
 	&shell_pwd,
 	&shell_exit
 };
-
-int		shell_pwd(char **args, char **evs)
-{
-	int i;
-
-	i = 0;
-	(void)args;
-	while (ft_strncmp(evs[i], "PWD", 3) != 0)
-		i++;
-	ft_printf("%s\n", &evs[i][4]);
-	return (0);
-}
-
-void	free_args(char **args)
-{
-	int i;
-
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	if (args)
-		free(args);
-}
-
-int		shell_exit(char **args, char **evs)
-{
-	free_args(evs);
-	free_args(args);
-	ft_printf("Goodbye.\n");
-	exit(0);
-	return (0);
-}
-
-int		shell_cd(char **args, char **evs)
-{
-	(void)evs;
-	if (!args[1])
-		ft_printf("Please specify which directory you want to change to.\n");
-	else
-	{
-		if (chdir(args[1]) != 0)
-			ft_printf("That folder does not exist.\n");
-	}
-	return (0);
-}
 
 int		shell_execute(char **args, char **evs)
 {
 	unsigned long i;
 
 	i = 0;
-	while (i < (sizeof(shell_fnames) / sizeof(char *)))
+	while (i < (sizeof(shell_bnames) / sizeof(char *)))
 	{
-		if (ft_strncmp(args[0], shell_fnames[i], ft_strlen(args[0])) == 0)
-			return (shell_functions[i](args, evs));
+		if (ft_strncmp(args[0], shell_bnames[i], ft_strlen(args[0])) == 0)
+			return (shell_builtins[i](args, evs));
 		i++;
 	}
-	ft_printf("That's not something I can do.\n");
+	ft_printf("That's not something I can do. Type 'help' for suggestions.\n");
 	return (0);
 }
 

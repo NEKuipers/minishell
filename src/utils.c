@@ -6,22 +6,22 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 12:02:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/23 16:05:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_exit(char **evs)
+void	free_args(char **args)
 {
 	int i;
 
 	i = 0;
-	while (evs[i])
+	while (args[i])
 	{
-		free(evs[i]);
+		free(args[i]);
 		i++;
 	}
-	free(evs);
-	exit(0);
+	if (args)
+		free(args);
 }
