@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 15:39:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/23 16:02:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	shell_loop(char **evs)
 	{
 		ft_printf("=> ");
 		get_next_line(0, &input);
-		args = ft_split(input, ' ');
+		args = ft_token(input, ' ', '\t');
 		free(input);
 		if (args[0] != NULL)
 			shell_execute(args, evs);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 15:35:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/23 16:02:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int     shell_exit(char **args, char **evs);
 int     shell_cd(char **args, char **evs);
 int     shell_pwd(char **args, char **evs);
 void    free_args(char **args);
+char	**ft_token(char const *s, char c, char d);
 
 #endif
