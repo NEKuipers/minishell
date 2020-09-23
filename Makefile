@@ -6,12 +6,13 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/23 11:20:46 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/09/23 12:01:56 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            =   minishell
 SRCS            =   main.c \
+					utils.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
@@ -38,16 +39,17 @@ RESET   = \x1b[0m
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
-	make bonus -C $(LIBFT_LOC)
-	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
-	make -C $(FTPRINTF_LOC)
 	@echo "$(WHITE)/-----      Compiling minishell    -----\\ $(RESET)"
 	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
+	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
+	@make bonus -C $(LIBFT_LOC)
+	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
+	@make -C $(FTPRINTF_LOC)
 	@echo "$(GREEN) Compiling complete. Name of executable is 'minishell'. $(RESET)"
 
 %.o: %.c
-	gcc $(CFLAGS) $(INCLUDES) -c $< -o $@ -g
+	@echo "$(WHITE)Compiling: $<"
+	@gcc $(INCLUDES) -o $@ -c $< $(CFLAGS) 
 
 clean:
 	@echo "$(WHITE)/-----      Cleaning libft      -----\\ $(RESET)"
