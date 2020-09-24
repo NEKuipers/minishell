@@ -6,11 +6,17 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 13:56:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:37:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+** This is a recreation of pwd. We just call getcwd() which returns a string.
+** The argument 1024 does nothing when the first argument is NULL, but we need
+** to put it in anyway because the person who wrote it is bad at his job.
+*/
 
 int		shell_pwd(char **args, char **evs)
 {
@@ -24,6 +30,10 @@ int		shell_pwd(char **args, char **evs)
 	return (0);
 }
 
+/*
+** Free the malloced stuff and exit. 
+*/
+
 int		shell_exit(char **args, char **evs)
 {
 	free_args(evs);
@@ -32,6 +42,11 @@ int		shell_exit(char **args, char **evs)
 	exit(0);
 	return (0);
 }
+
+/*
+** Again, a systemcall makes our work easier. Chdir changes directory for us, 
+** as long as one is given and it actually exists.
+*/
 
 int		shell_cd(char **args, char **evs)
 {
@@ -46,6 +61,10 @@ int		shell_cd(char **args, char **evs)
 	return (0);
 }
 
+/*
+** Wrote a little help function to show off what we can do.
+*/
+
 int		shell_help(char **args, char **evs)
 {
 	(void)args;
@@ -59,6 +78,10 @@ int		shell_help(char **args, char **evs)
 	ft_printf(" - exit to exit the shell.\n");
 	return (0);
 }
+
+/*
+**	The command env prints all the environment variables.
+*/
 
 int		shell_env(char **args, char **evs)
 {

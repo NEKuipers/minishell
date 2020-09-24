@@ -6,11 +6,16 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 15:59:22 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 16:02:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:27:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
+/*
+** This is a modified ft_split that takes two characters, in this case ' ' and
+** '\t', in order to correctly cut out the arguments entered in the cmd line.
+*/
 
 static void		*free_all(char **strs)
 {

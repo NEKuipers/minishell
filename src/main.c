@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:19:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:25:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int		(*g_shell_builtins[]) (char **, char **) =
 };
 
 /*
-This function simply looks up the first argument in the name table above, and
-then enters the corresponding function in the function table if it exists.
-Otherwise, it will check if the first argument is an existing program it can
-find in the PATH, and attempt to execute it in shell_execpath.
+** This function simply looks up the first argument in the name table above, and
+** then enters the corresponding function in the function table if it exists.
+** Otherwise, it will check if the first argument is an existing program it can
+** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
 int		shell_execute(char **args, char **evs)
@@ -58,18 +58,18 @@ int		shell_execute(char **args, char **evs)
 }
 
 /*
-The main loop. Here, we print the prompt; we read the standard input
-for instructions; we cut them up into arguments by splitting the
-spaces/tabs, and then we free the input. Then it's time to execute whatever
-the input wants.
-
-The signal(SIGINT) catches the interruption signal caused by ctrl-c and,
-instead of exiting the program, calls the function ctrlchandler.
-That function prints a new prompt.
-
-The signal(SIGTERM) catches the quit signal caused by ctrl-\, which
-would normally cause a core dump and force the minishell to exit.
-Instead it does nothing, like in bash.
+** The main loop. Here, we print the prompt; we read the standard input
+** for instructions; we cut them up into arguments by splitting the
+** spaces/tabs, and then we free the input. Then it's time to execute whatever
+** the input wants.
+**
+** The signal(SIGINT) catches the interruption signal caused by ctrl-c and,
+** instead of exiting the program, calls the function ctrlchandler.
+** That function prints a new prompt.
+**
+** The signal(SIGTERM) catches the quit signal caused by ctrl-\, which
+** would normally cause a core dump and force the minishell to exit.
+** Instead it does nothing, like in bash.
 */
 
 void	shell_loop(char **evs)
@@ -118,9 +118,10 @@ char	**copy_evs(char **inputs)
 }
 
 /*
-The main is called with a third argument: envp, which are the
-environment variables. Since they are inmutable, we copy them
-to a new string array using copy_evs. After that, we enter the main shell loop.
+** The main is called with a third argument: envp, which are the
+** environment variables. Since they are inmutable, we copy them
+** to a new string array using copy_evs. After that, we enter the main
+** shell loop.
 */
 
 int		main(int argc, char **argv, char **envp)

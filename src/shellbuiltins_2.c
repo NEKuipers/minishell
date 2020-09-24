@@ -6,11 +6,16 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 14:35:47 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:33:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+** This is echo. It prints all arguments back with one space in between and a
+** newline at the end, except for when the -n flag is given.
+*/
 
 int		shell_echo(char **args, char **evs)
 {
@@ -40,6 +45,11 @@ int		shell_echo(char **args, char **evs)
 	return (0);
 }
 
+/*
+** This is a recreation of cat. It opens the target argument and
+** reads and prints the contents, line by line.
+*/
+
 int		shell_cat(char **args, char **evs)
 {
 	int		fd;
@@ -53,5 +63,6 @@ int		shell_cat(char **args, char **evs)
 		if (line)
 			free(line);
 	}
+	close(fd);
 	return (0);
 }
