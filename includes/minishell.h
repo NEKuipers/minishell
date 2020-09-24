@@ -17,6 +17,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/includes/ft_printf.h"
 
