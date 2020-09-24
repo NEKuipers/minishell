@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 14:57:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:03:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ The main loop. Here, we print the prompt; we read the standard input
 for instructions; we cut them up into arguments by splitting the
 spaces/tabs, and then we free the input. Then it's time to execute whatever
 the input wants.
+
+The signal(SIGINT) catches the interruption signal caused by ctrl-c and,
+instead of exiting the program, calls the function ctrlchandler.
+That function prints a new prompt.
 */
 
 void	shell_loop(char **evs)
