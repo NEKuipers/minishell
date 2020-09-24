@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/23 16:13:35 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/09/24 11:10:03 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME            =   minishell
 SRCS            =   main.c \
 					ft_token.c \
 					shellbuiltins.c \
-					utils.c \
-					../lib/get_next_line/get_next_line.c
+					shellbuiltins_2.c \
+					shellfunctions.c \
+					utils.c 
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror
@@ -41,12 +42,12 @@ RESET   = \x1b[0m
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	@echo "$(WHITE)/-----      Compiling minishell    -----\\ $(RESET)"
-	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
 	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
 	@make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
 	@make -C $(FTPRINTF_LOC)
+	@echo "$(WHITE)/-----      Compiling minishell    -----\\ $(RESET)"
+	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
 	@echo "$(GREEN) Compiling complete. Name of executable is 'minishell'. $(RESET)"
 
 %.o: %.c

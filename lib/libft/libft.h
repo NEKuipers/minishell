@@ -5,14 +5,22 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/10/28 15:04:50 by nkuipers       #+#    #+#                */
-/*   Updated: 2019/11/11 10:49:49 by nkuipers      ########   odam.nl         */
+/*   Created: 2019/10/28 15:04:50 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/09/24 10:00:58 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include <stdlib.h>
 # include <stddef.h>
+# include <unistd.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE	1000
+# endif
+# ifndef FD_SIZE
+#  define FD_SIZE	1000
+# endif
 
 typedef struct		s_list
 {
@@ -65,5 +73,6 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+int					get_next_line(int fd, char **line);
 
 #endif

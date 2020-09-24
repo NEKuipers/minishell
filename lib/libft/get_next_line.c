@@ -5,12 +5,12 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/02 10:51:13 by nkuipers       #+#    #+#                */
-/*   Updated: 2019/12/02 16:02:58 by nkuipers      ########   odam.nl         */
+/*   Created: 2019/12/02 10:51:13 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/09/24 10:01:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static int	split_line(char **line, char **store, char *temp, int fd)
 {

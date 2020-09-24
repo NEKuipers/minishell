@@ -6,44 +6,60 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 16:23:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 11:11:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*shell_bnames[] =
+char	*g_shell_bnames[] =
 {
 	"cd",
+	"echo",
 	"env",
 	"help",
+	"ls",
 	"pwd",
 	"exit"
 };
 
-int		(*shell_builtins[]) (char **, char **) =
+int		(*g_shell_builtins[]) (char **, char **) =
 {
 	&shell_cd,
+	&shell_echo,
 	&shell_env,
 	&shell_help,
+	&shell_ls,
 	&shell_pwd,
 	&shell_exit
 };
+
+/*
+This function simply looks up the first argument in the name table above, and
+then enters the corresponding function in the function table if it exists.
+*/
 
 int		shell_execute(char **args, char **evs)
 {
 	unsigned long i;
 
 	i = 0;
-	while (i < (sizeof(shell_bnames) / sizeof(char *)))
+	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
-		if (ft_strncmp(args[0], shell_bnames[i], ft_strlen(args[0])) == 0)
-			return (shell_builtins[i](args, evs));
+		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)
+			return (g_shell_builtins[i](args, evs));
 		i++;
 	}
-	ft_printf("That's not something I can do. Type 'help' for suggestions.\n");
+	ft_printf("minishell: command not found: %s.\n", args[0]);
 	return (0);
 }
+
+/*
+The main loop. Here, we print the prompt; we read the standard input
+for instructions; we cut them up into arguments by splitting the
+spaces/tabs, and then we free the input. Then it's time to execute whatever
+the input wants.
+*/
 
 void	shell_loop(char **evs)
 {
@@ -83,6 +99,12 @@ char	**copy_evs(char **inputs)
 	ret[i] = NULL;
 	return (ret);
 }
+
+/*
+The main is called with a third argument: envp, which are the
+environment variables. Since they are inmutable, we copy them
+to a new string array using copy_evs. After that, we enter the main shell loop.
+*/
 
 int		main(int argc, char **argv, char **envp)
 {
