@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/24 11:32:36 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/09/24 16:16:51 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS            =   main.c \
 					shellbuiltins.c \
 					shellbuiltins_2.c \
 					shellfunctions.c \
-					utils.c 
+					translate_envs.c \
+					utils.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror
@@ -46,19 +47,21 @@ $(NAME): $(OFILES)
 	@make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
 	@make -C $(FTPRINTF_LOC)
-	@echo "$(WHITE)/-----      Putting minishell together...    -----\\ $(RESET)"
+	@echo "$(WHITE)/-----      Putting minishell together..\
+	.    -----\\ $(RESET)"
 	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
-	@echo "$(GREEN) Compiling complete. Name of executable is 'minishell'. $(RESET)"
+	@echo "$(GREEN) Compiling complete. Name of executable is \
+	'minishell'. $(RESET)"
 
 %.o: %.c
 	@echo "$(WHITE)Compiling: $<"
-	@gcc $(INCLUDES) -o $@ -c $< $(CFLAGS) 
+	@gcc $(INCLUDES) -o $@ -c $< $(CFLAGS)
 
 clean:
 	@echo "$(WHITE)/-----      Cleaning libft      -----\\ $(RESET)"
-	@make clean -C $(LIBFT_LOC)
+	@make fclean -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Cleaning ft_printf      -----\\ $(RESET)"
-	@make clean -C $(FTPRINTF_LOC)
+	@make fclean -C $(FTPRINTF_LOC)
 	@echo "$(WHITE)/-----      Cleaning minishell     -----\\ $(RESET)"
 	@echo "$(WHITE) Cleaning..."
 	@rm -f $(OFILES)

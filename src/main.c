@@ -6,11 +6,25 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:25:31 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 16:39:36 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+** TO DO:
+**   - create export command
+**   - create unset command
+**   - make sure ; can be used to enter multiple instructions
+**   - make ' and " behave the same as in bash
+**   - make >, < and >> behave the same as in bash
+**   - make pipes work
+**   - make environment variables work (so that $USER is automatically
+**     translated to nkuipers or bmans) ~Working on this, segfaults~
+**   - make $? work: it should contain the return value of the last executed
+**     command. For example, "touch 'test'; echo $?" means '0' is printed.
+*/
 
 char	*g_shell_bnames[] =
 {
@@ -18,9 +32,10 @@ char	*g_shell_bnames[] =
 	"cd",
 	"echo",
 	"env",
+	"exit"
 	"help",
 	"pwd",
-	"exit"
+	// "unset"
 };
 
 int		(*g_shell_builtins[]) (char **, char **) =
@@ -29,9 +44,10 @@ int		(*g_shell_builtins[]) (char **, char **) =
 	&shell_cd,
 	&shell_echo,
 	&shell_env,
+	&shell_exit,
 	&shell_help,
 	&shell_pwd,
-	&shell_exit
+	// &shell_unset,
 };
 
 /*
@@ -46,6 +62,7 @@ int		shell_execute(char **args, char **evs)
 	unsigned long i;
 
 	i = 0;
+	// args = transl_env(args, evs);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:33:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 16:39:58 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,4 @@ int		shell_cat(char **args, char **evs)
 	close(fd);
 	return (0);
 }
+

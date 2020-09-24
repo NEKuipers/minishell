@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:28:07 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 16:16:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void	ctrlbshandler(int n);
 void	free_args(char **args);
 char	**copy_evs(char **inputs);
 char	**ft_token(char const *s, char c, char d);
+char	**transl_env(char **args, char **evs);
 
 #endif

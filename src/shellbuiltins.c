@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:37:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 16:02:18 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		shell_pwd(char **args, char **evs)
 }
 
 /*
-** Free the malloced stuff and exit. 
+** Free the malloced stuff and exit.
 */
 
 int		shell_exit(char **args, char **evs)
@@ -44,7 +44,7 @@ int		shell_exit(char **args, char **evs)
 }
 
 /*
-** Again, a systemcall makes our work easier. Chdir changes directory for us, 
+** Again, a systemcall makes our work easier. Chdir changes directory for us,
 ** as long as one is given and it actually exists.
 */
 
@@ -80,18 +80,25 @@ int		shell_help(char **args, char **evs)
 }
 
 /*
-**	The command env prints all the environment variables.
+**	The command env prints all the environment variables with a value.
 */
 
 int		shell_env(char **args, char **evs)
 {
 	int i;
+	int j;
 
 	i = 0;
 	(void)args;
 	while (evs[i])
 	{
-		ft_printf("%s\n", evs[i]);
+		j = 0;
+		while (evs[i][j + 1] != '\0')
+		{
+			j++;
+		}
+		if (evs[i][j] != '=')
+			ft_printf("%s\n", evs[i]);
 		i++;
 	}
 	return (0);
