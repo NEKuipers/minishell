@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 10:13:49 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 11:39:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		shell_echo(char **args, char **evs)
 	int i;
 
 	i = 1;
-
 	(void)evs;
 	while (args[i])
 	{
@@ -26,6 +25,22 @@ int		shell_echo(char **args, char **evs)
 		else
 			ft_printf("%s ", args[i]);
 		i++;
+	}
+	return (0);
+}
+
+int		shell_cat(char **args, char **evs)
+{
+	int		fd;
+	char	*line;
+
+	(void)evs;
+	fd = open(args[1], O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		ft_printf("%s\n", line);
+		if (line)
+			free(line);
 	}
 	return (0);
 }

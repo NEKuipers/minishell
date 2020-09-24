@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 11:11:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 13:09:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 char	*g_shell_bnames[] =
 {
+	"cat",
 	"cd",
 	"echo",
 	"env",
 	"help",
-	"ls",
 	"pwd",
 	"exit"
 };
 
 int		(*g_shell_builtins[]) (char **, char **) =
 {
+	&shell_cat,
 	&shell_cd,
 	&shell_echo,
 	&shell_env,
 	&shell_help,
-	&shell_ls,
 	&shell_pwd,
 	&shell_exit
 };
@@ -37,6 +37,8 @@ int		(*g_shell_builtins[]) (char **, char **) =
 /*
 This function simply looks up the first argument in the name table above, and
 then enters the corresponding function in the function table if it exists.
+Otherwise, it will check if the first argument is an existing program it can
+find in the PATH, and attempt to execute it in shell_execpath.
 */
 
 int		shell_execute(char **args, char **evs)
@@ -50,7 +52,8 @@ int		shell_execute(char **args, char **evs)
 			return (g_shell_builtins[i](args, evs));
 		i++;
 	}
-	ft_printf("minishell: command not found: %s.\n", args[0]);
+	if (shell_execpath(args, evs) == 0)
+		return (0);
 	return (0);
 }
 

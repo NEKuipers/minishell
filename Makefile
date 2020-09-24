@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/24 11:10:03 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/09/24 11:32:36 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(NAME): $(OFILES)
 	@make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
 	@make -C $(FTPRINTF_LOC)
-	@echo "$(WHITE)/-----      Compiling minishell    -----\\ $(RESET)"
+	@echo "$(WHITE)/-----      Putting minishell together...    -----\\ $(RESET)"
 	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
 	@echo "$(GREEN) Compiling complete. Name of executable is 'minishell'. $(RESET)"
 
@@ -60,6 +60,7 @@ clean:
 	@echo "$(WHITE)/-----      Cleaning ft_printf      -----\\ $(RESET)"
 	@make clean -C $(FTPRINTF_LOC)
 	@echo "$(WHITE)/-----      Cleaning minishell     -----\\ $(RESET)"
+	@echo "$(WHITE) Cleaning..."
 	@rm -f $(OFILES)
 
 fclean: clean

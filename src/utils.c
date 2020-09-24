@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 16:05:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 12:19:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,34 @@ void	free_args(char **args)
 	}
 	if (args)
 		free(args);
+}
+
+char	*joinpaths(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	if (s1 == 0 || s2 == 0)
+		return (NULL);
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	if (new == 0)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	s1[i] = '/';
+	i++;
+	while (s2[j] != '\0')
+	{
+		new[i] = s2[j];
+		i++;
+		j++;
+	}
+	new[i] = '\0';
+	return (new);
 }
