@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 16:39:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 16:43:36 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ char	*g_shell_bnames[] =
 	"cd",
 	"echo",
 	"env",
-	"exit"
+	"exit",
 	"help",
 	"pwd",
-	// "unset"
 };
 
 int		(*g_shell_builtins[]) (char **, char **) =
@@ -47,7 +46,6 @@ int		(*g_shell_builtins[]) (char **, char **) =
 	&shell_exit,
 	&shell_help,
 	&shell_pwd,
-	// &shell_unset,
 };
 
 /*
