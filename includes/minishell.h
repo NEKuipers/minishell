@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 13:23:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 14:45:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/includes/ft_printf.h"
 

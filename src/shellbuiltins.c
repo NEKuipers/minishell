@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 10:55:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 13:56:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ int		shell_help(char **args, char **evs)
 	ft_printf("You can try one of the following commands:\n");
 	ft_printf(" - cd to change directory\n");
 	ft_printf(" - env to print environment variables\n");
+	ft_printf(" - ls to list the contents of the current directory\n");
 	ft_printf(" - pwd to print working directory\n");
+	ft_printf(" - touch [filename] to create a file\n");
 	ft_printf(" - exit to exit the shell.\n");
 	return (0);
 }

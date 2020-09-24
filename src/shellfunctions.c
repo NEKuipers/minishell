@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 13:50:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 13:54:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 /*
 This is where it starts getting interesting. Most shell commands are programs
-in the /bin/ folder. To run it, we need to fork() our process to create a new
-process. We then have two processes who run concurrently, distinguished by their
-rv. A child process returns 0 while the parent process returns its processID
-(or pid). We make the process with pid = 0 (the child) execute (or execve()) ls.
-The parent process waits by calling wait() until the child is done and
-terminated, and then returns.
+in a /bin/ folder. To run it, we need to fork() our process to create a new
+process. We then have two processes which run concurrently, distinguished by
+their rv. A child process returns 0 while the parent process returns its
+processID (or pid). We make the process with pid = 0 (the child) execute (or
+execve()) ls. The parent process waits by calling wait() until the child is
+done and terminated, and then returns.
 If fork() returns a negative value, there has been an error and we exit.
 
 To access programs in the various /bin/ folders in the path, we add /[argument]
-to every bin folder and attempt to run them. Stat() is used to check if the 
-executable exists before running. There's a lot of freeing going on since we
-need to make sure we free in both the parent and child processes.
+to every bin folder and attempt to run them. Stat() is used to check if the
+executable exists before running.
+There's a lot of freeing going on since we need to make sure we free in
+both the parent and child processes.
 */
 
 static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
