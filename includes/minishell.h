@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 14:56:07 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:15:06 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	shell_loop(char **evs);
 int		shell_pwd(char **args, char **evs);
 
 void	ctrlchandler(int n);
+void	ctrlbshandler(int n);
 
 void	free_args(char **args);
 char	**copy_evs(char **inputs);

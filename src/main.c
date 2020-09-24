@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:04:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/24 15:19:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ the input wants.
 The signal(SIGINT) catches the interruption signal caused by ctrl-c and,
 instead of exiting the program, calls the function ctrlchandler.
 That function prints a new prompt.
+
+The signal(SIGTERM) catches the quit signal caused by ctrl-\, which
+would normally cause a core dump and force the minishell to exit.
+Instead it does nothing, like in bash.
 */
 
 void	shell_loop(char **evs)
@@ -77,6 +81,7 @@ void	shell_loop(char **evs)
 	while (ft_strncmp(input, "exit", 5) != 0)
 	{
 		signal(SIGINT, ctrlchandler);
+		signal(SIGQUIT, ctrlbshandler);
 		ft_printf("=> ");
 		if (get_next_line(0, &input) == 0)
 		{
