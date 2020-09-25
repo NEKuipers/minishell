@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 16:02:18 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 17:02:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		shell_exit(char **args, char **evs)
 {
 	free_args(evs);
 	free_args(args);
-	ft_printf("Goodbye.\n");
 	exit(0);
 	return (0);
 }

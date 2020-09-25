@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 16:43:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 16:59:34 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 **   - make ' and " behave the same as in bash
 **   - make >, < and >> behave the same as in bash
 **   - make pipes work
-**   - make environment variables work (so that $USER is automatically
-**     translated to nkuipers or bmans) ~Working on this, segfaults~
 **   - make $? work: it should contain the return value of the last executed
 **     command. For example, "touch 'test'; echo $?" means '0' is printed.
 */
