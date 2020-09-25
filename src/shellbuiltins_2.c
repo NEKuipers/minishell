@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:31:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 18:06:37 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** This is echo. It prints all arguments back with one space in between and a
-** newline at the end, except for when the -n flag is given.
+** nline at the end, except for when the -n flag is given.
 */
 
 int		shell_echo(char **args, char **evs)
@@ -69,33 +69,32 @@ int		shell_cat(char **args, char **evs)
 
 char	**sort_alpha(char **evs)
 {
-	char 	**new;
+	char	**n;
 	char	*temp;
-	int 	i;
+	int		i;
 	int		j;
 
-	new = copy_evs(evs);
+	n = copy_evs(evs);
 	i = 0;
-	temp = NULL;
-	while (new[i] != NULL && i < j - 1)
+	j = 2;
+	while (n[i] != NULL && i < j - 1)
 	{
 		j = i + 1;
-		while (new[j] != NULL)
+		while (n[j] != NULL)
 		{
-			if (ft_strncmp(new[i], new[j], (ft_strlen(new[i]) > ft_strlen(new[j])
-				? ft_strlen(new[i]) : ft_strlen(new[j]))) > 0)
+			if (ft_strncmp(n[i], n[j], (ft_strlen(n[i]) > ft_strlen(n[j])
+			? ft_strlen(n[i]) : ft_strlen(n[j]))) > 0)
 			{
-				temp = new[i];
-				new[i] = new[j];
-				new[j] = temp;
-			}	
+				temp = n[i];
+				n[i] = n[j];
+				n[j] = temp;
+			}
 			j++;
 		}
 		i++;
 	}
-	return (new);
+	return (n);
 }
-
 
 int		shell_export(char **args, char **evs)
 {

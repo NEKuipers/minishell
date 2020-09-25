@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:31:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 17:57:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		shell_execute(char **args, char **evs)
 	unsigned long i;
 
 	i = 0;
-	// args = transl_env(args, evs);
+	args = transl_env(args, evs);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)
