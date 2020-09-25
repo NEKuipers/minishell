@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 16:59:34 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 17:31:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*g_shell_bnames[] =
 	"echo",
 	"env",
 	"exit",
+	"export",
 	"help",
 	"pwd",
 };
@@ -42,6 +43,7 @@ int		(*g_shell_builtins[]) (char **, char **) =
 	&shell_echo,
 	&shell_env,
 	&shell_exit,
+	&shell_export,
 	&shell_help,
 	&shell_pwd,
 };
@@ -91,7 +93,7 @@ void	shell_loop(char **evs)
 	char **args;
 
 	input = "";
-	while (ft_strncmp(input, "exit", 5) != 0)
+	while (1)
 	{
 		signal(SIGINT, ctrlchandler);
 		signal(SIGQUIT, ctrlbshandler);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 16:39:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 17:31:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,42 @@ int		shell_cat(char **args, char **evs)
 	return (0);
 }
 
+char	**sort_alpha(char **evs)
+{
+	char 	**new;
+	char	*temp;
+	int 	i;
+	int		j;
+
+	new = copy_evs(evs);
+	i = 0;
+	temp = NULL;
+	while (new[i] != NULL && i < j - 1)
+	{
+		j = i + 1;
+		while (new[j] != NULL)
+		{
+			if (ft_strncmp(new[i], new[j], (ft_strlen(new[i]) > ft_strlen(new[j])
+				? ft_strlen(new[i]) : ft_strlen(new[j]))) > 0)
+			{
+				temp = new[i];
+				new[i] = new[j];
+				new[j] = temp;
+			}	
+			j++;
+		}
+		i++;
+	}
+	return (new);
+}
+
+
+int		shell_export(char **args, char **evs)
+{
+	char **temp;
+
+	temp = sort_alpha(evs);
+	shell_env(args, temp);
+	free_args(temp);
+	return (0);
+}
