@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:02:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/30 11:31:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ int		shell_exit(char **args, char **evs)
 
 /*
 ** Again, a systemcall makes our work easier. Chdir changes directory for us,
-** as long as one is given and it actually exists.
+** as long as it actually exists.
 */
 
 int		shell_cd(char **args, char **evs)
 {
-	(void)evs;
-	if (!args[1])
-		ft_printf("Please specify which directory you want to change to.\n");
-	else
-	{
-		if (chdir(args[1]) != 0)
-			ft_printf("That folder does not exist.\n");
-	}
+	int i;
+
+	i = 0;
+	while (ft_strncmp(evs[i], "HOME=", 5) != 0)
+		i++;
+	if (args[1] == NULL)
+		chdir(&evs[i][5]);
+	else if (chdir(args[1]) != 0)
+		ft_printf("That folder does not exist.\n");
 	return (0);
 }
 
