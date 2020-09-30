@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 18:06:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/30 12:55:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,18 @@ int		shell_export(char **args, char **evs)
 	temp = sort_alpha(evs);
 	shell_env(args, temp);
 	free_args(temp);
+	return (0);
+}
+
+
+/*
+** Free the malloced stuff and exit.
+*/
+
+int		shell_exit(char **args, char **evs)
+{
+	free_args(evs);
+	free_args(args);
+	exit(0);
 	return (0);
 }

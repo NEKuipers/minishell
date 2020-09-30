@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/30 11:31:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/30 12:54:56 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,58 @@ int		shell_pwd(char **args, char **evs)
 }
 
 /*
-** Free the malloced stuff and exit.
+** Again, a systemcall makes our work easier. Chdir changes directory for us,
+** as long as it actually exists. Problem is, we need to update both PWD and
+** OLDPWD after every time we change directory.
+** cd without arguments reverts to Home. cd with '-' flag will direct us to
+** OLDPWD and print wd afterwards.
 */
 
-int		shell_exit(char **args, char **evs)
+static int	set_new_pwd(char **evs, int i, char *old)
 {
-	free_args(evs);
-	free_args(args);
-	exit(0);
+	char *temp;
+	char *pwd;
+	int j;
+
+	while (ft_strncmp(evs[j], "PWD=", 4) != 0)
+		j++;
+	pwd = getcwd(NULL, 1024);
+	temp = evs[j];
+	evs[j] = ft_strjoin("PWD=", pwd);
+	free(temp);
+	temp = evs[i];
+	evs[i] = ft_strjoin("OLDPWD=", old);
+	free(temp);
 	return (0);
 }
 
-/*
-** Again, a systemcall makes our work easier. Chdir changes directory for us,
-** as long as it actually exists.
-*/
-
-int		shell_cd(char **args, char **evs)
+int			shell_cd(char **args, char **evs)
 {
-	int i;
+	int		i;
+	char	*old;
 
 	i = 0;
-	while (ft_strncmp(evs[i], "HOME=", 5) != 0)
-		i++;
+	old = getcwd(NULL, 1024);
 	if (args[1] == NULL)
+	{
+		while (ft_strncmp(evs[i], "HOME=", 5) != 0)
+			i++;
 		chdir(&evs[i][5]);
-	else if (chdir(args[1]) != 0)
-		ft_printf("That folder does not exist.\n");
-	return (0);
+	}
+	i = 0;
+	while (ft_strncmp(evs[i], "OLDPWD=", 7) != 0)
+		i++;
+	if (args[1] != NULL)
+	{
+		if (ft_strncmp(args[1], "-", 2) == 0)
+		{
+			chdir(&evs[i][7]);
+			shell_pwd(args, evs);
+		}
+		else if (chdir(args[1]) != 0)
+			return (ft_printf("That folder does not exist.\n"));
+	}
+	return (set_new_pwd(evs, i, old));
 }
 
 /*
