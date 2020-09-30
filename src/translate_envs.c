@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:02:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/09/25 17:57:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 ** Environment variables called in the terminal should translate to their value.
-** These functions check if any argument begins with $ and if there is an 
-** environment variable called, will then translate it to the corresponding 
+** These functions check if any argument begins with $ and if there is an
+** environment variable called, will then translate it to the corresponding
 ** value.
 **
 ** Example: environment variable $USER=nkuipers;
