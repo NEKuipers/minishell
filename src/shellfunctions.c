@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:26:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 10:09:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int			shell_execpath(char **args, char **evs)
 	char	*newpath;
 
 	newpath = ft_strjoin("/", args[0]);
-	i = 0;
-	while (ft_strncmp(evs[i], "PATH=", 5) != 0)
-		i++;
+	i = find_ev(evs, "PATH=");
 	paths = ft_split(&evs[i][5], ':');
 	i = 0;
 	while (paths[i])

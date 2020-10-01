@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:58:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 10:08:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	free_args(char **args);
 char	**copy_evs(char **inputs);
 char	**ft_token(char const *s, char c, char d);
 char	**transl_env(char **args, char **evs);
+int		find_ev(char **evs, char *target);
 
 #endif

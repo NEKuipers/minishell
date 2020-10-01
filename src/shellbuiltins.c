@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 09:54:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 10:10:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int			shell_pwd(char **args, char **evs)
 {
-	char 	*path;
+	char	*path;
 
 	(void)args;
 	(void)evs;
@@ -44,15 +44,15 @@ static int	set_new_pwd(char **evs, int i, char *old)
 	char	*pwd;
 	int		j;
 
-	j = 0;
-	while (ft_strncmp(evs[j], "PWD=", 4) != 0)
-		j++;
+	j = find_ev(evs, "PWD=");
 	pwd = getcwd(NULL, 1024);
+	free(pwd);
 	temp = evs[j];
 	evs[j] = ft_strjoin("PWD=", pwd);
 	free(temp);
 	temp = evs[i];
 	evs[i] = ft_strjoin("OLDPWD=", old);
+	free(old);
 	free(temp);
 	return (0);
 }
@@ -62,17 +62,13 @@ int			shell_cd(char **args, char **evs)
 	int		i;
 	char	*old;
 
-	i = 0;
 	old = getcwd(NULL, 1024);
 	if (args[1] == NULL)
 	{
-		while (ft_strncmp(evs[i], "HOME=", 5) != 0)
-			i++;
+		i = find_ev(evs, "HOME=");
 		chdir(&evs[i][5]);
 	}
-	i = 0;
-	while (ft_strncmp(evs[i], "OLDPWD=", 7) != 0)
-		i++;
+	i = find_ev(evs, "OLDPWD=");
 	if (args[1] != NULL)
 	{
 		if (ft_strncmp(args[1], "-", 2) == 0)
@@ -81,7 +77,10 @@ int			shell_cd(char **args, char **evs)
 			shell_pwd(args, evs);
 		}
 		else if (chdir(args[1]) != 0)
+		{
+			free(old);
 			return (ft_printf("That folder does not exist.\n"));
+		}
 	}
 	return (set_new_pwd(evs, i, old));
 }
@@ -110,8 +109,8 @@ int			shell_help(char **args, char **evs)
 
 int			shell_env(char **args, char **evs)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	(void)args;
@@ -119,9 +118,7 @@ int			shell_env(char **args, char **evs)
 	{
 		j = 0;
 		while (evs[i][j + 1] != '\0')
-		{
 			j++;
-		}
 		if (evs[i][j] != '=')
 			ft_printf("%s\n", evs[i]);
 		i++;
