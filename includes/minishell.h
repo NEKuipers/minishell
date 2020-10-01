@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 12:03:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 16:32:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				shell_env(char **args, char **evs);
 int				shell_execpath(char **args, char **evs);
 int				shell_execute(t_shell *shell);
 int				shell_exit(char **args, char **evs);
-int				shell_export(char **args, char **evs);
+int				shell_export(char **args, char ***evs);
 int				shell_help(char **args, char **evs);
 void			shell_loop(t_shell *shell);
 int				shell_pwd(char **args, char **evs);

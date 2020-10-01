@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 12:36:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 16:34:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 **   - make ' and " behave the same as in bash
 **   - make >, < and >> behave the same as in bash
 **   - make pipes work
-**   - make $? work: it should contain the return value of the last executed
-**     command. For example, "touch 'test'; echo $?" means '0' is printed.
+**   - make sure the shell->rv is always given the correct rv
 */
 
 char	*g_shell_bnames[] =
@@ -30,7 +29,6 @@ char	*g_shell_bnames[] =
 	"echo",
 	"env",
 	"exit",
-	"export",
 	"help",
 	"pwd",
 };
@@ -42,7 +40,6 @@ int		(*g_shell_builtins[]) (char **, char **) =
 	&shell_echo,
 	&shell_env,
 	&shell_exit,
-	&shell_export,
 	&shell_help,
 	&shell_pwd,
 };
@@ -67,9 +64,9 @@ int		shell_execute(t_shell *shell)
 			return (g_shell_builtins[i](shell->args, shell->evs));
 		i++;
 	}
-	if (shell_execpath(shell->args, shell->evs) == 0)
-		return (0);
-	return (0);
+	if (ft_strncmp(shell->args[0], "export", 7) == 0)
+		return (shell_export(shell->args, &shell->evs));
+	return (shell_execpath(shell->args, shell->evs));
 }
 
 /*

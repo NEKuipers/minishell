@@ -6,20 +6,15 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 13:25:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 13:30:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-** Environment variables called in the terminal should translate to their value.
-** These functions check if any argument begins with $ and if there is an
-** environment variable called, will then translate it to the corresponding
-** value.
-**
-** Example: environment variable $USER=nkuipers;
-** 'echo $USER' prints 'nkuipers' to the terminal.
+** The function below converts any occurrence of '$?' to the rv of the previous-
+** ly executed function.
 */
 
 char		*insert_rv(char *rv, char *arg)
@@ -60,6 +55,16 @@ size_t		ft_evlen(char *ev)
 		i++;
 	return (i);
 }
+
+/*
+** Environment variables called in the terminal should translate to their value.
+** These functions check if any argument begins with $ and if there is an
+** environment variable called, will then translate it to the corresponding
+** value.
+**
+** Example: environment variable $USER=nkuipers;
+** 'echo $USER' prints 'nkuipers' to the terminal.
+*/
 
 static char	*swap_env(char *arg, char **evs)
 {
