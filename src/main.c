@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:44:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 12:36:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		shell_execute(t_shell *shell)
 	unsigned long i;
 
 	i = 0;
-	shell->args = transl_env(shell->args, shell->evs);
+	shell->args = transl_env(shell);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(shell->args[0], g_shell_bnames[i],
@@ -105,7 +105,7 @@ void	shell_loop(t_shell *shell)
 		shell->args = ft_token(input, ' ', '\t');
 		free(input);
 		if (shell->args[0] != NULL)
-			shell_execute(shell);
+			shell->rv = shell_execute(shell);
 		free_args(shell->args);
 	}
 }
@@ -142,6 +142,7 @@ int		main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
+	shell.rv = 0;
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
 		shell_exit(shell.evs, shell.evs);

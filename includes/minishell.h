@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:43:55 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 12:03:52 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void			ctrlbshandler(int n);
 void			free_args(char **args);
 char			**copy_evs(char **inputs);
 char			**ft_token(char const *s, char c, char d);
-char			**transl_env(char **args, char **evs);
+char			**transl_env(t_shell *shell);
 int				find_ev(char **evs, char *target);
+size_t			ft_evlen(char *ev);
+char			*insert_rv(char *rv, char *arg);
 
 #endif

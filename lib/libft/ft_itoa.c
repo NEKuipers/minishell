@@ -6,27 +6,12 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 09:44:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:20:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 11:19:49 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdlib.h>
-
-static int	ft_nbrlen(int nb)
-{
-	int length;
-
-	length = (nb < 0) ? 1 : 0;
-	if (nb == 0)
-		return (1);
-	while (nb != 0)
-	{
-		nb /= 10;
-		length++;
-	}
-	return (length);
-}
+#include "libft.h"
 
 char		*ft_itoa(int n)
 {
