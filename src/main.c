@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/25 17:57:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 09:56:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /*
 ** TO DO:
-**   - create export command
 **   - create unset command
 **   - make sure ; can be used to enter multiple instructions
 **   - make ' and " behave the same as in bash

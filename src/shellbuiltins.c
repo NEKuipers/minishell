@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/30 12:54:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 09:54:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 ** to put it in anyway because the person who wrote it is bad at his job.
 */
 
-int		shell_pwd(char **args, char **evs)
+int			shell_pwd(char **args, char **evs)
 {
-	char *path;
+	char 	*path;
 
 	(void)args;
 	(void)evs;
@@ -40,10 +40,11 @@ int		shell_pwd(char **args, char **evs)
 
 static int	set_new_pwd(char **evs, int i, char *old)
 {
-	char *temp;
-	char *pwd;
-	int j;
+	char	*temp;
+	char	*pwd;
+	int		j;
 
+	j = 0;
 	while (ft_strncmp(evs[j], "PWD=", 4) != 0)
 		j++;
 	pwd = getcwd(NULL, 1024);
@@ -89,7 +90,7 @@ int			shell_cd(char **args, char **evs)
 ** Wrote a little help function to show off what we can do.
 */
 
-int		shell_help(char **args, char **evs)
+int			shell_help(char **args, char **evs)
 {
 	(void)args;
 	(void)evs;
@@ -107,10 +108,10 @@ int		shell_help(char **args, char **evs)
 **	The command env prints all the environment variables with a value.
 */
 
-int		shell_env(char **args, char **evs)
+int			shell_env(char **args, char **evs)
 {
-	int i;
-	int j;
+	int 	i;
+	int 	j;
 
 	i = 0;
 	(void)args;
