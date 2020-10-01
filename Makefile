@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/01 14:21:42 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/01 16:46:05 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS            =   main.c \
 					ft_token.c \
 					shellbuiltins.c \
 					shellbuiltins_2.c \
+					shellbuiltins_3.c \
 					shellfunctions.c \
 					translate_envs.c \
 					utils.c

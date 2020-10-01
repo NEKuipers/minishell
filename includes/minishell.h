@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 16:32:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 16:52:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				shell_export(char **args, char ***evs);
 int				shell_help(char **args, char **evs);
 void			shell_loop(t_shell *shell);
 int				shell_pwd(char **args, char **evs);
+int				shell_unset(char **args, char ***evs);
 
 void			ctrlchandler(int n);
 void			ctrlbshandler(int n);
@@ -50,5 +51,6 @@ char			**transl_env(t_shell *shell);
 int				find_ev(char **evs, char *target);
 size_t			ft_evlen(char *ev);
 char			*insert_rv(char *rv, char *arg);
+char			**remove_env(char **evs, char *arg);
 
 #endif

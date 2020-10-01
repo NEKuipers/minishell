@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 16:34:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 16:54:34 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** TO DO:
-**   - create unset command
+**   - unset command is still not perfect, especially when used several times
 **   - make sure ; can be used to enter multiple instructions
 **   - make ' and " behave the same as in bash
 **   - make >, < and >> behave the same as in bash
@@ -66,6 +66,8 @@ int		shell_execute(t_shell *shell)
 	}
 	if (ft_strncmp(shell->args[0], "export", 7) == 0)
 		return (shell_export(shell->args, &shell->evs));
+	if (ft_strncmp(shell->args[0], "unset", 5) == 0)
+		return (shell_unset(shell->args, &shell->evs));
 	return (shell_execpath(shell->args, shell->evs));
 }
 
