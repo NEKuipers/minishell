@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 10:20:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:50 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:10:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 void	ft_puthex_lower_count(unsigned int nbr, int *rv)
 {

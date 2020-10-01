@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 10:19:20 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:49 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:10:41 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 void	prepare_hex(t_flags *flags, unsigned int *nbr)
 {

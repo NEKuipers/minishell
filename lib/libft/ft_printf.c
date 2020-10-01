@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/18 09:44:57 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:11:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 void	ft_store_rv(va_list list, int *rv)
 {

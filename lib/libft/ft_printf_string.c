@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 12:04:33 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:55 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:11:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 void	padder(int width, int precision, char pad, int *rv)
 {

@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 11:37:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:10:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 void	ft_putchar_fd_count(char c, int fd, int *rv)
 {

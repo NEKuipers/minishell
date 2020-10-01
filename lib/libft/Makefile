@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/09/24 15:39:12 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/01 17:08:46 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,18 @@ OBJECTS = 	ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o \
 			ft_split.o ft_strchr.o ft_strdup.o ft_strjoin.o ft_strlcat.o \
 			ft_strlcpy.o ft_strlen.o ft_strmapi.o ft_strncmp.o ft_strnstr.o \
 			ft_strrchr.o ft_strtrim.o ft_substr.o ft_tolower.o ft_toupper.o \
-			get_next_line.o
+			get_next_line.o \
+			ft_parse_flags.o \
+			ft_printf_char.o \
+			ft_printf_hex.o \
+			ft_printf_hex_2.o \
+			ft_printf_int.o \
+			ft_printf_int_l.o \
+			ft_printf_int_ll.o \
+			ft_printf.o \
+			ft_printf_un.o \
+			ft_printf_string.o \
+			ft_printf_ptr.o
 BONUS =		ft_lstadd_back_bonus.o ft_lstadd_front_bonus.o \
 			ft_lstclear_bonus.o ft_lstclear_bonus.o ft_lstdelone_bonus.o \
 			ft_lstiter_bonus.o ft_lstlast_bonus.o ft_lstmap_bonus.o \

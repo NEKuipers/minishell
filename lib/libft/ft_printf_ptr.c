@@ -6,11 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/24 13:37:02 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 17:11:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 int		ft_nbrlen_ptr(unsigned long nbr)
 {

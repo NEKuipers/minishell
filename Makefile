@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/01 16:46:05 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/01 17:12:20 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,8 @@ CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror
 INCLUDES        =   -I includes \
-                    -I lib/libft \
-					-I lib/ft_printf/includes
-LIBS            =   lib/libft/libft.a \
-					lib/ft_printf/libftprintf.a
+                    -I lib/libft
+LIBS            =   lib/libft/libft.a
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 FTPRINTF_LOC	=	lib/ft_printf
@@ -46,8 +44,6 @@ all: $(NAME)
 $(NAME): $(OFILES)
 	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
 	@make bonus -C $(LIBFT_LOC)
-	@echo "$(WHITE)/-----      Compiling ft_printf     -----\\ $(RESET)"
-	@make -C $(FTPRINTF_LOC)
 	@echo "$(WHITE)/-----      Putting minishell together..\
 	.    -----\\ $(RESET)"
 	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) -o $(NAME)
@@ -61,8 +57,6 @@ $(NAME): $(OFILES)
 clean:
 	@echo "$(WHITE)/-----      Cleaning libft      -----\\ $(RESET)"
 	@make fclean -C $(LIBFT_LOC)
-	@echo "$(WHITE)/-----      Cleaning ft_printf      -----\\ $(RESET)"
-	@make fclean -C $(FTPRINTF_LOC)
 	@echo "$(WHITE)/-----      Cleaning minishell     -----\\ $(RESET)"
 	@echo "$(WHITE) Cleaning..."
 	@rm -f $(OFILES)

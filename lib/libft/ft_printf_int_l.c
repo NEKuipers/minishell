@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf_int_ll.c                                 :+:    :+:            */
+/*   ft_printf_int_l.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/19 11:01:32 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/23 10:25:53 by nkuipers      ########   odam.nl         */
+/*   Created: 2019/12/19 10:35:33 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/10/01 17:10:49 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
-void		ft_putnbr_ll_fd_count(long long int nbr, int *rv)
+void		ft_putnbr_l_fd_count(long int nbr, int *rv)
 {
-	long long int		res;
-	long long int		len;
+	long int		res;
+	long int		len;
 
 	res = nbr;
 	len = 1;
@@ -35,31 +35,31 @@ void		ft_putnbr_ll_fd_count(long long int nbr, int *rv)
 	}
 }
 
-int			ft_nbrlen_ll(long long int nbr)
+int			ft_nbrlen_l(long int nbr)
 {
-	long long int		tmp;
-	int					len;
+	long int		tmp;
+	int				size;
 
 	tmp = nbr;
-	len = 0;
+	size = 0;
 	if (nbr == 0)
-		len++;
+		size++;
 	while (tmp)
 	{
 		tmp = tmp / 10;
-		len++;
+		size++;
 	}
-	return (len);
+	return (size);
 }
 
-void		prepare_ll_int(t_flags *flags, long long int *nbr)
+void		prepare_l_int(t_flags *flags, long int *nbr)
 {
 	if (*nbr < 0)
 	{
 		flags->signornot = 1;
 		flags->sign = '-';
 	}
-	flags->nbrlen = ft_nbrlen_ll(*nbr);
+	flags->nbrlen = ft_nbrlen_l(*nbr);
 	if (flags->precision != -2)
 		flags->zero = 0;
 	if (flags->precision == -2 ||
@@ -67,19 +67,19 @@ void		prepare_ll_int(t_flags *flags, long long int *nbr)
 		flags->precision = flags->nbrlen;
 }
 
-void		printint_ll(t_flags *flags, va_list list, int *rv)
+void		printint_l(t_flags *flags, va_list list, int *rv)
 {
-	long long int nbr;
+	long int nbr;
 
-	nbr = va_arg(list, long long int);
-	prepare_ll_int(flags, &nbr);
+	nbr = va_arg(list, long int);
+	prepare_l_int(flags, &nbr);
 	if (flags->signornot && (flags->zero || flags->leftj))
 		ft_putchar_fd_count(flags->sign, 1, rv);
 	if (flags->leftj)
 	{
 		padder(flags->precision, flags->nbrlen, '0', rv);
 		if (flags->precision)
-			ft_putnbr_ll_fd_count(nbr, rv);
+			ft_putnbr_l_fd_count(nbr, rv);
 	}
 	if (!flags->leftj && flags->zero)
 		padder(flags->width, flags->precision + flags->signornot, '0', rv);
@@ -91,6 +91,6 @@ void		printint_ll(t_flags *flags, va_list list, int *rv)
 			ft_putchar_fd_count(flags->sign, 1, rv);
 		padder(flags->precision, flags->nbrlen, '0', rv);
 		if (flags->precision)
-			ft_putnbr_ll_fd_count(nbr, rv);
+			ft_putnbr_l_fd_count(nbr, rv);
 	}
 }
