@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:08:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 10:43:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,32 @@
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/includes/ft_printf.h"
 
-int		shell_cat(char **args, char **evs);
-int		shell_cd(char **args, char **evs);
-int		shell_echo(char **args, char **evs);
-int		shell_env(char **args, char **evs);
-int		shell_execpath(char **args, char **evs);
-int		shell_exit(char **args, char **evs);
-int		shell_export(char **args, char **evs);
-int		shell_help(char **args, char **evs);
-void	shell_loop(char **evs);
-int		shell_pwd(char **args, char **evs);
+typedef struct	s_shell
+{
+	char		**args;
+	char		**evs;
+	int			rv;
+}				t_shell;
 
-void	ctrlchandler(int n);
-void	ctrlbshandler(int n);
+int				shell_cat(char **args, char **evs);
+int				shell_cd(char **args, char **evs);
+int				shell_echo(char **args, char **evs);
+int				shell_env(char **args, char **evs);
+int				shell_execpath(char **args, char **evs);
+int				shell_execute(t_shell *shell);
+int				shell_exit(char **args, char **evs);
+int				shell_export(char **args, char **evs);
+int				shell_help(char **args, char **evs);
+void			shell_loop(t_shell *shell);
+int				shell_pwd(char **args, char **evs);
 
-void	free_args(char **args);
-char	**copy_evs(char **inputs);
-char	**ft_token(char const *s, char c, char d);
-char	**transl_env(char **args, char **evs);
-int		find_ev(char **evs, char *target);
+void			ctrlchandler(int n);
+void			ctrlbshandler(int n);
+
+void			free_args(char **args);
+char			**copy_evs(char **inputs);
+char			**ft_token(char const *s, char c, char d);
+char			**transl_env(char **args, char **evs);
+int				find_ev(char **evs, char *target);
 
 #endif

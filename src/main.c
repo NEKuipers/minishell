@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:33:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 10:44:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,20 @@ int		(*g_shell_builtins[]) (char **, char **) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-int		shell_execute(char **args, char **evs)
+int		shell_execute(t_shell *shell)
 {
 	unsigned long i;
 
 	i = 0;
-	args = transl_env(args, evs);
+	shell->args = transl_env(shell->args, shell->evs);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
-		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)
-			return (g_shell_builtins[i](args, evs));
+		if (ft_strncmp(shell->args[0], g_shell_bnames[i],
+			ft_strlen(shell->args[0])) == 0)
+			return (g_shell_builtins[i](shell->args, shell->evs));
 		i++;
 	}
-	if (shell_execpath(args, evs) == 0)
+	if (shell_execpath(shell->args, shell->evs) == 0)
 		return (0);
 	return (0);
 }
@@ -86,10 +87,9 @@ int		shell_execute(char **args, char **evs)
 ** Instead it does nothing, like in bash.
 */
 
-void	shell_loop(char **evs)
+void	shell_loop(t_shell *shell)
 {
-	char 	*input;
-	char 	**args;
+	char	*input;
 
 	input = "";
 	while (1)
@@ -99,14 +99,14 @@ void	shell_loop(char **evs)
 		ft_printf("<$ ");
 		if (get_next_line(0, &input) == 0)
 		{
-			free_args(evs);
+			free_args(shell->evs);
 			exit(0);
 		}
-		args = ft_token(input, ' ', '\t');
+		shell->args = ft_token(input, ' ', '\t');
 		free(input);
-		if (args[0] != NULL)
-			shell_execute(args, evs);
-		free_args(args);
+		if (shell->args[0] != NULL)
+			shell_execute(shell);
+		free_args(shell->args);
 	}
 }
 
@@ -140,18 +140,18 @@ char	**copy_evs(char **inputs)
 
 int		main(int argc, char **argv, char **envp)
 {
-	char **evs;
+	t_shell	shell;
 
-	evs = copy_evs(envp);
-	if (evs == NULL)
-		shell_exit(evs, evs);
+	shell.evs = copy_evs(envp);
+	if (shell.evs == NULL)
+		shell_exit(shell.evs, shell.evs);
 	(void)argv;
 	if (argc == 1)
 	{
 		ft_printf("Hi %s! Welcome to ~~minishell~~. ", getenv("USER"));
 		ft_printf("Enter 'exit' at any time to leave.\n");
 		ft_printf("_______________________________________________________\n");
-		shell_loop(evs);
+		shell_loop(&shell);
 	}
 	return (0);
 }
