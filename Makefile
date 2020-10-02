@@ -6,17 +6,18 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/01 17:12:20 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/02 11:21:31 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            =   minishell
 SRCS            =   main.c \
 					ft_token.c \
+					shell_export.c \
+					shell_unset.c \
 					shellbuiltins.c \
 					shellbuiltins_2.c \
-					shellbuiltins_3.c \
-					shellfunctions.c \
+					shell_exec.c \
 					translate_envs.c \
 					utils.c
 CFILES          =   $(SRCS:%=src/%)

@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/01 17:08:46 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/01 19:32:15 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ BONUS =		ft_lstadd_back_bonus.o ft_lstadd_front_bonus.o \
 			ft_lstiter_bonus.o ft_lstlast_bonus.o ft_lstmap_bonus.o \
 			ft_lstnew_bonus.o ft_lstsize_bonus.o
 FLAGS = 	-Wall -Werror -Wextra
-INCLUDES = 	libft.h
+INCLUDES = 	.
 
 # COLOURS
 GREEN	= \x1b[32;01m

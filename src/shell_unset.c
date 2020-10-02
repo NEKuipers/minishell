@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   shellbuiltins_3.c                                  :+:    :+:            */
+/*   shell_unset.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/01 16:37:28 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 16:52:19 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/10/02 11:20:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-** Free the malloced stuff and exit.
+** Unset removes an environment variable from the list.
 */
-
-int		shell_exit(char **args, char **evs)
-{
-	free_args(evs);
-	free_args(args);
-	exit(0);
-	return (0);
-}
 
 char	**remove_env(char **evs, char *arg)
 {

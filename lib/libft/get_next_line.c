@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 10:51:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 10:01:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/01 19:32:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	}
 	temp = ft_strchr(store[fd], '\n');
-	if (temp > 0)
+	if (temp != 0)
 		return (split_line(line, store, temp, fd));
 	*line = ft_strdup(store[fd]);
 	free(store[fd]);
