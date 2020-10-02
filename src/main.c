@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/02 15:05:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/02 15:07:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 ** TO DO:
 **   - unset command is still not perfect, especially when used several times
-**   - make sure ; can be used to enter multiple instructions
 **   - make ' and " behave the same as in bash
 **   - make >, < and >> behave the same as in bash
 **   - make pipes work
