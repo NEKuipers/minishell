@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 12:28:19 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 14:30:57 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int		shell_execute(t_shell *shell)
 void	shell_loop(t_shell *shell)
 {
 	char	*input;
-	int		i;
 
 	input = "";
 	while (1)
@@ -101,18 +100,7 @@ void	shell_loop(t_shell *shell)
 			free_args(shell->evs);
 			exit(0);
 		}
-		shell->operations = ft_split(input, ';');
-		free(input);
-		i = 0;
-		while (shell->operations[i])
-		{
-			shell->args = ft_token(shell->operations[i], ' ', '\t');
-			if (shell->args[0] != NULL)
-				shell->rv = shell_execute(shell);
-			free_args(shell->args);
-			i++;
-		}
-		free_args(shell->operations);
+		parse_inputstring(shell, input);
 	}
 }
 
