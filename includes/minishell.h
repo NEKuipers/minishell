@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 14:31:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 15:53:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,49 @@
 # include <sys/wait.h>
 # include "../lib/libft/libft.h"
 
-typedef struct	s_shell
+typedef struct		s_ops
 {
-	char		**operations;
-	char		**args;
-	char		**evs;
-	int			rv;
-}				t_shell;
+	char			*operation;
+	char			**args;
+	int				in_quotes;
+	int				pipefds[2];
+	int				rv;
+	struct s_ops	*next;
+}					t_ops;
 
-int				shell_cat(char **args, char **evs);
-int				shell_cd(char **args, char **evs);
-int				shell_echo(char **args, char **evs);
-int				shell_env(char **args, char **evs);
-int				shell_execpath(char **args, char **evs);
-int				shell_execute(t_shell *shell);
-int				shell_exit(char **args, char **evs);
-int				shell_export(char **args, char ***evs);
-int				shell_help(char **args, char **evs);
-void			shell_loop(t_shell *shell);
-int				shell_pwd(char **args, char **evs);
-int				shell_unset(char **args, char ***evs);
+typedef struct		s_shell
+{
+	char			**operations;
+	char			**args;
+	char			**evs;
+	int				rv;
+	t_ops			*ops;
+}					t_shell;
 
-void			ctrlchandler(int n);
-void			ctrlbshandler(int n);
+int					shell_cat(char **args, char **evs);
+int					shell_cd(char **args, char **evs);
+int					shell_echo(char **args, char **evs);
+int					shell_env(char **args, char **evs);
+int					shell_execpath(char **args, char **evs);
+int					shell_execute(t_shell *shell);
+int					shell_exit(char **args, char **evs);
+int					shell_export(char **args, char ***evs);
+int					shell_help(char **args, char **evs);
+void				shell_loop(t_shell *shell);
+int					shell_pwd(char **args, char **evs);
+int					shell_unset(char **args, char ***evs);
 
-void			free_args(char **args);
-char			**copy_evs(char **inputs);
-char			**ft_token(char const *s, char c, char d);
-char			**transl_env(t_shell *shell);
-int				find_ev(char **evs, char *target);
-size_t			ft_evlen(char *ev);
-char			*insert_rv(char *rv, char *arg);
-char			**remove_env(char **evs, char *arg);
-void			parse_inputstring(t_shell *shell, char *input);
+void				ctrlchandler(int n);
+void				ctrlbshandler(int n);
+
+void				free_args(char **args);
+char				**copy_evs(char **inputs);
+char				**ft_token(char const *s, char c, char d);
+char				**transl_env(t_shell *shell);
+int					find_ev(char **evs, char *target);
+size_t				ft_evlen(char *ev);
+char				*insert_rv(char *rv, char *arg);
+char				**remove_env(char **evs, char *arg);
+void				parse_inputstring(t_shell *shell, char *input);
 
 #endif

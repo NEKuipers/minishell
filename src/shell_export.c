@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 14:23:28 by bmans         ########   odam.nl         */
+/*   Updated: 2020/10/07 16:00:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ char		**set_new_env(char **evs, char *arg)
 		ret[i] = ft_strdup(evs[i]);
 		i++;
 	}
-	if (ft_strchr(arg, '=') != NULL)
-		ret[i] = ft_strdup(arg);
-	else
-		ret[i] = ft_strjoin(arg, "=''");
+	ret[i] = ft_strdup(arg);
 	i++;
 	ret[i] = NULL;
 	free_args(evs);
