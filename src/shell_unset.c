@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 13:00:20 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 13:01:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*
 ** Unset removes an environment variable from the list.
 */
-static void		replace_array(char **ret, char **evs, char *arg)
+
+static void	replace_array(char **ret, char **evs, char *arg)
 {
 	int i;
 	int j;
