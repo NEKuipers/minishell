@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/07 14:18:51 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/07 14:35:28 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ INCLUDES        =   -I includes \
 LIBS            =   lib/libft/libft.a
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
-FTPRINTF_LOC	=	lib/ft_printf
 # COLORS
 WHITE   = \x1b[37;01m
 CYAN    = \x1b[36;01m
