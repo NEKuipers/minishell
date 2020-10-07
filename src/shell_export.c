@@ -77,15 +77,44 @@ char	**set_new_env(char **evs, char *arg)
 	return (ret);
 }
 
+static int	match_env(char **evs, char *arg)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (evs[i])
+	{
+		j = 0;
+		while (evs[i][j] != '=')
+			j++;
+		if (ft_strncmp(evs[i], arg, j + 1) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+static void	replace_env(char **evs, char *arg, int index)
+{
+	free(evs[index]);
+	evs[index] = ft_strdup(arg);
+}
+
 int		shell_export(char **args, char ***evs)
 {
 	char	**temp;
 	int		i;
+	int		index;
 
 	i = 1;
 	while (args[i] != NULL)
 	{
-		*evs = set_new_env(*evs, args[i]);
+		index = match_env(*evs, args[i]);
+		if (index >= 0)
+			replace_env(*evs, args[i], index);
+		else
+			*evs = set_new_env(*evs, args[i]);
 		i++;
 	}
 	if (args[1] == NULL)
