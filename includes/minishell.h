@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/02 14:55:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 12:28:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct	s_shell
 {
-	char		**ops;
+	char		**operations;
 	char		**args;
 	char		**evs;
 	int			rv;
