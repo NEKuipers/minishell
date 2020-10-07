@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 15:04:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 17:06:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 14:29:22 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@
 # ifndef FD_SIZE
 #  define FD_SIZE	1000
 # endif
+# ifndef CONV_LIST
+#  define CONV_LIST "cspdiuxX%"
+# endif
+
+typedef struct		s_print
+{
+	va_list			ap;
+	char			*form;
+	u_int32_t		len;
+	int				width;
+	int				prec;
+	char			pad;
+	char			left;
+	char			conv;
+	int				out;
+}					t_print;
 
 typedef struct		s_list
 {
@@ -99,22 +115,22 @@ void				parse_length(char **start, t_flags *flags);
 void				parse_precision(char **start, t_flags *flags, va_list list);
 void				parse_width(char **start, t_flags *flags, va_list list);
 
-int					ft_printf(const char *str, ...);
-void				printchar(t_flags *flags, va_list list, int *rv);
-void				printhex(char **start, t_flags *flags,
-					va_list list, int *rv);
-void				printhex_lower(t_flags *flags, va_list list, int *rv);
-void				printhex_upper(t_flags *flags, va_list list, int *rv);
-void				printint(t_flags *flags, va_list list, int *rv);
-void				printint_reg(t_flags *flags, va_list list, int *rv);
-void				printint_l(t_flags *flags, va_list list, int *rv);
-void				printint_ll(t_flags *flags, va_list list, int *rv);
-void				print_percent(t_flags *flags, int *rv);
-void				printptr(t_flags *flags, va_list list, int *rv);
-void				printptr_2(t_flags *flags, unsigned long nbr, int *rv);
-void				printstr(t_flags *flags, va_list list, int *rv);
-void				printun(t_flags *flags, va_list list, int *rv);
-void				padder(int width, int precision, char pad, int *rv);
+/*
+**	ft_printf by bmans
+*/
+
+int					ft_printf(const char *format, ...);
+int					ft_printf_fd(int fd, const char *format, ...);
+void				ft_print_flags(t_print *print);
+char				*ft_print_resize(char *str, t_print *print);
+char				*ft_itoa_prec(int n, int prec);
+char				*ft_itoa_base_prec(u_int64_t n, char *basedigits, int prec);
+void				ft_print_char(t_print *print);
+void				ft_print_string(t_print *print);
+void				ft_print_ptr(t_print *print);
+void				ft_print_int(t_print *print);
+void				ft_print_uint(t_print *print);
+void				ft_putnchar_fd(int c, size_t n, int fd);
 
 void				prepare_hex(t_flags *flags, unsigned int *nbr);
 void				prepare_int(t_flags *flags, int *nbr);

@@ -3,87 +3,93 @@
 /*                                                        ::::::::            */
 /*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
+/*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/18 09:44:57 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 12:58:05 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/06/25 13:58:36 by bmans         #+#    #+#                 */
+/*   Updated: 2020/10/07 14:24:15 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_store_rv(va_list list, int *rv)
-{
-	int	*temp;
+static const char	g_lex[] = CONV_LIST;
 
-	temp = va_arg(list, int *);
-	*temp = *rv;
-}
+static void			(*g_func[])(t_print *) = {&ft_print_char, \
+	&ft_print_string, &ft_print_ptr, &ft_print_int, &ft_print_int, \
+	&ft_print_uint, &ft_print_uint, &ft_print_uint, &ft_print_char};
 
-int		parse_spec(char **start, t_flags *flags, va_list list, int *rv)
+static void			formatprint(t_print *print)
 {
-	while (**start != 's' && **start != 'c' && **start != 'i' && **start != 'd'
-		&& **start != 'x' && **start != 'X' && **start != 'u' && **start != 'p'
-		&& **start != 'n')
-		(*start)++;
-	if (**start == 's')
-		printstr(flags, list, rv);
-	else if (**start == 'c')
-		printchar(flags, list, rv);
-	else if (**start == 'i' || **start == 'd')
-		printint(flags, list, rv);
-	else if (**start == 'u')
-		printun(flags, list, rv);
-	else if (**start == 'x' || **start == 'X')
-		printhex(start, flags, list, rv);
-	else if (**start == 'p')
-		printptr(flags, list, rv);
-	else if (**start == 'n')
-		ft_store_rv(list, rv);
-	else
-		return (0);
-	return (1);
-}
-
-void	parse_hub(char **start, t_flags *flags, va_list list, int *rv)
-{
-	parse_flags(start, flags);
-	if (flags->sign != 0)
-		flags->signornot = 1;
-	parse_width(start, flags, list);
-	if (flags->width < 0)
+	print->width = 0;
+	print->prec = -1;
+	print->pad = ' ';
+	print->left = 0;
+	print->conv = 0;
+	(print->form)++;
+	ft_print_flags(print);
+	if (print->conv)
 	{
-		flags->leftj = 1;
-		flags->width *= -1;
+		g_func[ft_strchr(g_lex, (int)print->conv) - g_lex](print);
+		if (print->form)
+			(print->form)++;
 	}
-	parse_precision(start, flags, list);
-	parse_length(start, flags);
-	if (**start == '%')
-		print_percent(flags, rv);
-	else
-		parse_spec(start, flags, list, rv);
 }
 
-int		ft_printf(const char *input, ...)
+static void			normalprint(t_print *print)
 {
-	t_flags	flags;
-	va_list list;
-	int		rv;
+	char	*end;
 
-	rv = 0;
-	va_start(list, input);
-	while (*input != '\0')
+	end = ft_strchr(print->form, '%');
+	if (!end)
+		end = ft_strchr(print->form, '\0');
+	while (*(print->form) && print->form < end)
 	{
-		if (*input != '%')
-			ft_putchar_fd_count(*input, 1, &rv);
+		ft_putchar_fd(*(print->form), print->out);
+		(print->len)++;
+		(print->form)++;
+	}
+}
+
+int					ft_printf(const char *format, ...)
+{
+	t_print	print;
+
+	va_start(print.ap, format);
+	print.out = 1;
+	print.form = (char *)format;
+	print.len = 0;
+	while (*(print.form))
+	{
+		if (*(print.form) == '%')
+			formatprint(&print);
 		else
-		{
-			input++;
-			ft_bzero(&flags, (sizeof(t_flags)));
-			parse_hub((char **)&input, &flags, list, &rv);
-		}
-		input++;
+			normalprint(&print);
+		if (print.form == NULL)
+			return (-1);
 	}
-	va_end(list);
-	return (rv);
+	va_end(print.ap);
+	return (print.len);
+}
+
+int					ft_printf_fd(int fd, const char *format, ...)
+{
+	t_print	print;
+
+	va_start(print.ap, format);
+	print.out = fd;
+	if (write(fd, NULL, 0) == -1)
+		return (-1);
+	print.form = (char *)format;
+	print.len = 0;
+	while (*(print.form))
+	{
+		if (*(print.form) == '%')
+			formatprint(&print);
+		else
+			normalprint(&print);
+		if (print.form == NULL)
+			return (-1);
+	}
+	va_end(print.ap);
+	return (print.len);
 }

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/02 11:15:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/07 14:23:28 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** variable is added with no value (test='').
 */
 
-char	**sort_alpha(char **evs)
+char		**sort_alpha(char **evs)
 {
 	char	**n;
 	char	*temp;
@@ -50,7 +50,7 @@ char	**sort_alpha(char **evs)
 	return (n);
 }
 
-char	**set_new_env(char **evs, char *arg)
+char		**set_new_env(char **evs, char *arg)
 {
 	int		i;
 	char	**ret;
@@ -88,7 +88,7 @@ static int	match_env(char **evs, char *arg)
 		j = 0;
 		while (evs[i][j] != '=')
 			j++;
-		if (ft_strncmp(evs[i], arg, j + 1) == 0)
+		if (ft_strncmp(evs[i], arg, j) == 0)
 			return (i);
 		i++;
 	}
@@ -97,11 +97,14 @@ static int	match_env(char **evs, char *arg)
 
 static void	replace_env(char **evs, char *arg, int index)
 {
-	free(evs[index]);
-	evs[index] = ft_strdup(arg);
+	if (ft_strchr(arg, '='))
+	{
+		free(evs[index]);
+		evs[index] = ft_strdup(arg);
+	}
 }
 
-int		shell_export(char **args, char ***evs)
+int			shell_export(char **args, char ***evs)
 {
 	char	**temp;
 	int		i;

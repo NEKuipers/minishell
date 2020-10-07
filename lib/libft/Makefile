@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/01 19:32:15 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/10/07 14:28:20 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,17 +19,19 @@ OBJECTS = 	ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o \
 			ft_strlcpy.o ft_strlen.o ft_strmapi.o ft_strncmp.o ft_strnstr.o \
 			ft_strrchr.o ft_strtrim.o ft_substr.o ft_tolower.o ft_toupper.o \
 			get_next_line.o \
-			ft_parse_flags.o \
-			ft_printf_char.o \
-			ft_printf_hex.o \
-			ft_printf_hex_2.o \
-			ft_printf_int.o \
-			ft_printf_int_l.o \
-			ft_printf_int_ll.o \
+			ft_itoa_prec.o \
+			ft_itoa_base_prec.o \
+			ft_print_char.o \
+			ft_print_flags.o \
+			ft_print_int.o \
+			ft_print_ptr.o \
+			ft_print_resize.o \
+			ft_print_string.o \
+			ft_print_uint.o \
 			ft_printf.o \
-			ft_printf_un.o \
-			ft_printf_string.o \
-			ft_printf_ptr.o
+			ft_putnchar_fd.o \
+			ft_nbrlen.o
+
 BONUS =		ft_lstadd_back_bonus.o ft_lstadd_front_bonus.o \
 			ft_lstclear_bonus.o ft_lstclear_bonus.o ft_lstdelone_bonus.o \
 			ft_lstiter_bonus.o ft_lstlast_bonus.o ft_lstmap_bonus.o \
