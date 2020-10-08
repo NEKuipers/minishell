@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/08 09:58:00 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/08 12:05:34 by bmans         ########   odam.nl         */
+/*   Updated: 2020/10/08 14:50:36 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,36 @@ t_list	*parse_args(char *line)
 {
 	t_list	*list;
 	int		i;
+	char	*cptr;
 
 	i = 0;
 	list = NULL;
 	while (line[i])
 	{
-		if (line[i] == '\"')
+		while (*line == ' ')
+			line++;
+		if (line[0] == '\"' || line[0] == '\'')
 		{
-			
+			cptr = ft_strchr(line + 1, line[0]);
+			ft_printf("%p\n", cptr);
+			ft_lstadd_back(&list, ft_lstnew(ft_substr(line + 1, 0, line - cptr)));
+			line = cptr + 1;
+			i = -1;
 		}
-		else if (!line[i] || (line[i] != ' ' && line[i + 1] == ' '))
+		else if (!line[i + 1] || (line[i] != ' ' && line[i + 1] == ' '))
 		{
-			ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i)));
+			ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
 			line += i + 1;
-			i = 0;
+			i = -1;
 		}
 		i++;
 	}
+	while (list)
+	{
+		ft_printf("  |%s\n", (char *)(list->content));
+		list = list->next;
+	}
+	return (list);
 }
 
 t_list	*parse_ops(char *line)
@@ -67,13 +80,14 @@ t_list	*parse_ops(char *line)
 int		main(void)
 {
 	t_list	*list;
-	char	line[] = "echo abc ; /bin/ls | cat -e";
+	char	line[] = "echo \"abc ; /bin/ls | cat -e\"";
 
 	list = parse_ops(line);
 	while (list)
 	{
-		ft_printf("%s ", ((t_ops *)(list->content))->operation);
-		ft_printf("%c\n", ((t_ops *)(list->content))->type);
+		ft_printf("%s\n", ((t_ops *)(list->content))->operation);
+		parse_args(((t_ops *)(list->content))->operation);
+		ft_putchar_fd(1, '\n');
 		list = list->next;
 	}
 	return (0);
