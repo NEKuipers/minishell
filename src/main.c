@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 14:59:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:09:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ int		(*g_shell_builtins[]) (char **, char **) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-int		shell_execute(t_shell *shell)
+int		shell_execute(t_shell *shell, char **args)
 {
 	unsigned long i;
 
 	i = 0;
-	shell->args = transl_env(shell);
+	args = transl_env(shell, args);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
-		if (ft_strncmp(shell->args[0], g_shell_bnames[i],
-			ft_strlen(shell->args[0])) == 0)
-			return (g_shell_builtins[i](shell->args, shell->evs));
+		if (ft_strncmp(args[0], g_shell_bnames[i],
+			ft_strlen(args[0])) == 0)
+			return (g_shell_builtins[i](args, shell->evs));
 		i++;
 	}
-	if (ft_strncmp(shell->args[0], "export", 7) == 0)
-		return (shell_export(shell->args, &shell->evs));
-	if (ft_strncmp(shell->args[0], "unset", 5) == 0)
-		return (shell_unset(shell->args, &shell->evs));
-	return (shell_execpath(shell->args, shell->evs));
+	if (ft_strncmp(args[0], "export", 7) == 0)
+		return (shell_export(args, &shell->evs));
+	if (ft_strncmp(args[0], "unset", 5) == 0)
+		return (shell_unset(args, &shell->evs));
+	return (shell_execpath(args, shell->evs));
 }
 
 /*

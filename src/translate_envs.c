@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 13:30:19 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:10:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,28 @@ static char	*swap_env(char *arg, char **evs)
 	return (arg);
 }
 
-char		**transl_env(t_shell *shell)
+char		**transl_env(t_shell *shell, char **args)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	while (shell->args[i])
+	while (args[i])
 	{
-		if (shell->args[i][0] == '$' && shell->args[i][1] != '?')
-			shell->args[i] = swap_env(shell->args[i], shell->evs);
+		if (args[i][0] == '$' && args[i][1] != '?')
+			args[i] = swap_env(args[i], shell->evs);
 		j = 0;
-		while (shell->args[i][j])
+		while (args[i][j])
 		{
-			if (shell->args[i][j] == '?' && j > 0)
-				if (shell->args[i][j - 1] == '$')
+			if (args[i][j] == '?' && j > 0)
+				if (args[i][j - 1] == '$')
 				{
-					shell->args[i] = insert_rv(ft_itoa(shell->rv),
-						shell->args[i]);
+					args[i] = insert_rv(ft_itoa(shell->rv), args[i]);
 					j = 0;
 				}
 			j++;
 		}
 		i++;
 	}
-	return (shell->args);
+	return (args);
 }

@@ -6,60 +6,149 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 16:02:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:08:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	parse_quotes(t_shell *shell, char *input, int *i, char c)
+static char	**list_to_arr(t_list *list)
 {
-	int		j;
-	// t_ops	operation;
+	int		size;
+	int		i;
+	t_list	*lst;
+	char	**arr;
 
-	(void)shell;
-	j = *i + 1;
-	while (input[j] != c && input[j])
-		j++;
-	if (input[j] != c)
-		return (ft_printf("error: syntax\n"));
-	// shell->operations[0 = ft_substr(input, *i, j);
-	// while (*i != j)
-	// 	j++;
-	return (0);
+	if (!list)
+		return (NULL);
+	lst = list;
+	size = ft_lstsize(list);
+	arr = (char **)malloc(sizeof(char *) * size + 1);
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = ft_strdup(lst->content);
+		i++;
+		lst = lst->next;
+	}
+	arr[size] = NULL;
+	ft_lstclear(&list, &free);
+	return (arr);
 }
 
-static void	parse_tokens(t_shell *shell, char *input, int *i)
+static int	skip_to_quote(char *line, int index, char type)
 {
-	(void)i;
-	shell->operations = ft_split(input, ';');
+	while (1)
+	{
+		index++;
+		if (!line[index])
+			return (-1);
+		if (line[index] == type)
+			return (index);
+	}
 }
 
-void		parse_inputstring(t_shell *shell, char *input)
+char	**parse_args(char *line)
 {
+	t_list	*list;
 	int		i;
 
 	i = 0;
-	while (input[i])
+	list = NULL;
+	while (line[i])
 	{
-		if (input[i] == '"' || input[i] == '\'')
+		while (*line == ' ')
+			line++;
+		if (!line[0])
+			break ;
+		if ((line[0] == '\"' || line[0] == '\'' || \
+			!line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
 		{
-			if (parse_quotes(shell, input, &i, (input[i] ==
-				'"' ? '"' : '\'')) > 1)
-				return ;
+			if (line[0] == '\"' || line[0] == '\'')
+				i = skip_to_quote(line, i, line[0]);
+			ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
+			line += i + 1;
+			i = -1;
 		}
-		else
-			parse_tokens(shell, input, &i);
 		i++;
 	}
-	free(input);
-	i = 0;
-	while (shell->operations[i])
+	return (list_to_arr(list));
+}
+
+static void	clear_ops(void *ops)
+{
+	char **args;
+
+	free(((t_ops *)ops)->operation);
+	args = ((t_ops *)ops)->args;
+	while (*args)
 	{
-		shell->args = ft_token(shell->operations[i], ' ', '\t');
-		if (shell->args[0] != NULL)
-			shell->rv = shell_execute(shell);
-		free_args(shell->args);
+		free(*args);
+		args++;
+	}
+	free(args);
+	free(ops);
+}
+
+t_ops	*set_ops(char *line, int len)
+{
+	t_ops	*ops;
+
+	ops = (t_ops *)malloc(sizeof(t_ops));
+	ops->operation = ft_substr(line, 0, len);
+	ops->args = parse_args(ops->operation);
+	if (line[len + 1] == '>')
+		ops->type = '}';
+	else
+		ops->type = line[len];
+	return (ops);
+}
+
+t_list	*parse_ops(char *line)
+{
+	t_list	*list;
+	t_ops	*ops;
+	int		i;
+
+	i = 0;
+	list = NULL;
+	while (1)
+	{
+		if (line[i] == '\"' || line[i] == '\'')
+		{
+			i = skip_to_quote(line, i, line[i]);
+			if (i == -1)
+			{
+				ft_lstclear(&list, &clear_ops);
+				ft_printf("error: syntax\n");
+				return (NULL);
+			}
+		}
+		else if (!line[i] || ft_strchr(";|<>", line[i]))
+		{
+			ops = set_ops(line, i);
+			ft_lstadd_back(&list, ft_lstnew(ops));
+			if (!line[i])
+				return (list);
+			line += i + 1;
+			i = 0;
+		}
 		i++;
 	}
+}
+
+int		parse_inputstring(t_shell *shell, char *input)
+{
+	t_list	*list;
+	t_list	*tlist;
+
+	list = parse_ops(input);
+	tlist = list;
+	free(input);
+	while (tlist)
+	{
+		shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
+		tlist = tlist->next;
+	}
+	return (0);
 }

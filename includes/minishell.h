@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/08 10:38:21 by bmans         ########   odam.nl         */
+/*   Updated: 2020/10/14 15:10:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct		s_shell
 	char			**args;
 	char			**evs;
 	int				rv;
-	t_ops			*ops;
 }					t_shell;
 
 int					shell_cat(char **args, char **evs);
@@ -45,7 +44,7 @@ int					shell_cd(char **args, char **evs);
 int					shell_echo(char **args, char **evs);
 int					shell_env(char **args, char **evs);
 int					shell_execpath(char **args, char **evs);
-int					shell_execute(t_shell *shell);
+int					shell_execute(t_shell *shell, char **args);
 int					shell_exit(char **args, char **evs);
 int					shell_export(char **args, char ***evs);
 int					shell_help(char **args, char **evs);
@@ -59,11 +58,11 @@ void				ctrlbshandler(int n);
 void				free_args(char **args);
 char				**copy_evs(char **inputs);
 char				**ft_token(char const *s, char c, char d);
-char				**transl_env(t_shell *shell);
+char				**transl_env(t_shell *shell, char **args);
 int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				*insert_rv(char *rv, char *arg);
 char				**remove_env(char **evs, char *arg);
-void				parse_inputstring(t_shell *shell, char *input);
+int					parse_inputstring(t_shell *shell, char *input);
 
 #endif
