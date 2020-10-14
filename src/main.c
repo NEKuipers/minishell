@@ -6,7 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/10/14 15:38:57 by bmans         ########   odam.nl         */
+=======
+/*   Updated: 2020/10/14 15:19:17 by nkuipers      ########   odam.nl         */
+>>>>>>> f6d0c946119a9988a6f7790365f3d2fa88d5291e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +99,7 @@ void	shell_loop(t_shell *shell)
 	input = "";
 	while (1)
 	{
-		// signal(SIGINT, ctrlchandler);
+		signal(SIGINT, ctrlchandler);
 		signal(SIGQUIT, ctrlbshandler);
 		ft_printf("<$ ");
 		if (get_next_line(0, &input) == 0)
@@ -104,7 +108,10 @@ void	shell_loop(t_shell *shell)
 			exit(0);
 		}
 		parse_inputstring(shell, input);
+<<<<<<< HEAD
 		//free_args(shell->operations);
+=======
+>>>>>>> f6d0c946119a9988a6f7790365f3d2fa88d5291e
 	}
 }
 
