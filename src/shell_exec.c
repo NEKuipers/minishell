@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   shellfunctions.c                                   :+:    :+:            */
+/*   shell_exec.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:09:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:48:02 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
+#include <stdio.h>
+
 int			shell_execpath(char **args, char **evs)
 {
 	char	**paths;
@@ -88,6 +90,7 @@ int			shell_execpath(char **args, char **evs)
 		temp = paths[i];
 		paths[i] = ft_strjoin(paths[i], newpath);
 		free(temp);
+		printf("%s\n", paths[i]);
 		i++;
 	}
 	free(newpath);

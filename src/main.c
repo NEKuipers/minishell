@@ -6,11 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:09:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:38:57 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 /*
 ** TO DO:
@@ -56,6 +57,8 @@ int		shell_execute(t_shell *shell, char **args)
 
 	i = 0;
 	args = transl_env(shell, args);
+	if (args == NULL)
+		return (0);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i],
@@ -101,7 +104,7 @@ void	shell_loop(t_shell *shell)
 			exit(0);
 		}
 		parse_inputstring(shell, input);
-		free_args(shell->operations);
+		//free_args(shell->operations);
 	}
 }
 
