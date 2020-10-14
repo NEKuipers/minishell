@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/08 09:58:00 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/13 14:29:30 by bmans         ########   odam.nl         */
+/*   Updated: 2020/10/14 13:35:14 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int		main(void)
 	t_list	*list;
 	t_list	*tlist;
 	int		i;
-	char	line[] = "echo abc ; /bin/ls | cat -e | echo abcde";
+	char	line[] = "echo \"abc ; /bin/ls | cat -e | echo abcde";
 
 	list = parse_ops(line);
 	tlist = list;
@@ -158,6 +158,5 @@ int		main(void)
 		ft_putchar_fd(1, '\n');
 		tlist = tlist->next;
 	}
-	while (1) {}
 	return (0);
 }
