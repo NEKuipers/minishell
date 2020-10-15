@@ -6,7 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/10/15 15:12:27 by bmans         ########   odam.nl         */
+=======
+/*   Updated: 2020/10/15 14:59:37 by nkuipers      ########   odam.nl         */
+>>>>>>> 84ad246c8a2429c9f36557b819c015a8115b9328
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +20,7 @@
 /*
 ** TO DO:
 **   - unset command is still not perfect, especially when used several times
-**   - make ' and " behave the same as in bash
-**   - make >, < and >> behave the same as in bash
+**   - make redirects work
 **   - make pipes work
 **   - make sure the shell->rv is always given the correct rv
 */

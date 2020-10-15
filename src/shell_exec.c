@@ -6,7 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2020/10/14 15:48:02 by bmans         ########   odam.nl         */
+=======
+/*   Updated: 2020/10/15 14:47:05 by nkuipers      ########   odam.nl         */
+>>>>>>> 84ad246c8a2429c9f36557b819c015a8115b9328
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +89,7 @@ int			shell_execpath(char **args, char **evs)
 	i = find_ev(evs, "PATH=");
 	paths = ft_split(&evs[i][5], ':');
 	i = 0;
+	paths = set_new_env(paths, "/");
 	while (paths[i])
 	{
 		temp = paths[i];
