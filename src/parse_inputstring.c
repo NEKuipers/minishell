@@ -96,8 +96,7 @@ t_ops	*set_ops(char *line, int len)
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
-	free(ops->operation);
-	if (line[len + 1] == '>')
+	if (line[len] && line[len + 1] == '>')
 		ops->type = '}';
 	else
 		ops->type = line[len];
