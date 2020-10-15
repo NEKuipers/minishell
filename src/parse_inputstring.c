@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 13:29:19 by brendan       ########   odam.nl         */
+/*   Updated: 2020/10/15 15:07:25 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_ops	*set_ops(char *line, int len)
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation);
-	free(ops->operation);
+	//free(ops->operation);
 	if (line[len + 1] == '>')
 		ops->type = '}';
 	else

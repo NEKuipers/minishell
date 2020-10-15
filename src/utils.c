@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 21:25:46 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 13:44:39 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void		free_args(char **args)
 	int i;
 
 	i = 0;
-	while (args[i] != NULL)
-	{
-		free(args[i]);
-		i++;
-	}
 	if (args)
+	{
+		while (args[i] != NULL)
+		{
+			free(args[i]);
+			i++;
+		}
 		free(args);
+	}
 }
 
 /*
