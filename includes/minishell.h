@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:10:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 14:47:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				*insert_rv(char *rv, char *arg);
 char				**remove_env(char **evs, char *arg);
+char				**set_new_env(char **evs, char *arg);
 int					parse_inputstring(t_shell *shell, char *input);
 
 #endif

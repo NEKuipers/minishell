@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   shellfunctions.c                                   :+:    :+:            */
+/*   shell_exec.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 10:09:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 14:47:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int			shell_execpath(char **args, char **evs)
 	i = find_ev(evs, "PATH=");
 	paths = ft_split(&evs[i][5], ':');
 	i = 0;
+	paths = set_new_env(paths, "/");
 	while (paths[i])
 	{
 		temp = paths[i];
