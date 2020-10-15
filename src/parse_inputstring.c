@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 14:55:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 15:03:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,12 @@ static int	skip_to_quote(char *line, int index, char type)
 	}
 }
 
-char	**parse_args(char *line)
+char	**parse_args(char *line, t_ops *ops)
 {
 	t_list	*list;
 	int		i;
-	int		quotes;
 
-	quotes = 0;
+	ops->in_quotes = 0;
 	i = 0;
 	list = NULL;
 	while (line[i])
@@ -69,9 +68,9 @@ char	**parse_args(char *line)
 			if (line[0] == '\"' || line[0] == '\'')
 			{
 				i = skip_to_quote(line, i, line[0]);
-				quotes = 1;
+				ops->in_quotes = 1;
 			}
-			if (quotes == 0)
+			if (ops->in_quotes == 0)
 				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
 			else
 				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
@@ -104,7 +103,7 @@ t_ops	*set_ops(char *line, int len)
 
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
-	ops->args = parse_args(ops->operation);
+	ops->args = parse_args(ops->operation, ops);
 	free(ops->operation);
 	if (line[len + 1] == '>')
 		ops->type = '}';
