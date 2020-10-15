@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:07:25 by brendan       ########   odam.nl         */
+/*   Updated: 2020/10/15 15:19:10 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,8 @@ char	**parse_args(char *line)
 
 static void	clear_ops(void *ops)
 {
-	char **args;
-
 	free(((t_ops *)ops)->operation);
-	args = ((t_ops *)ops)->args;
-	while (*args)
-	{
-		free(*args);
-		args++;
-	}
-	free(args);
+	free_args(((t_ops *)ops)->args);
 	free(ops);
 }
 
@@ -97,7 +89,6 @@ t_ops	*set_ops(char *line, int len)
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation);
-	//free(ops->operation);
 	if (line[len + 1] == '>')
 		ops->type = '}';
 	else
@@ -142,7 +133,6 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
-	t_list	*temp;
 
 	list = parse_ops(input);
 	tlist = list;
@@ -150,11 +140,8 @@ int		parse_inputstring(t_shell *shell, char *input)
 	while (tlist)
 	{
 		shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
-		free_args(((t_ops *)(tlist->content))->args);
-		temp = tlist;
-		free((t_ops *)(tlist->content));
 		tlist = tlist->next;
-		free(temp);
 	}
+	ft_lstclear(&list, &clear_ops);
 	return (0);
 }
