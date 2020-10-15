@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 11:57:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 14:55:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ char	**parse_args(char *line)
 {
 	t_list	*list;
 	int		i;
+	int		quotes;
 
+	quotes = 0;
 	i = 0;
 	list = NULL;
 	while (line[i])
@@ -65,8 +67,14 @@ char	**parse_args(char *line)
 			!line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
 		{
 			if (line[0] == '\"' || line[0] == '\'')
+			{
 				i = skip_to_quote(line, i, line[0]);
-			ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
+				quotes = 1;
+			}
+			if (quotes == 0)
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
+			else
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
 			line += i + 1;
 			i = -1;
 		}
