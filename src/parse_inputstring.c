@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:31:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/15 10:39:26 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	**list_to_arr(t_list *list)
 		return (NULL);
 	lst = list;
 	size = ft_lstsize(list);
-	arr = (char **)malloc(sizeof(char *) * size + 1);
+	arr = (char **)malloc(sizeof(char *) * (size + 1));
 	i = 0;
 	while (i < size)
 	{
