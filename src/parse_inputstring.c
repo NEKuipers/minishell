@@ -142,6 +142,8 @@ int		parse_inputstring(t_shell *shell, char *input)
 	t_list	*tlist;
 
 	list = parse_ops(input);
+	if (!list)
+		return (0);
 	tlist = list;
 	free(input);
 	while (tlist)

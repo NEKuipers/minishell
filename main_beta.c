@@ -12,6 +12,7 @@
 
 #include "../includes/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /*
 ** TO DO:
@@ -90,19 +91,30 @@ int		shell_execute(t_shell *shell, char **args)
 void	shell_loop(t_shell *shell)
 {
 	char	*input;
+//	char	buf[20];
 
-	input = "";
+//	input = "";
+	input = ft_strdup("echo abcde");
+//	input = malloc(12);
+//	ft_bzero(input, 12);
 	while (1)
 	{
 //		signal(SIGINT, ctrlchandler);
 //		signal(SIGQUIT, ctrlbshandler);
+//		ft_bzero(buf, 12);
 		ft_printf("<$ ");
-		if (get_next_line(0, &input) == 0)
-		{
-			free_args(shell->evs);
-			exit(0);
-		}
+//		if (get_next_line(0, &input) == 0)
+//		if (read(0, input, 12) == 0)
+//		{
+//			free_args(shell->evs);
+//			exit(0);
+//		}
+//		write(1, buf, 12);
+//		ft_memcpy(input, buf, 12);
+		write(1, input, 10);
 		parse_inputstring(shell, input);
+//		free_args(shell->args);
+		break ;
 	}
 }
 
