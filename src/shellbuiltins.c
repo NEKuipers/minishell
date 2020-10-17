@@ -18,12 +18,11 @@
 ** to put it in anyway because the person who wrote it is bad at his job.
 */
 
-int			shell_pwd(char **args, char **evs)
+int			shell_pwd(t_shell *shell)
 {
 	char	*path;
 
-	(void)args;
-	(void)evs;
+	(void)shell;
 	path = getcwd(NULL, 1024);
 	ft_printf("%s\n", path);
 	free(path);
@@ -57,42 +56,41 @@ static int	set_new_pwd(char **evs, int i, char *old)
 	return (0);
 }
 
-int			shell_cd(char **args, char **evs)
+int			shell_cd(t_shell *shell)
 {
 	int		i;
 	char	*old;
 
 	old = getcwd(NULL, 1024);
-	if (args[1] == NULL)
+	if (shell->args[1] == NULL)
 	{
-		i = find_ev(evs, "HOME=");
-		chdir(&evs[i][5]);
+		i = find_ev(shell->evs, "HOME=");
+		chdir(&((shell->evs)[i][5]));
 	}
-	i = find_ev(evs, "OLDPWD=");
-	if (args[1] != NULL)
+	i = find_ev(shell->evs, "OLDPWD=");
+	if (shell->args[1] != NULL)
 	{
-		if (ft_strncmp(args[1], "-", 2) == 0)
+		if (ft_strncmp(shell->args[1], "-", 2) == 0)
 		{
-			chdir(&evs[i][7]);
-			shell_pwd(args, evs);
+			chdir(&((shell->evs)[i][7]));
+			shell_pwd(shell);
 		}
-		else if (chdir(args[1]) != 0)
+		else if (chdir(shell->args[1]) != 0)
 		{
 			free(old);
 			return (ft_printf("That folder does not exist.\n"));
 		}
 	}
-	return (set_new_pwd(evs, i, old));
+	return (set_new_pwd(shell->evs, i, old));
 }
 
 /*
 ** Wrote a little help function to show off what we can do.
 */
 
-int			shell_help(char **args, char **evs)
+int			shell_help(t_shell *shell)
 {
-	(void)args;
-	(void)evs;
+	(void)shell;
 	ft_printf("You can try one of the following commands:\n");
 	ft_printf(" - cd to change directory\n");
 	ft_printf(" - env to print environment variables\n");
@@ -107,20 +105,19 @@ int			shell_help(char **args, char **evs)
 **	The command env prints all the environment variables with a value.
 */
 
-int			shell_env(char **args, char **evs)
+int			shell_env(t_shell *shell)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	(void)args;
-	while (evs[i])
+	while (shell->evs[i])
 	{
 		j = 0;
-		while (evs[i][j + 1] != '\0')
+		while (shell->evs[i][j + 1] != '\0')
 			j++;
-		if (evs[i][j] != '=')
-			ft_printf("%s\n", evs[i]);
+		if (shell->evs[i][j] != '=')
+			ft_printf("%s\n", shell->evs[i]);
 		i++;
 	}
 	return (0);

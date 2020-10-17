@@ -74,16 +74,16 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 
 #include <stdio.h>
 
-int			shell_execpath(char **args, char **evs)
+int			shell_execpath(t_shell *shell)
 {
 	char	**paths;
 	int		i;
 	char	*temp;
 	char	*newpath;
 
-	newpath = ft_strjoin("/", args[0]);
-	i = find_ev(evs, "PATH=");
-	paths = ft_split(&evs[i][5], ':');
+	newpath = ft_strjoin("/", shell->args[0]);
+	i = find_ev(shell->evs, "PATH=");
+	paths = ft_split(&((shell->evs)[i][5]), ':');
 	i = 0;
 	paths = set_new_env(paths, "/");
 	while (paths[i])
@@ -95,5 +95,5 @@ int			shell_execpath(char **args, char **evs)
 		i++;
 	}
 	free(newpath);
-	return (shell_execpath_2(paths, args, evs));
+	return (shell_execpath_2(paths, shell->args, shell->evs));
 }

@@ -32,7 +32,7 @@ char	*g_shell_bnames[] =
 	"pwd",
 };
 
-int		(*g_shell_builtins[]) (char **, char **) =
+int		(*g_shell_builtins[]) (t_shell *) =
 {
 	&shell_cat,
 	&shell_cd,
@@ -50,13 +50,6 @@ int		(*g_shell_builtins[]) (char **, char **) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-static void	clear_ops(void *ops)
-{
-	free(((t_ops *)ops)->operation);
-	free_args(((t_ops *)ops)->args);
-	free(ops);
-}
-
 int		shell_execute(t_shell *shell, char **args)
 {
 	unsigned long i;
@@ -65,20 +58,18 @@ int		shell_execute(t_shell *shell, char **args)
 	args = transl_env(shell, args);
 	if (args == NULL)
 		return (0);
-//	if (ft_strncmp(args[0], "exit", 5) == 0)
-//		ft_lstclear(&(shell->ops), &clear_ops);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i],
 			ft_strlen(args[0])) == 0)
-			return (g_shell_builtins[i](args, shell->evs));
+			return (g_shell_builtins[i](shell));
 		i++;
 	}
 	if (ft_strncmp(args[0], "export", 7) == 0)
-		return (shell_export(args, &shell->evs));
+		return (shell_export(shell));
 	if (ft_strncmp(args[0], "unset", 5) == 0)
-		return (shell_unset(args, &shell->evs));
-	return (shell_execpath(args, shell->evs));
+		return (shell_unset(shell));
+	return (shell_execpath(shell));
 }
 
 /*
@@ -150,7 +141,7 @@ int		main(int argc, char **argv, char **envp)
 	shell.rv = 0;
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
-		shell_exit(shell.evs, shell.evs);
+		shell_exit(&shell);
 	(void)argv;
 	if (argc == 1)
 	{

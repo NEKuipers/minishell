@@ -34,24 +34,23 @@ typedef struct		s_ops
 typedef struct		s_shell
 {
 	t_list			*ops;
-	char			**operations;
 	char			**args;
 	char			**evs;
 	int				rv;
 }					t_shell;
 
-int					shell_cat(char **args, char **evs);
-int					shell_cd(char **args, char **evs);
-int					shell_echo(char **args, char **evs);
-int					shell_env(char **args, char **evs);
-int					shell_execpath(char **args, char **evs);
+int					shell_cat(t_shell *shell);
+int					shell_cd(t_shell *shell);
+int					shell_echo(t_shell *shell);
+int					shell_env(t_shell *shell);
+int					shell_execpath(t_shell *shell);
 int					shell_execute(t_shell *shell, char **args);
-int					shell_exit(char **args, char **evs);
-int					shell_export(char **args, char ***evs);
-int					shell_help(char **args, char **evs);
+int					shell_exit(t_shell *shell);
+int					shell_export(t_shell *shell);
+int					shell_help(t_shell *shell);
 void				shell_loop(t_shell *shell);
-int					shell_pwd(char **args, char **evs);
-int					shell_unset(char **args, char ***evs);
+int					shell_pwd(t_shell *shell);
+int					shell_unset(t_shell *shell);
 
 void				ctrlchandler(int n);
 void				ctrlbshandler(int n);

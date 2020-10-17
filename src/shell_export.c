@@ -101,27 +101,30 @@ static void	replace_env(char **evs, char *arg, int index)
 	}
 }
 
-int			shell_export(char **args, char ***evs)
+int			shell_export(t_shell *shell)
 {
-	char	**temp;
+	char	**temp[2];
 	int		i;
 	int		index;
 
 	i = 1;
-	while (args[i] != NULL)
+	while (shell->args[i] != NULL)
 	{
-		index = match_env(*evs, args[i]);
+		index = match_env(shell->evs, shell->args[i]);
 		if (index >= 0)
-			replace_env(*evs, args[i], index);
+			replace_env(shell->evs, shell->args[i], index);
 		else
-			*evs = set_new_env(*evs, args[i]);
+			shell->evs = set_new_env(shell->evs, shell->args[i]);
 		i++;
 	}
-	if (args[1] == NULL)
+	if (shell->args[1] == NULL)
 	{
-		temp = sort_alpha(*evs);
-		shell_env(args, temp);
-		free_args(temp);
+		temp[0] = sort_alpha(shell->evs);
+		temp[1] = shell->evs;
+		shell->evs = temp[0];
+		shell_env(shell);
+		shell->evs = temp[1];
+		free_args(temp[0]);
 	}
 	return (0);
 }
