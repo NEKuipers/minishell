@@ -146,9 +146,11 @@ int		parse_inputstring(t_shell *shell, char *input)
 		return (0);
 	tlist = list;
 	free(input);
+	shell->ops = list;
 	while (tlist)
 	{
-		shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
+		shell->args = ((t_ops *)(tlist->content))->args;
+		shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);

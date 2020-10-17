@@ -75,6 +75,7 @@ int		shell_exit(char **args, char **evs)
 {
 	free_args(evs);
 	free_args(args);
+
 	exit(0);
 	return (0);
 }

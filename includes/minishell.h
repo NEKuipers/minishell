@@ -33,6 +33,7 @@ typedef struct		s_ops
 
 typedef struct		s_shell
 {
+	t_list			*ops;
 	char			**operations;
 	char			**args;
 	char			**evs;
