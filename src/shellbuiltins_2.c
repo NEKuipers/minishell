@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/02 11:17:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/22 13:50:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,6 @@ int		shell_echo(char **args, char **evs)
 			ft_printf("%s ", args[i]);
 		i++;
 	}
-	return (0);
-}
-
-/*
-** This is a recreation of cat. It opens the target argument and
-** reads and prints the contents, line by line.
-*/
-
-int		shell_cat(char **args, char **evs)
-{
-	int		fd;
-	char	*line;
-
-	(void)evs;
-	fd = open(args[1], O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
-	{
-		ft_printf("%s\n", line);
-		if (line)
-			free(line);
-	}
-	close(fd);
 	return (0);
 }
 
