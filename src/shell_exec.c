@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:26:36 by brendan       ########   odam.nl         */
+/*   Updated: 2020/10/22 11:06:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
-#include <stdio.h>
-
 int			shell_execpath(t_shell *shell)
 {
 	char	**paths;
@@ -91,7 +89,6 @@ int			shell_execpath(t_shell *shell)
 		temp = paths[i];
 		paths[i] = ft_strjoin(paths[i], newpath);
 		free(temp);
-		printf("%s\n", paths[i]);
 		i++;
 	}
 	free(newpath);
