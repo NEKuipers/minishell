@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:24:34 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:45:10 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 char	*g_shell_bnames[] =
 {
-	"cat",
 	"cd",
 	"echo",
 	"env",
@@ -34,7 +33,6 @@ char	*g_shell_bnames[] =
 
 int		(*g_shell_builtins[]) (t_shell *) =
 {
-	&shell_cat,
 	&shell_cd,
 	&shell_echo,
 	&shell_env,

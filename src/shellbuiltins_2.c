@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:19:54 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:51:32 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		shell_echo(t_shell *shell)
 ** reads and prints the contents, line by line.
 */
 
-int		shell_cat(t_shell *shell)
+/*int		shell_cat(t_shell *shell)
 {
 	int		fd;
 	char	*line;
@@ -63,7 +63,7 @@ int		shell_cat(t_shell *shell)
 	}
 	close(fd);
 	return (0);
-}
+}*/
 
 /*
 ** Free the malloced stuff and exit.
