@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/22 13:51:00 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/11/14 11:27:24 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ int		shell_execute(t_shell *shell, char **args)
 
 	i = 0;
 	args = transl_env(shell, args);
-<<<<<<< HEAD
-=======
 	if (args == NULL)
 		return (0);
 //	if (ft_strncmp(args[0], "exit", 5) == 0)
 //		ft_lstclear(&(shell->ops), &clear_ops);
->>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i],

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 14:47:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/11/14 11:27:25 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,8 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
-<<<<<<< HEAD
-=======
 #include <stdio.h>
 
->>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 int			shell_execpath(char **args, char **evs)
 {
 	char	**paths;
