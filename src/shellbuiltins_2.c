@@ -55,6 +55,7 @@ int		shell_echo(t_shell *shell)
 	char	*line;
 
 	fd = open(shell->args[1], O_RDONLY);
+
 	while (get_next_line(fd, &line) > 0)
 	{
 		ft_printf("%s\n", line);

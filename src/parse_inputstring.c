@@ -94,15 +94,13 @@ t_ops	*set_ops(char *line, int len)
 	t_ops		*ops;
 	static int	i = 0;
 
-	i = 0;
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
 	if (line[len] && line[len + 1] == '>')
 		ops->type[i] = '}';
 	else
-		ops->type[i] = line[len];
-	i++;
+		ops->type = line[len];
 	return (ops);
 }
 
@@ -114,8 +112,6 @@ t_list	*parse_ops(char *line)
 
 	i = 0;
 	list = NULL;
-	if (!line[i])
-		return (NULL);
 	while (1)
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -147,7 +143,6 @@ int		parse_inputstring(t_shell *shell, char *input)
 	t_list	*tlist;
 	int		i;
 
-	i = 0;
 	list = parse_ops(input);
 	if (!list)
 		return (0);

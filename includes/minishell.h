@@ -44,6 +44,7 @@ int					shell_cd(t_shell *shell);
 int					shell_echo(t_shell *shell);
 int					shell_env(t_shell *shell);
 int					shell_execpath(t_shell *shell);
+
 int					shell_execute(t_shell *shell, char **args);
 int					shell_exit(t_shell *shell);
 int					shell_export(t_shell *shell);

@@ -15,6 +15,7 @@
 
 /*
 ** TO DO:
+**   - unset command is still not perfect, especially when used several times
 **   - make redirects work
 **   - make pipes work
 **   - make sure the shell->rv is always given the correct rv
@@ -22,6 +23,7 @@
 
 char	*g_shell_bnames[] =
 {
+	"cat",
 	"cd",
 	"echo",
 	"env",
@@ -32,6 +34,7 @@ char	*g_shell_bnames[] =
 
 int		(*g_shell_builtins[]) (t_shell *) =
 {
+	&shell_cat,
 	&shell_cd,
 	&shell_echo,
 	&shell_env,
@@ -46,6 +49,13 @@ int		(*g_shell_builtins[]) (t_shell *) =
 ** Otherwise, it will check if the first argument is an existing program it can
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
+
+//static void	clear_ops(void *ops)
+//{
+//	free(((t_ops *)ops)->operation);
+//	free_args(((t_ops *)ops)->args);
+//	free(ops);
+//}
 
 int		shell_execute(t_shell *shell, char **args)
 {
