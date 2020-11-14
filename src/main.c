@@ -46,12 +46,26 @@ int		(*g_shell_builtins[]) (char **, char **) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
+static void	clear_ops(void *ops)
+{
+	free(((t_ops *)ops)->operation);
+	free_args(((t_ops *)ops)->args);
+	free(ops);
+}
+
 int		shell_execute(t_shell *shell, char **args)
 {
 	unsigned long i;
 
 	i = 0;
 	args = transl_env(shell, args);
+<<<<<<< HEAD
+=======
+	if (args == NULL)
+		return (0);
+//	if (ft_strncmp(args[0], "exit", 5) == 0)
+//		ft_lstclear(&(shell->ops), &clear_ops);
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i],

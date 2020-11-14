@@ -72,6 +72,11 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
+<<<<<<< HEAD
+=======
+#include <stdio.h>
+
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 int			shell_execpath(char **args, char **evs)
 {
 	char	**paths;

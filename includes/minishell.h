@@ -33,13 +33,21 @@ typedef struct		s_ops
 
 typedef struct		s_shell
 {
+<<<<<<< HEAD
+=======
+	t_list			*ops;
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 	char			**operations;
 	char			**args;
 	char			**evs;
 	int				rv;
 }					t_shell;
 
+<<<<<<< HEAD
 // int					shell_cat(char **args, char **evs);
+=======
+int					shell_cat(char **args, char **evs);
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 int					shell_cd(char **args, char **evs);
 int					shell_echo(char **args, char **evs);
 int					shell_env(char **args, char **evs);

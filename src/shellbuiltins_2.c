@@ -46,6 +46,31 @@ int		shell_echo(char **args, char **evs)
 }
 
 /*
+<<<<<<< HEAD
+=======
+** This is a recreation of cat. It opens the target argument and
+** reads and prints the contents, line by line.
+*/
+
+int		shell_cat(char **args, char **evs)
+{
+	int		fd;
+	char	*line;
+
+	(void)evs;
+	fd = open(args[1], O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		ft_printf("%s\n", line);
+		if (line)
+			free(line);
+	}
+	close(fd);
+	return (0);
+}
+
+/*
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 ** Free the malloced stuff and exit.
 */
 
@@ -53,6 +78,10 @@ int		shell_exit(char **args, char **evs)
 {
 	free_args(evs);
 	free_args(args);
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of b3b7784... One leak left - Single character arguments are not properly parsed
 	exit(0);
 	return (0);
 }
