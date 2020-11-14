@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:56:32 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 12:16:09 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_ops	*set_ops(char *line, int len)
 	if (line[len] && line[len + 1] == '>')
 		ops->type[i] = '}';
 	else
-		ops->type = line[len];
+		ops->type[i] = line[len];
 	return (ops);
 }
 
@@ -143,6 +143,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 	t_list	*tlist;
 	int		i;
 
+	i = 0;
 	list = parse_ops(input);
 	if (!list)
 		return (0);
