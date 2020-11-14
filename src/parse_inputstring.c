@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 10:54:45 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:56:32 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	clear_ops(void *ops)
 t_ops	*set_ops(char *line, int len)
 {
 	t_ops		*ops;
-	static int	i;
+	static int	i = 0;
 
 	i = 0;
 	ops = (t_ops *)malloc(sizeof(t_ops));
@@ -145,7 +145,6 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
-	t_list	*temp;
 	int		i;
 
 	i = 0;
@@ -157,16 +156,14 @@ int		parse_inputstring(t_shell *shell, char *input)
 	shell->ops = list;
 	while (tlist)
 	{
+		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type[i] == '|')
 		{
-			shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
+			shell->rv = shell_execute(shell, shell->args);
 			i++;
 		}
 		else
-			shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
-		free_args(((t_ops *)(tlist->content))->args);
-		temp = tlist;
-		free((t_ops *)(tlist->content));
+			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);

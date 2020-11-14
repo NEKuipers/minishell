@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 10:51:50 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:55:37 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct		s_shell
 	int				rv;
 }					t_shell;
 
-// int					shell_cat(char **args, char **evs);
-int					shell_cd(char **args, char **evs);
-int					shell_echo(char **args, char **evs);
-int					shell_env(char **args, char **evs);
-int					shell_execpath(char **args, char **evs);
+//int					shell_cat(t_shell *shell);
+int					shell_cd(t_shell *shell);
+int					shell_echo(t_shell *shell);
+int					shell_env(t_shell *shell);
+int					shell_execpath(t_shell *shell);
 int					shell_execute(t_shell *shell, char **args);
 int					shell_exit(t_shell *shell);
 int					shell_export(t_shell *shell);
