@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:27:24 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:28:46 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int		(*g_shell_builtins[]) (char **, char **) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-static void	clear_ops(void *ops)
-{
-	free(((t_ops *)ops)->operation);
-	free_args(((t_ops *)ops)->args);
-	free(ops);
-}
+//static void	clear_ops(void *ops)
+//{
+//	free(((t_ops *)ops)->operation);
+//	free_args(((t_ops *)ops)->args);
+//	free(ops);
+//}
 
 int		shell_execute(t_shell *shell, char **args)
 {
