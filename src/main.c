@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:28:46 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/14 11:36:35 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*
 ** TO DO:
+**   - unset command is still not perfect, especially when used several times
 **   - make redirects work
 **   - make pipes work
 **   - make sure the shell->rv is always given the correct rv
@@ -21,6 +22,7 @@
 
 char	*g_shell_bnames[] =
 {
+	"cat",
 	"cd",
 	"echo",
 	"env",
@@ -31,6 +33,7 @@ char	*g_shell_bnames[] =
 
 int		(*g_shell_builtins[]) (char **, char **) =
 {
+	&shell_cat,
 	&shell_cd,
 	&shell_echo,
 	&shell_env,
