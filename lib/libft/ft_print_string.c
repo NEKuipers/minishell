@@ -25,6 +25,7 @@ void	ft_print_string(t_print *print)
 	str = malloc(sizeof(char) * (print->prec + 1));
 	if (str)
 	{
+		ft_bzero(str, print->prec + 1);
 		ft_strlcpy(str, tstr, print->prec + 1);
 		if (print->width > (int)ft_strlen(str))
 			str = ft_print_resize(str, print);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 13:01:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:29:18 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ char		**remove_env(char **evs, char *arg)
 	return (ret);
 }
 
-int			shell_unset(char **args, char ***evs)
+int			shell_unset(t_shell *shell)
 {
 	int		i;
 
 	i = 1;
-	if (args[1] == NULL)
+	if (shell->args[1] == NULL)
 	{
 		ft_printf("unset: not enough arguments\n");
 		return (1);
 	}
-	while (args[i] != NULL)
+	while (shell->args[i] != NULL)
 	{
-		*evs = remove_env(*evs, args[i]);
+		shell->evs = remove_env(shell->evs, shell->args[i]);
 		i++;
 	}
 	return (0);

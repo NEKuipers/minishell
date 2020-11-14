@@ -6,12 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:55:36 by bmans         ########   odam.nl         */
+/*   Updated: 2020/10/15 15:24:34 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /*
 ** TO DO:
@@ -32,7 +33,7 @@ char	*g_shell_bnames[] =
 	"pwd",
 };
 
-int		(*g_shell_builtins[]) (t_shell *) =
+int		(*g_shell_builtins[]) (char **, char **) =
 {
 	&shell_cat,
 	&shell_cd,
@@ -50,13 +51,6 @@ int		(*g_shell_builtins[]) (t_shell *) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-//static void	clear_ops(void *ops)
-//{
-//	free(((t_ops *)ops)->operation);
-//	free_args(((t_ops *)ops)->args);
-//	free(ops);
-//}
-
 int		shell_execute(t_shell *shell, char **args)
 {
 	unsigned long i;
@@ -69,14 +63,14 @@ int		shell_execute(t_shell *shell, char **args)
 	{
 		if (ft_strncmp(args[0], g_shell_bnames[i],
 			ft_strlen(args[0])) == 0)
-			return (g_shell_builtins[i](shell));
+			return (g_shell_builtins[i](args, shell->evs));
 		i++;
 	}
 	if (ft_strncmp(args[0], "export", 7) == 0)
-		return (shell_export(shell));
+		return (shell_export(args, &shell->evs));
 	if (ft_strncmp(args[0], "unset", 5) == 0)
-		return (shell_unset(shell));
-	return (shell_execpath(shell));
+		return (shell_unset(args, &shell->evs));
+	return (shell_execpath(args, shell->evs));
 }
 
 /*
@@ -97,19 +91,30 @@ int		shell_execute(t_shell *shell, char **args)
 void	shell_loop(t_shell *shell)
 {
 	char	*input;
+//	char	buf[20];
 
-	input = "";
+//	input = "";
+	input = ft_strdup("echo abcde");
+//	input = malloc(12);
+//	ft_bzero(input, 12);
 	while (1)
 	{
 //		signal(SIGINT, ctrlchandler);
 //		signal(SIGQUIT, ctrlbshandler);
+//		ft_bzero(buf, 12);
 		ft_printf("<$ ");
-		if (get_next_line(0, &input) == 0)
-		{
-			free_args(shell->evs);
-			exit(0);
-		}
+//		if (get_next_line(0, &input) == 0)
+//		if (read(0, input, 12) == 0)
+//		{
+//			free_args(shell->evs);
+//			exit(0);
+//		}
+//		write(1, buf, 12);
+//		ft_memcpy(input, buf, 12);
+		write(1, input, 10);
 		parse_inputstring(shell, input);
+		free_args(shell->evs);
+		break ;
 	}
 }
 
@@ -148,7 +153,7 @@ int		main(int argc, char **argv, char **envp)
 	shell.rv = 0;
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
-		shell_exit(&shell);
+		shell_exit(shell.evs, shell.evs);
 	(void)argv;
 	if (argc == 1)
 	{

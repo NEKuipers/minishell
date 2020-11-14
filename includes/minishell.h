@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:36:25 by brendan       ########   odam.nl         */
+/*   Updated: 2020/11/14 11:55:37 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,31 @@ typedef struct		s_ops
 	int				in_quotes;
 	int				pipefds[2];
 	int				rv;
-	char			type;
+	char			type[999];
 	struct s_ops	*next;
 }					t_ops;
 
 typedef struct		s_shell
 {
 	t_list			*ops;
-	char			**operations;
 	char			**args;
 	char			**evs;
 	int				rv;
 }					t_shell;
 
-int					shell_cat(char **args, char **evs);
-int					shell_cd(char **args, char **evs);
-int					shell_echo(char **args, char **evs);
-int					shell_env(char **args, char **evs);
-int					shell_execpath(char **args, char **evs);
+//int					shell_cat(t_shell *shell);
+int					shell_cd(t_shell *shell);
+int					shell_echo(t_shell *shell);
+int					shell_env(t_shell *shell);
+int					shell_execpath(t_shell *shell);
+
 int					shell_execute(t_shell *shell, char **args);
-int					shell_exit(char **args, char **evs);
-int					shell_export(char **args, char ***evs);
-int					shell_help(char **args, char **evs);
+int					shell_exit(t_shell *shell);
+int					shell_export(t_shell *shell);
+int					shell_help(t_shell *shell);
 void				shell_loop(t_shell *shell);
-int					shell_pwd(char **args, char **evs);
-int					shell_unset(char **args, char ***evs);
+int					shell_pwd(t_shell *shell);
+int					shell_unset(t_shell *shell);
 
 void				ctrlchandler(int n);
 void				ctrlbshandler(int n);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:10:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/10/14 15:29:01 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char		**transl_env(t_shell *shell, char **args)
 	int		j;
 
 	i = 0;
-	while (args[i])
+	while (args && args[i])
 	{
 		if (args[i][0] == '$' && args[i][1] != '?')
 			args[i] = swap_env(args[i], shell->evs);

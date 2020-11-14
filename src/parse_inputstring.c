@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/15 15:10:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/11/14 11:56:32 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,21 @@ char	**parse_args(char *line, t_ops *ops)
 
 static void	clear_ops(void *ops)
 {
-	char **args;
-
 	free(((t_ops *)ops)->operation);
-	args = ((t_ops *)ops)->args;
-	while (*args)
-	{
-		free(*args);
-		args++;
-	}
-	free(args);
+	free_args(((t_ops *)ops)->args);
 	free(ops);
 }
 
 t_ops	*set_ops(char *line, int len)
 {
-	t_ops	*ops;
+	t_ops		*ops;
+	static int	i = 0;
 
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
-	free(ops->operation);
-	if (line[len + 1] == '>')
-		ops->type = '}';
+	if (line[len] && line[len + 1] == '>')
+		ops->type[i] = '}';
 	else
 		ops->type = line[len];
 	return (ops);
@@ -149,19 +141,26 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
-	t_list	*temp;
+	int		i;
 
 	list = parse_ops(input);
+	if (!list)
+		return (0);
 	tlist = list;
 	free(input);
+	shell->ops = list;
 	while (tlist)
 	{
-		shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
-		free_args(((t_ops *)(tlist->content))->args);
-		temp = tlist;
-		free((t_ops *)(tlist->content));
+		shell->args = ((t_ops *)(tlist->content))->args;
+		if (((t_ops *)(tlist->content))->type[i] == '|')
+		{
+			shell->rv = shell_execute(shell, shell->args);
+			i++;
+		}
+		else
+			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
-		free(temp);
 	}
+	ft_lstclear(&list, &clear_ops);
 	return (0);
 }
