@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/17 10:52:40 by brendan       ########   odam.nl         */
+/*   Updated: 2020/11/14 10:54:45 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,18 @@ static void	clear_ops(void *ops)
 
 t_ops	*set_ops(char *line, int len)
 {
-	t_ops	*ops;
+	t_ops		*ops;
+	static int	i;
 
+	i = 0;
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
 	if (line[len] && line[len + 1] == '>')
-		ops->type = '}';
+		ops->type[i] = '}';
 	else
-		ops->type = line[len];
+		ops->type[i] = line[len];
+	i++;
 	return (ops);
 }
 
@@ -111,6 +114,8 @@ t_list	*parse_ops(char *line)
 
 	i = 0;
 	list = NULL;
+	if (!line[i])
+		return (NULL);
 	while (1)
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -140,7 +145,10 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
+	t_list	*temp;
+	int		i;
 
+	i = 0;
 	list = parse_ops(input);
 	if (!list)
 		return (0);
@@ -149,8 +157,16 @@ int		parse_inputstring(t_shell *shell, char *input)
 	shell->ops = list;
 	while (tlist)
 	{
-		shell->args = ((t_ops *)(tlist->content))->args;
-		shell->rv = shell_execute(shell, shell->args);
+		if (((t_ops *)(tlist->content))->type[i] == '|')
+		{
+			shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
+			i++;
+		}
+		else
+			shell->rv = shell_execute(shell, ((t_ops *)(tlist->content))->args);
+		free_args(((t_ops *)(tlist->content))->args);
+		temp = tlist;
+		free((t_ops *)(tlist->content));
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);
