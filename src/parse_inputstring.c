@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 12:16:09 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/18 13:54:00 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,14 @@ static void	clear_ops(void *ops)
 t_ops	*set_ops(char *line, int len)
 {
 	t_ops		*ops;
-	static int	i = 0;
 
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
 	if (line[len] && line[len + 1] == '>')
-		ops->type[i] = '}';
+		ops->type = '}';
 	else
-		ops->type[i] = line[len];
+		ops->type = line[len];
 	return (ops);
 }
 
@@ -137,13 +136,22 @@ t_list	*parse_ops(char *line)
 	}
 }
 
+#include <stdio.h>
+
+void	pipe_next(t_shell *shell, t_ops *op)
+{
+	(void)shell;
+	pipe(op->pipefds);
+	dup2(1, op->pipefds[1]);
+	dup2(op->pipefds[0], 0);
+}
+
 int		parse_inputstring(t_shell *shell, char *input)
 {
+	//char	buf[500];
 	t_list	*list;
 	t_list	*tlist;
-	int		i;
 
-	i = 0;
 	list = parse_ops(input);
 	if (!list)
 		return (0);
@@ -153,13 +161,18 @@ int		parse_inputstring(t_shell *shell, char *input)
 	while (tlist)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
-		if (((t_ops *)(tlist->content))->type[i] == '|')
+		printf("Type: %i\n", (int)((t_ops *)(tlist->content))->type);
+		if (((t_ops *)(tlist->content))->type == '|')
 		{
-			shell->rv = shell_execute(shell, shell->args);
-			i++;
+			printf("PIPE\n");
+			pipe_next(shell, (t_ops *)(tlist->content));
 		}
-		else
-			shell->rv = shell_execute(shell, shell->args);
+		shell->rv = shell_execute(shell, shell->args);
+//		if (((t_ops *)(tlist->content))->type == '|')
+//		{
+//			read(0, buf, 500);
+//			printf("PIPE: %s\n", buf);
+//		}
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);

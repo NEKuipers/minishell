@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 12:15:18 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/18 12:52:12 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	shell_loop(t_shell *shell)
 {
 	char	*input;
 
-	input = "";
+	input = NULL;
 	while (1)
 	{
 //		signal(SIGINT, ctrlchandler);

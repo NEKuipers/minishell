@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:55:37 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/18 13:13:26 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct		s_ops
 	int				in_quotes;
 	int				pipefds[2];
 	int				rv;
-	char			type[999];
+	char			type;
 	struct s_ops	*next;
 }					t_ops;
 
