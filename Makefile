@@ -6,12 +6,13 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/11/14 10:56:23 by bmans         ########   odam.nl          #
+#    Updated: 2020/11/18 14:24:57 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            =   minishell
 SRCS            =   main.c \
+					fds.c \
 					parse_inputstring.c \
 					ft_token.c \
 					shell_export.c \

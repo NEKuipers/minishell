@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 12:15:18 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/18 14:24:13 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ void	shell_loop(t_shell *shell)
 {
 	char	*input;
 
-	input = "";
+	input = NULL;
 	while (1)
 	{
-//		signal(SIGINT, ctrlchandler);
-//		signal(SIGQUIT, ctrlbshandler);
+		signal(SIGINT, ctrlchandler);
+		signal(SIGQUIT, ctrlbshandler);
 		ft_printf("<$ ");
 		if (get_next_line(0, &input) == 0)
 		{
@@ -144,6 +144,7 @@ int		main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	shell.rv = 0;
+	reset_std_fds(&shell);
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
 		shell_exit(&shell);

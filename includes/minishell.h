@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:55:37 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/18 14:24:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ typedef struct		s_shell
 	char			**args;
 	char			**evs;
 	int				rv;
+	int				in;
+	int				out;
 }					t_shell;
 
-//int					shell_cat(t_shell *shell);
 int					shell_cd(t_shell *shell);
 int					shell_echo(t_shell *shell);
 int					shell_env(t_shell *shell);
@@ -55,6 +56,8 @@ int					shell_unset(t_shell *shell);
 
 void				ctrlchandler(int n);
 void				ctrlbshandler(int n);
+void				ft_close_fd(int fd);
+void				reset_std_fds(t_shell *shell);
 
 void				free_args(char **args);
 char				**copy_evs(char **inputs);
