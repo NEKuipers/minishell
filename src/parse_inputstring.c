@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/18 13:54:00 by bmans         ########   odam.nl         */
+/*   Updated: 2020/11/25 13:47:08 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,51 @@ t_list	*parse_ops(char *line)
 }
 
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	pipe_next(t_shell *shell, t_ops *op)
 {
-	(void)shell;
-	pipe(op->pipefds);
-	dup2(1, op->pipefds[1]);
+	pid_t	pid;
+
+	if (pipe(op->pipefds))
+		exit(-1);
+	pid = fork();
+	if (pid == -1)
+		exit(-1);
+	else if (pid == 0)
+	{
+		shell->fd[1] = dup(1);
+		close(op->pipefds[0]);
+		dup2(op->pipefds[1], 1);
+		shell->rv = shell_execute(shell, shell->args);
+		exit(0);
+	}
+	shell->fd[0] = dup(0);
+	close(op->pipefds[1]);
 	dup2(op->pipefds[0], 0);
+	waitpid(pid, 0, 0);
+}
+
+void	reset_out(t_shell *shell)
+{
+	if (shell->fd[1] != -1)
+	{
+		dup2(shell->fd[1], 1);
+		close(shell->fd[1]);
+		shell->fd[1] = -1;
+	}
+}
+
+void	reset_in(t_shell *shell)
+{
+	if (shell->fd[0] != -1)
+	{
+		dup2(shell->fd[0], 0);
+		close(shell->fd[0]);
+		shell->fd[0] = -1;
+	}
 }
 
 int		parse_inputstring(t_shell *shell, char *input)
@@ -160,19 +198,20 @@ int		parse_inputstring(t_shell *shell, char *input)
 	shell->ops = list;
 	while (tlist)
 	{
+		ft_printf_fd(2, "%i %i\n", shell->fd[0], shell->fd[1]);
 		shell->args = ((t_ops *)(tlist->content))->args;
-		printf("Type: %i\n", (int)((t_ops *)(tlist->content))->type);
+//		printf("Type: %i\n", (int)((t_ops *)(tlist->content))->type);
+		reset_out(shell);
 		if (((t_ops *)(tlist->content))->type == '|')
 		{
-			printf("PIPE\n");
+//			printf("PIPE\n");
 			pipe_next(shell, (t_ops *)(tlist->content));
 		}
-		shell->rv = shell_execute(shell, shell->args);
-//		if (((t_ops *)(tlist->content))->type == '|')
-//		{
-//			read(0, buf, 500);
-//			printf("PIPE: %s\n", buf);
-//		}
+		else
+		{
+			shell->rv = shell_execute(shell, shell->args);
+		}
+		reset_in(shell);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);
