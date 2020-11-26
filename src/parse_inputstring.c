@@ -156,22 +156,13 @@ void	pipe_next(t_shell *shell, t_ops *op)
 		close(op->pipefds[0]);
 		dup2(op->pipefds[1], 1);
 		shell->rv = shell_execute(shell, shell->args);
+		close(op->pipefds[1]);
 		exit(0);
 	}
 	shell->fd[0] = dup(0);
 	close(op->pipefds[1]);
 	dup2(op->pipefds[0], 0);
 	waitpid(pid, 0, 0);
-}
-
-void	reset_out(t_shell *shell)
-{
-	if (shell->fd[1] != -1)
-	{
-		dup2(shell->fd[1], 1);
-		close(shell->fd[1]);
-		shell->fd[1] = -1;
-	}
 }
 
 void	reset_in(t_shell *shell)
@@ -186,7 +177,6 @@ void	reset_in(t_shell *shell)
 
 int		parse_inputstring(t_shell *shell, char *input)
 {
-	//char	buf[500];
 	t_list	*list;
 	t_list	*tlist;
 
@@ -198,20 +188,14 @@ int		parse_inputstring(t_shell *shell, char *input)
 	shell->ops = list;
 	while (tlist)
 	{
-		ft_printf_fd(2, "%i %i\n", shell->fd[0], shell->fd[1]);
 		shell->args = ((t_ops *)(tlist->content))->args;
-//		printf("Type: %i\n", (int)((t_ops *)(tlist->content))->type);
-		reset_out(shell);
 		if (((t_ops *)(tlist->content))->type == '|')
-		{
-//			printf("PIPE\n");
 			pipe_next(shell, (t_ops *)(tlist->content));
-		}
 		else
 		{
 			shell->rv = shell_execute(shell, shell->args);
+			reset_in(shell);
 		}
-		reset_in(shell);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);
