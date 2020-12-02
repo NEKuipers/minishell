@@ -6,11 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/25 13:47:08 by bmans         ########   odam.nl         */
+/*   Updated: 2020/12/02 14:16:32 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int errno;
 
 static char	**list_to_arr(t_list *list)
 {
@@ -58,6 +60,8 @@ char	**parse_args(char *line, t_ops *ops)
 	list = NULL;
 	while (line[i])
 	{
+		while (line[i] == ' ')
+			i++;
 		while (*line == ' ')
 			line++;
 		if (!line[0])
@@ -129,7 +133,7 @@ t_list	*parse_ops(char *line)
 			ft_lstadd_back(&list, ft_lstnew(ops));
 			if (!line[i])
 				return (list);
-			line += i + 1;
+			line += i + 1 + (line[i + 1] == '>');
 			i = 0;
 		}
 		i++;
@@ -138,8 +142,10 @@ t_list	*parse_ops(char *line)
 
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string.h>
 
 void	pipe_next(t_shell *shell, t_ops *op)
 {
@@ -155,7 +161,7 @@ void	pipe_next(t_shell *shell, t_ops *op)
 		shell->fd[1] = dup(1);
 		close(op->pipefds[0]);
 		dup2(op->pipefds[1], 1);
-		fprintf(stderr, "%i %i\n", op->pipefds[0], op->pipefds[1]);
+//		fprintf(stderr, "%i %i\n", op->pipefds[0], op->pipefds[1]);
 		shell->rv = shell_execute(shell, shell->args);
 		close(op->pipefds[1]);
 		exit(0);
@@ -164,6 +170,41 @@ void	pipe_next(t_shell *shell, t_ops *op)
 	close(op->pipefds[1]);
 	dup2(op->pipefds[0], 0);
 	waitpid(pid, 0, 0);
+}
+
+char	file_exists(const char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	close(fd);
+	return (1);
+}
+
+void	redirect(t_shell *shell, t_list *op)
+{
+	int		fd;
+	char	*file;
+
+	file = ((t_ops *)(op->next->content))->args[0];
+	if (!file)
+		return ;
+	fprintf(stderr, "%s\n", file);
+	shell->fd[1] = dup(1);
+	if (((t_ops *)(op->content))->type == '}' && file_exists(file))
+		fd = open(file, O_RDWR | O_APPEND);
+	else
+		fd = open(file, O_RDWR | O_CREAT, 0644);
+	fprintf(stderr, "%i %s\n", fd, strerror(errno));
+	if (fd == -1)
+		fprintf(stderr, "Error\n");
+	dup2(fd, 1);
+	shell->rv = shell_execute(shell, shell->args);
+	close(fd);
+	dup2(shell->fd[1], 1);
+	shell->fd[1] = -1;
 }
 
 void	reset_in(t_shell *shell)
@@ -192,12 +233,18 @@ int		parse_inputstring(t_shell *shell, char *input)
 		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type == '|')
 			pipe_next(shell, (t_ops *)(tlist->content));
+		else if (((t_ops *)(tlist->content))->type == '>' \
+				|| ((t_ops *)(tlist->content))->type == '}')
+		{
+			redirect(shell, tlist);
+			tlist = tlist->next;
+		}
 		else
 		{
 			shell->rv = shell_execute(shell, shell->args);
 			reset_in(shell);
 		}
-		fprintf(stderr, "\t%i %i %i\n", ((t_ops *)(tlist->content))->pipefds[0], shell->fd[0], shell->fd[1]);
+	//	fprintf(stderr, "\t%i %i %i\n", ((t_ops *)(tlist->content))->pipefds[0], shell->fd[0], shell->fd[1]);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);
