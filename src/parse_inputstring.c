@@ -155,6 +155,7 @@ void	pipe_next(t_shell *shell, t_ops *op)
 		shell->fd[1] = dup(1);
 		close(op->pipefds[0]);
 		dup2(op->pipefds[1], 1);
+		fprintf(stderr, "%i %i\n", op->pipefds[0], op->pipefds[1]);
 		shell->rv = shell_execute(shell, shell->args);
 		close(op->pipefds[1]);
 		exit(0);
@@ -196,6 +197,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 			shell->rv = shell_execute(shell, shell->args);
 			reset_in(shell);
 		}
+		fprintf(stderr, "\t%i %i %i\n", ((t_ops *)(tlist->content))->pipefds[0], shell->fd[0], shell->fd[1]);
 		tlist = tlist->next;
 	}
 	ft_lstclear(&list, &clear_ops);
