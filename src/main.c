@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 13:06:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 15:42:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*g_shell_bnames[] =
 	"pwd",
 };
 
-int		(*g_shell_builtins[]) (t_shell *) =
+int		*g_shell_builtins[] =
 {
 	&shell_cd,
 	&shell_echo,
