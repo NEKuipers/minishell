@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/18 13:40:59 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 14:26:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**parse_args(char *line, t_ops *ops)
 	return (list_to_arr(list));
 }
 
-static void	clear_ops(void *ops)
+void	clear_ops(void *ops)
 {
 	free(((t_ops *)ops)->operation);
 	free_args(((t_ops *)ops)->args);
@@ -94,15 +94,14 @@ static void	clear_ops(void *ops)
 t_ops	*set_ops(char *line, int len)
 {
 	t_ops		*ops;
-	static int	i = 0;
 
 	ops = (t_ops *)malloc(sizeof(t_ops));
 	ops->operation = ft_substr(line, 0, len);
 	ops->args = parse_args(ops->operation, ops);
 	if (line[len] && line[len + 1] == '>')
-		ops->type[i] = '}';
+		ops->type = '}';
 	else
-		ops->type[i] = line[len];
+		ops->type = line[len];
 	return (ops);
 }
 
@@ -143,9 +142,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
-	int		i;
-
-	i = 0;
+	
 	list = parse_ops(input);
 	if (!list)
 		return (0);
@@ -155,11 +152,8 @@ int		parse_inputstring(t_shell *shell, char *input)
 	while (tlist)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
-		if (((t_ops *)(tlist->content))->type[i] == '|')
-		{
-			shell->rv = shell_execute(shell, shell->args);
-			i++;
-		}
+		if (((t_ops *)(tlist->content))->type != '\0')
+			operator_exec(tlist, shell);
 		else
 			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;

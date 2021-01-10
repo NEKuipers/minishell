@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/18 14:24:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 14:25:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ typedef struct		s_ops
 	char			*operation;
 	char			**args;
 	int				in_quotes;
-	int				pipefds[2];
 	int				rv;
-	char			type[999];
+	char			type;
 	struct s_ops	*next;
 }					t_ops;
 
@@ -37,8 +36,7 @@ typedef struct		s_shell
 	char			**args;
 	char			**evs;
 	int				rv;
-	int				in;
-	int				out;
+	int				fds[2];
 }					t_shell;
 
 int					shell_cd(t_shell *shell);
@@ -69,5 +67,8 @@ char				*insert_rv(char *rv, char *arg);
 char				**remove_env(char **evs, char *arg);
 char				**set_new_env(char **evs, char *arg);
 int					parse_inputstring(t_shell *shell, char *input);
+void				operator_exec(t_list *tlist, t_shell *shell);
+void				clear_ops(void *ops);
+void				pipe_error(t_list *tlist, t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/22 11:06:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 15:41:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,54 @@ int			shell_execpath(t_shell *shell)
 	}
 	free(newpath);
 	return (shell_execpath_2(paths, shell->args, shell->evs));
+}
+
+void	pipe_error(t_list *tlist, t_shell *shell)
+{
+	ft_lstclear(&tlist, &clear_ops);
+	free_args(shell->evs);
+	free_args(shell->args);
+	exit(-1);
+}
+
+void	operator_pipe(t_list *tlist, t_shell *shell)
+{
+	pid_t	pid;
+	char	*buff;
+
+	buff = (char *)malloc(sizeof(char) * 1025);
+	buff[1025] = '\0';
+	if (pipe(shell->fds) == -1)
+		pipe_error(tlist, shell);
+	pid = fork();
+	if (pid < 0)
+		pipe_error(tlist, shell);
+	if (pid > 0)
+	{
+		dup2(0, shell->fds[1]);
+		close(shell->fds[1]);
+	}
+	if (pid == 0)
+	{
+		if (read(shell->fds[0], buff, 1024) < 0)
+			pipe_error(tlist, shell);
+		dup2(STDIN_FILENO, shell->fds[0]);
+		shell->rv = shell_execute(shell, shell->args);
+		close(shell->fds[0]);
+	}
+	free(buff);
+}
+
+void	operator_exec(t_list *tlist, t_shell *shell)
+{
+	if (((t_ops *)(tlist->content))->type == '|')
+		operator_pipe(tlist, shell);
+	// else if (((t_ops *)(tlist->content))->type == '>')
+	// 	shell->rv = shell_execute(shell, shell->args);
+	// else if (((t_ops *)(tlist->content))->type == '<')
+	// 	shell->rv = shell_execute(shell, shell->args);
+	// else if (((t_ops *)(tlist->content))->type == '}')
+	// 	shell->rv = shell_execute(shell, shell->args);
+	else
+		return ;
 }
