@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 11:57:03 by bmans         ########   odam.nl         */
+/*   Updated: 2021/01/10 16:45:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		shell_echo(t_shell *shell)
 ** Free the malloced stuff and exit.
 */
 
-static void	clear_ops(void *ops)
+void	clear_ops(void *ops)
 {
 	free(((t_ops *)ops)->operation);
 	free_args(((t_ops *)ops)->args);

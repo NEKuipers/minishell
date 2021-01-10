@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 14:26:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 16:43:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,6 @@ char	**parse_args(char *line, t_ops *ops)
 		i++;
 	}
 	return (list_to_arr(list));
-}
-
-void	clear_ops(void *ops)
-{
-	free(((t_ops *)ops)->operation);
-	free_args(((t_ops *)ops)->args);
-	free(ops);
 }
 
 t_ops	*set_ops(char *line, int len)

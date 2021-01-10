@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 15:41:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 16:43:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,43 @@ void	operator_pipe(t_list *tlist, t_shell *shell)
 	free(buff);
 }
 
+void	operator_redirect(t_list *tlist, t_shell *shell)
+{
+	pid_t	pid;
+	char	*buff;
+	int		fd;
+
+	buff = (char *)malloc(sizeof(char) * 1025);
+	buff[1025] = '\0';
+	if (pipe(shell->fds) == -1)
+		pipe_error(tlist, shell);
+	pid = fork();
+	return ; 
+	if (pid < 0)
+		pipe_error(tlist, shell);
+	if (pid > 0)
+	{
+		fd = open(((t_ops *)(tlist->next))->args[0], O_RDONLY);
+		dup2(0, fd);
+		close(shell->fds[1]);
+	}
+	if (pid == 0)
+	{
+		if (read(shell->fds[0], buff, 1024) < 0)
+			pipe_error(tlist, shell);
+		dup2(STDIN_FILENO, shell->fds[0]);
+		close(shell->fds[0]);
+	}
+	shell->rv = shell_execute(shell, shell->args);
+	free(buff);
+}
+
 void	operator_exec(t_list *tlist, t_shell *shell)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
 		operator_pipe(tlist, shell);
-	// else if (((t_ops *)(tlist->content))->type == '>')
-	// 	shell->rv = shell_execute(shell, shell->args);
+	else if (((t_ops *)(tlist->content))->type == '>')
+		shell->rv = shell_execute(shell, shell->args);
 	// else if (((t_ops *)(tlist->content))->type == '<')
 	// 	shell->rv = shell_execute(shell, shell->args);
 	// else if (((t_ops *)(tlist->content))->type == '}')
