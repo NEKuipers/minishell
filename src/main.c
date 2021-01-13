@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 16:44:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 12:31:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 /*
 ** TO DO:
 **   - unset command is still not perfect, especially when used several times
-**   - make redirects work
-**   - make pipes work
 **   - make sure the shell->rv is always given the correct rv
 */
 
@@ -46,13 +44,6 @@ int		(*g_shell_builtins[]) (t_shell *) =
 ** Otherwise, it will check if the first argument is an existing program it can
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
-
-//static void	clear_ops(void *ops)
-//{
-//	free(((t_ops *)ops)->operation);
-//	free_args(((t_ops *)ops)->args);
-//	free(ops);
-//}
 
 int		shell_execute(t_shell *shell, char **args)
 {
@@ -108,27 +99,6 @@ void	shell_loop(t_shell *shell)
 		}
 		parse_inputstring(shell, input);
 	}
-}
-
-char	**copy_evs(char **inputs)
-{
-	int		i;
-	char	**ret;
-
-	i = 0;
-	while (inputs[i])
-		i++;
-	ret = malloc((i + 1) * (sizeof(char *)));
-	if (!ret)
-		return (NULL);
-	i = 0;
-	while (inputs[i])
-	{
-		ret[i] = ft_strdup(inputs[i]);
-		i++;
-	}
-	ret[i] = NULL;
-	return (ret);
 }
 
 /*

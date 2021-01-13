@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:05:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 12:24:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ t_list	*parse_ops(char *line)
 			ft_lstadd_back(&list, ft_lstnew(ops));
 			if (!line[i])
 				return (list);
+			line += (line[i] && line[i + 1] == '>' ?  1 : 0);
 			line += i + 1;
 			i = 0;
 		}

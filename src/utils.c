@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/11/14 10:56:19 by bmans         ########   odam.nl         */
+/*   Updated: 2021/01/13 12:31:30 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,25 @@ int			find_ev(char **evs, char *target)
 	while (ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
 		i++;
 	return (i);
+}
+
+char	**copy_evs(char **inputs)
+{
+	int		i;
+	char	**ret;
+
+	i = 0;
+	while (inputs[i])
+		i++;
+	ret = malloc((i + 1) * (sizeof(char *)));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (inputs[i])
+	{
+		ret[i] = ft_strdup(inputs[i]);
+		i++;
+	}
+	ret[i] = NULL;
+	return (ret);
 }

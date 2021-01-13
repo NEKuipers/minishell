@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:10:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 12:27:06 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@
 ** both the parent and child processes.
 */
 
+static int	pid_error(char **paths, char **args, char **evs)
+{
+	free_args(args);
+	free_args(evs);
+	free_args(paths);
+	exit(-1);
+}
+
+void	pipe_error(t_list *tlist, t_shell *shell)
+{
+	ft_lstclear(&tlist, &clear_ops);
+	free_args(shell->evs);
+	free_args(shell->args);
+	exit(-1);
+}
+
 static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 {
 	char *temp;
@@ -36,14 +52,6 @@ static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 	temp = ft_strdup(paths[i]);
 	free_args(paths);
 	execve(temp, args, evs);
-}
-
-static int	pid_error(char **paths, char **args, char **evs)
-{
-	free_args(args);
-	free_args(evs);
-	free_args(paths);
-	exit(-1);
 }
 
 static int	shell_execpath_2(char **paths, char **args, char **evs)
@@ -93,110 +101,4 @@ int			shell_execpath(t_shell *shell)
 	}
 	free(newpath);
 	return (shell_execpath_2(paths, shell->args, shell->evs));
-}
-
-void	pipe_error(t_list *tlist, t_shell *shell)
-{
-	ft_lstclear(&tlist, &clear_ops);
-	free_args(shell->evs);
-	free_args(shell->args);
-	exit(-1);
-}
-
-void	operator_pipe(t_list *tlist, t_shell *shell)
-{
-	pid_t	pid;
-	char	*buff;
-
-	buff = (char *)malloc(sizeof(char) * 1025);
-	buff[1025] = '\0';
-	if (pipe(shell->fds) == -1)
-		pipe_error(tlist, shell);
-	pid = fork();
-	if (pid < 0)
-		pipe_error(tlist, shell);
-	if (pid > 0)
-	{
-		dup2(0, shell->fds[1]);
-		close(shell->fds[1]);
-	}
-	if (pid == 0)
-	{
-		if (read(shell->fds[0], buff, 1024) < 0)
-			pipe_error(tlist, shell);
-		dup2(STDIN_FILENO, shell->fds[0]);
-		shell->rv = shell_execute(shell, shell->args);
-		close(shell->fds[0]);
-	}
-	free(buff);
-}
-
-void	operator_redirect_output(t_list *tlist, t_shell *shell)
-{
-	int		fd;
-	char	*filename;
-	
-	shell->fds[0] = dup(STDOUT_FILENO);
-	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
-	{
-		ft_printf_fd(2, "%s: no such file or directory\n", filename);
-		return ;
-	}
-	dup2(fd, STDOUT_FILENO);
-	shell->rv = shell_execute(shell, shell->args);
-	dup2(shell->fds[0], STDOUT_FILENO);
-	close(fd);
-	return ;
-}
-
-void	operator_append_output(t_list *tlist, t_shell *shell)
-{
-	int		fd;
-	char	*filename;
-	
-	shell->fds[0] = dup(STDOUT_FILENO);
-	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666)) == -1)
-	{
-		ft_printf_fd(2, "%s: no such file or directory\n", filename);
-		return ;
-	}
-	dup2(fd, STDOUT_FILENO);
-	shell->rv = shell_execute(shell, shell->args);
-	dup2(shell->fds[0], STDOUT_FILENO);
-	close(fd);
-	return ;
-}
-
-void	operator_redirect_input(t_list *tlist, t_shell *shell)
-{
-	int		fd;
-	char	*filename;
-	
-	shell->fds[0] = dup(STDIN_FILENO);
-	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_RDONLY)) == -1)
-	{
-		ft_printf_fd(2, "%s: no such file or directory\n", filename);
-		return ;
-	}
-	dup2(fd, STDIN_FILENO);
-	shell->rv = shell_execute(shell, shell->args);
-	dup2(shell->fds[0], STDIN_FILENO);
-	close(fd);
-	return ;
-}
-
-void	operator_exec(t_list *tlist, t_shell *shell)
-{
-	if (((t_ops *)(tlist->content))->type == '|')
-		operator_pipe(tlist, shell);
-	else if (((t_ops *)(tlist->content))->type == '>')
-		operator_redirect_output(tlist, shell);
-	else if (((t_ops *)(tlist->content))->type == '}')
-		operator_append_output(tlist, shell);
-	else if (((t_ops *)(tlist->content))->type == '<')
-		operator_redirect_input(tlist, shell);
-	return ;
 }
