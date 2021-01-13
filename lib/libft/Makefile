@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/10/07 14:28:20 by bmans         ########   odam.nl          #
+#    Updated: 2021/01/13 12:39:14 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,9 +69,7 @@ clean_b:
 re: fclean all
 
 bonus: $(OBJECTS) $(BONUS) $(NAME)
-	@echo "$(GREEN)Linking the bonuses into the library"
 	@ar rc $(NAME) $(OBJECTS) $(BONUS)
 	@ranlib $(NAME)
-	@echo "$(GREEN)Done"
 
 .PHONY: all clean fclean re bonus
