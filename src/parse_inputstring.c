@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 16:43:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 12:05:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,10 @@ int		parse_inputstring(t_shell *shell, char *input)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type != '\0')
+		{
 			operator_exec(tlist, shell);
+			tlist = tlist->next;
+		}
 		else
 			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;

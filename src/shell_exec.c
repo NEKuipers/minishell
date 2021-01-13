@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 11:43:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 12:10:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,26 @@ void	operator_pipe(t_list *tlist, t_shell *shell)
 	free(buff);
 }
 
-void	operator_redirect(t_list *tlist, t_shell *shell)
+void	operator_redirect_output(t_list *tlist, t_shell *shell)
+{
+	int		fd;
+	char	*filename;
+	
+	shell->fds[0] = dup(STDOUT_FILENO);
+	filename = ((t_ops *)(tlist->next->content))->args[0];
+	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
+	{
+		ft_printf_fd(2, "%s: no such file or directory\n", filename);
+		return ;
+	}
+	dup2(fd, STDOUT_FILENO);
+	shell->rv = shell_execute(shell, shell->args);
+	dup2(shell->fds[0], STDOUT_FILENO);
+	close(fd);
+	return ;
+}
+
+void	operator_append_output(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
@@ -150,16 +169,34 @@ void	operator_redirect(t_list *tlist, t_shell *shell)
 	return ;
 }
 
+void	operator_redirect_input(t_list *tlist, t_shell *shell)
+{
+	int		fd;
+	char	*filename;
+	
+	shell->fds[0] = dup(STDIN_FILENO);
+	filename = ((t_ops *)(tlist->next->content))->args[0];
+	if ((fd = open(filename, O_RDONLY)) == -1)
+	{
+		ft_printf_fd(2, "%s: no such file or directory\n", filename);
+		return ;
+	}
+	dup2(fd, STDIN_FILENO);
+	shell->rv = shell_execute(shell, shell->args);
+	dup2(shell->fds[0], STDIN_FILENO);
+	close(fd);
+	return ;
+}
+
 void	operator_exec(t_list *tlist, t_shell *shell)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
 		operator_pipe(tlist, shell);
 	else if (((t_ops *)(tlist->content))->type == '>')
-		operator_redirect(tlist, shell);
-	// else if (((t_ops *)(tlist->content))->type == '<')
-	// 	shell->rv = shell_execute(shell, shell->args);
-	// else if (((t_ops *)(tlist->content))->type == '}')
-	// 	shell->rv = shell_execute(shell, shell->args);
-	else
-		return ;
+		operator_redirect_output(tlist, shell);
+	else if (((t_ops *)(tlist->content))->type == '}')
+		operator_append_output(tlist, shell);
+	else if (((t_ops *)(tlist->content))->type == '<')
+		operator_redirect_input(tlist, shell);
+	return ;
 }
