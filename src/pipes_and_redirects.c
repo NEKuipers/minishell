@@ -16,7 +16,7 @@ int 	operator_redirect_output(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
-	
+
 	shell->fds[0] = dup(STDOUT_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
@@ -32,7 +32,7 @@ int 	operator_append_output(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
-	
+
 	shell->fds[0] = dup(STDOUT_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
 	if ((fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666)) == -1)
@@ -48,7 +48,7 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
-	
+
 	shell->fds[0] = dup(STDIN_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
 	if ((fd = open(filename, O_RDONLY)) == -1)
@@ -66,6 +66,29 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 void	operator_pipe(t_list *tlist, t_shell *shell)
 {
 	pid_t	pid;
+	t_ops	*op;
+
+	op = (t_ops *)(tlist->content);
+	if (pipe(op->pipefds))
+		exit(-1);
+	pid = fork();
+	if (pid == -1)
+		exit(-1);
+	else if (pid == 0)
+	{
+		shell->fds[1] = dup(1);
+		close(op->pipefds[0]);
+		dup2(op->pipefds[1], 1);
+		shell->rv = shell_execute(shell, shell->args);
+		close(op->pipefds[1]);
+		exit(0);
+	}
+	shell->fds[0] = dup(0);
+	close(op->pipefds[1]);
+	dup2(op->pipefds[0], 0);
+	waitpid(pid, 0, 0);
+
+/*	pid_t	pid;
 	char	*buff;
 
 	buff = (char *)malloc(sizeof(char) * 1025);
@@ -88,7 +111,7 @@ void	operator_pipe(t_list *tlist, t_shell *shell)
 		shell->rv = shell_execute(shell, shell->args);
 		close(shell->fds[0]);
 	}
-	free(buff);
+	free(buff); */
 }
 
 void	operator_exec(t_list *tlist, t_shell *shell)
