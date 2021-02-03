@@ -48,6 +48,8 @@ static int	skip_to_quote(char *line, int index, char type)
 	}
 }
 
+#include <stdio.h>
+
 char	**parse_args(char *line, t_ops *ops)
 {
 	t_list	*list;
@@ -58,6 +60,7 @@ char	**parse_args(char *line, t_ops *ops)
 	list = NULL;
 	while (line[i])
 	{
+		printf("%c %i\n", line[i], i);
 		while (line[i] == ' ')
 			i++;
 		while (*line == ' ')
@@ -154,7 +157,11 @@ int		parse_inputstring(t_shell *shell, char *input)
 				tlist = tlist->next;
 		}
 		else
+		{
+			//ft_printf_fd(2, "%i %i", ((t_ops *)(tlist->content))->pipefds[0], ((t_ops *)(tlist->content))->pipefds[1]);
 			shell->rv = shell_execute(shell, shell->args);
+			reset_std_fds(shell);
+		}
 		tlist = tlist->next;
 	}
 	reset_std_fds(shell);

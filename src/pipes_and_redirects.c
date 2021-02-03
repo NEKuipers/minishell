@@ -76,17 +76,17 @@ void	operator_pipe(t_list *tlist, t_shell *shell)
 		exit(-1);
 	else if (pid == 0)
 	{
-		shell->fds[1] = dup(1);
+//		shell->fds[1] = dup(1);
 		close(op->pipefds[0]);
 		dup2(op->pipefds[1], 1);
 		shell->rv = shell_execute(shell, shell->args);
 		close(op->pipefds[1]);
 		exit(0);
 	}
-	shell->fds[0] = dup(0);
+//	shell->fds[0] = dup(0);
+	waitpid(pid, 0, 0);
 	close(op->pipefds[1]);
 	dup2(op->pipefds[0], 0);
-	waitpid(pid, 0, 0);
 
 /*	pid_t	pid;
 	char	*buff;
