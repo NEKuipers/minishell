@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:29:06 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/04 15:51:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ typedef struct		s_shell
 	char			**evs;
 	int				rv;
 	int				fds[2];
+	int				stdin;
+	int				stdout;
 }					t_shell;
 
 int					shell_cd(t_shell *shell);
 int					shell_echo(t_shell *shell);
 int					shell_env(t_shell *shell);
 int					shell_execpath(t_shell *shell);
-
 int					shell_execute(t_shell *shell, char **args);
 int					shell_exit(t_shell *shell);
 int					shell_export(t_shell *shell);
@@ -67,12 +68,13 @@ char				*insert_rv(char *rv, char *arg);
 char				**remove_env(char **evs, char *arg);
 char				**set_new_env(char **evs, char *arg);
 int					parse_inputstring(t_shell *shell, char *input);
-void				operator_exec(t_list *tlist, t_shell *shell);
 void				clear_ops(void *ops);
-void				pipe_error(t_list *tlist, t_shell *shell);
-void				operator_pipe(t_list *tlist, t_shell *shell);
+
+void				operator_exec(t_list *tlist, t_shell *shell);
 int					operator_redirect_output(t_list *tlist, t_shell *shell);
 int					operator_append_output(t_list *tlist, t_shell *shell);
 int					operator_redirect_input(t_list *tlist, t_shell *shell);
+int					operator_pipe(t_list *tlist, t_shell *shell);
+void				pipe_error(t_list *tlist, t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/01/13 12:27:27 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/01/13 13:47:43 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS            =   main.c \
 					fds.c \
 					ft_token.c \
 					parse_inputstring.c \
-					pipes_and_redirects.c \
+					pipes.c \
+					redirects.c \
 					shell_export.c \
 					shell_unset.c \
 					shellbuiltins.c \

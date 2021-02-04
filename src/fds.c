@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/18 14:21:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 14:20:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/13 15:00:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,6 @@ void	reset_std_fds(t_shell *shell)
 {
 	dup2(shell->fds[0], 0);
 	dup2(shell->fds[1], 1);
+    dup2(shell->stdin, 0);
+	dup2(shell->stdout, 1);
 }

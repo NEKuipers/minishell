@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipes_and_redirects.c                              :+:    :+:            */
+/*   redirects.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:41:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/04 18:08:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,29 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-void	operator_pipe(t_list *tlist, t_shell *shell)
+int		operator_pipe(t_list *tlist, t_shell *shell)
 {
-	pid_t	pid;
-	char	*buff;
+	pid_t		pid;
 
-	buff = (char *)malloc(sizeof(char) * 1025);
-	buff[1025] = '\0';
+	shell->args = ((t_ops *)(tlist->content))->args;
 	if (pipe(shell->fds) == -1)
 		pipe_error(tlist, shell);
 	pid = fork();
-	if (pid < 0)
-		pipe_error(tlist, shell);
-	if (pid > 0)
-	{
-		dup2(0, shell->fds[1]);
-		close(shell->fds[1]);
-	}
 	if (pid == 0)
 	{
-		if (read(shell->fds[0], buff, 1024) < 0)
-			pipe_error(tlist, shell);
-		dup2(STDIN_FILENO, shell->fds[0]);
+		close (shell->fds[0]);
+		dup2(shell->fds[1], 1);
 		shell->rv = shell_execute(shell, shell->args);
-		close(shell->fds[0]);
+		close (shell->fds[1]);
+		exit(0);
 	}
-	free(buff);
+	wait(0);
+	close(shell->fds[1]);
+	shell->stdin = dup(0);
+	if (dup2(shell->fds[0], 0) == -1)
+		return (-1);
+	close(shell->fds[0]);
+	return (0);
 }
 
 void	operator_exec(t_list *tlist, t_shell *shell)
