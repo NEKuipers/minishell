@@ -136,7 +136,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
 	t_list	*tlist;
-	
+
 	list = parse_ops(input);
 	if (!list)
 		return (0);
@@ -146,8 +146,13 @@ int		parse_inputstring(t_shell *shell, char *input)
 	while (tlist)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
+<<<<<<< HEAD
 		if (((t_ops *)(tlist->content))->type != '\0' && 
 			((t_ops *)(tlist->content))->type != ';')
+=======
+		if (((t_ops *)(tlist->content))->type != '\0' \
+			&& ((t_ops *)(tlist->content))->type != ';')
+>>>>>>> f8e6df4da522184bb866f80be2af48eb5cca918c
 		{
 			operator_exec(tlist, shell);
 			if (((t_ops *)(tlist->content))->type != '|')
@@ -157,6 +162,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
 	}
+	reset_std_fds(shell);
 	ft_lstclear(&list, &clear_ops);
 	return (0);
 }

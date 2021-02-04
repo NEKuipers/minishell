@@ -24,6 +24,7 @@ typedef struct		s_ops
 {
 	char			*operation;
 	char			**args;
+	int				pipefds[2];
 	int				in_quotes;
 	int				rv;
 	char			type;

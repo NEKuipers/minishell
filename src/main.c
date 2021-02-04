@@ -118,7 +118,9 @@ int		main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	shell.rv = 0;
-	reset_std_fds(&shell);
+	shell.fds[0] = dup(0);
+	shell.fds[1] = dup(1);
+	//reset_std_fds(&shell);
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
 		shell_exit(&shell);
