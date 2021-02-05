@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/04 18:05:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 09:35:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,8 @@ int		parse_inputstring(t_shell *shell, char *input)
 	while (tlist)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
-<<<<<<< HEAD
 		if (((t_ops *)(tlist->content))->type != '\0' && 
 			((t_ops *)(tlist->content))->type != ';')
-=======
-		if (((t_ops *)(tlist->content))->type != '\0' \
-			&& ((t_ops *)(tlist->content))->type != ';')
->>>>>>> f8e6df4da522184bb866f80be2af48eb5cca918c
 		{
 			operator_exec(tlist, shell);
 			if (((t_ops *)(tlist->content))->type != '|')
