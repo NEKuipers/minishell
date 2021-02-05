@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 09:37:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 09:38:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 ** TO DO:
 **   - unset command is still not perfect, especially when used several times
 **   - make sure the shell->rv is always given the correct rv
-**   - pipes don't work yet and multiple pipes give strange behaviour with
-**	   the prompt
+**   - multiple pipes don't work yet
 **   - thorough testing (unit test?)
 **   - check for and fix memory leaks
 **	 - norme

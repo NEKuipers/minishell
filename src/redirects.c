@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 09:34:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 09:45:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,16 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-int		operator_pipe(t_list *tlist, t_shell *shell)
-{
-	pid_t		pid;
-
-	shell->args = ((t_ops *)(tlist->content))->args;
-	if (pipe(shell->fds) == -1)
-		pipe_error(tlist, shell);
-	pid = fork();
-	if (pid == 0)
-	{
-		close (shell->fds[0]);
-		dup2(shell->fds[1], 1);
-		shell->rv = shell_execute(shell, shell->args);
-		close (shell->fds[1]);
-		exit(0);
-	}
-	wait(0);
-	close(shell->fds[1]);
-	shell->stdin = dup(0);
-	if (dup2(shell->fds[0], 0) == -1)
-		return (-1);
-	close(shell->fds[0]);
-	return (0);
-}
-
-void	operator_exec(t_list *tlist, t_shell *shell)
+int		operator_exec(t_list *tlist, t_shell *shell)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
-		operator_pipe(tlist, shell);
+		return(operator_pipe(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '>')
-		operator_redirect_output(tlist, shell);
+		return(operator_redirect_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '}')
-		operator_append_output(tlist, shell);
+		return(operator_append_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '<')
-		operator_redirect_input(tlist, shell);
-	return ;
+		return(operator_redirect_input(tlist, shell));
+	else
+		return (-1);
 }

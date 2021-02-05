@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/04 15:51:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 09:44:27 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char				**set_new_env(char **evs, char *arg);
 int					parse_inputstring(t_shell *shell, char *input);
 void				clear_ops(void *ops);
 
-void				operator_exec(t_list *tlist, t_shell *shell);
+int					operator_exec(t_list *tlist, t_shell *shell);
 int					operator_redirect_output(t_list *tlist, t_shell *shell);
 int					operator_append_output(t_list *tlist, t_shell *shell);
 int					operator_redirect_input(t_list *tlist, t_shell *shell);
