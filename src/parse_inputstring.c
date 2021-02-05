@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 10:43:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 13:37:34 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	**parse_args(char *line, t_ops *ops)
 	list = NULL;
 	while (line[i])
 	{
-		printf("%c %i\n", line[i], i);
 		while (line[i] == ' ')
 			i++;
 		while (*line == ' ')
@@ -135,6 +134,16 @@ t_list	*parse_ops(char *line)
 	}
 }
 
+static void	probe_fds(void)
+{
+	for (int i = 0; i < 256; i++)
+	{
+		if (read(i, 0, 0) == 0)
+			ft_printf_fd(2, "%i ", i);
+	}
+	ft_printf_fd(2, "\n");
+}
+
 int		parse_inputstring(t_shell *shell, char *input)
 {
 	t_list	*list;
@@ -162,6 +171,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 			reset_std_fds(shell);
 		}
 		tlist = tlist->next;
+		probe_fds();
 	}
 	reset_std_fds(shell);
 	ft_lstclear(&list, &clear_ops);

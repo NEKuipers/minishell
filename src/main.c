@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 09:38:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 12:46:42 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ int		main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	shell.rv = 0;
-	shell.fds[0] = dup(0);
-	shell.fds[1] = dup(1);
+	init_std_fds(&shell);
 	shell.evs = copy_evs(envp);
 	if (shell.evs == NULL)
 		shell_exit(&shell);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 09:44:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 12:48:29 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void				ctrlchandler(int n);
 void				ctrlbshandler(int n);
 void				ft_close_fd(int fd);
 void				reset_std_fds(t_shell *shell);
+void				init_std_fds(t_shell *shell);
 
 void				free_args(char **args);
 char				**copy_evs(char **inputs);
