@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipes_and_redirects.c                              :+:    :+:            */
+/*   redirects.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:41:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/05 12:32:17 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,66 +63,16 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-void	operator_pipe(t_list *tlist, t_shell *shell)
-{
-	pid_t	pid;
-	t_ops	*op;
-
-	op = (t_ops *)(tlist->content);
-	if (pipe(op->pipefds))
-		exit(-1);
-	pid = fork();
-	if (pid == -1)
-		exit(-1);
-	else if (pid == 0)
-	{
-//		shell->fds[1] = dup(1);
-		close(op->pipefds[0]);
-		dup2(op->pipefds[1], 1);
-		shell->rv = shell_execute(shell, shell->args);
-		close(op->pipefds[1]);
-		exit(0);
-	}
-//	shell->fds[0] = dup(0);
-	waitpid(pid, 0, 0);
-	close(op->pipefds[1]);
-	dup2(op->pipefds[0], 0);
-
-/*	pid_t	pid;
-	char	*buff;
-
-	buff = (char *)malloc(sizeof(char) * 1025);
-	buff[1025] = '\0';
-	if (pipe(shell->fds) == -1)
-		pipe_error(tlist, shell);
-	pid = fork();
-	if (pid < 0)
-		pipe_error(tlist, shell);
-	if (pid > 0)
-	{
-		dup2(0, shell->fds[1]);
-		close(shell->fds[1]);
-	}
-	if (pid == 0)
-	{
-		if (read(shell->fds[0], buff, 1024) < 0)
-			pipe_error(tlist, shell);
-		dup2(STDIN_FILENO, shell->fds[0]);
-		shell->rv = shell_execute(shell, shell->args);
-		close(shell->fds[0]);
-	}
-	free(buff); */
-}
-
-void	operator_exec(t_list *tlist, t_shell *shell)
+int		operator_exec(t_list *tlist, t_shell *shell)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
-		operator_pipe(tlist, shell);
+		return(operator_pipe(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '>')
-		operator_redirect_output(tlist, shell);
+		return(operator_redirect_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '}')
-		operator_append_output(tlist, shell);
+		return(operator_append_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '<')
-		operator_redirect_input(tlist, shell);
-	return ;
+		return(operator_redirect_input(tlist, shell));
+	else
+		return (-1);
 }
