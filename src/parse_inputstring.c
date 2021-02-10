@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 10:43:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/10 11:39:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,23 @@ int		parse_inputstring(t_shell *shell, char *input)
 	tlist = list;
 	free(input);
 	shell->ops = list;
-	while (tlist)
+	shell->prev_pipe = STDIN_FILENO;
+	shell->count = ft_lstsize(tlist);
+	run_cmds(shell, tlist);
+	reset_std_fds(shell);
+	ft_lstclear(&list, &clear_ops);
+	return (0);
+}
+
+int		run_cmds(t_shell *shell, t_list *tlist)
+{
+	while (shell->count > 1)
 	{
+		shell->stdin = dup(0);
 		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type > ';')
 		{
+			dupclose_fd(shell->prev_pipe, STDIN_FILENO);
 			operator_exec(tlist, shell);
 			if (((t_ops *)(tlist->content))->type != '|')
 				tlist = tlist->next;
@@ -155,8 +167,14 @@ int		parse_inputstring(t_shell *shell, char *input)
 		else
 			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
+		shell->count = ft_lstsize(tlist);
 	}
-	reset_std_fds(shell);
-	ft_lstclear(&list, &clear_ops);
+	if (tlist)
+	{
+		shell->args = ((t_ops *)(tlist->content))->args;
+		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+		shell->rv = shell_execute(shell, shell->args);
+		dup2(shell->stdin, STDIN_FILENO);
+	}
 	return (0);
 }
