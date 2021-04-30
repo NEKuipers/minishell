@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:29:18 by bmans         ########   odam.nl         */
+/*   Updated: 2021/03/03 12:08:30 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 static void	replace_array(char **ret, char **evs, char *arg)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (*evs)
@@ -37,7 +37,7 @@ static void	replace_array(char **ret, char **evs, char *arg)
 	ret[i] = NULL;
 }
 
-char		**remove_env(char **evs, char *arg)
+char	**remove_env(char **evs, char *arg)
 {
 	int		i;
 	char	**ret;
@@ -53,9 +53,9 @@ char		**remove_env(char **evs, char *arg)
 	return (ret);
 }
 
-int			shell_unset(t_shell *shell)
+int	shell_unset(t_shell *shell)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (shell->args[1] == NULL)

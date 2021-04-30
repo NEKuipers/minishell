@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/03/03 11:37:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/03/17 14:26:41 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,22 @@ char	**parse_args(char *line, t_ops *ops)
 			line++;
 		if (!line[0])
 			break ;
-		if (line[i] != '\0')
-			if ((line[0] == '\"' || line[0] == '\'' || !line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
+		if ((line[0] == '\"' || line[0] == '\'' || !line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
+		{
+			if (line[0] == '\"' || line[0] == '\'')
 			{
-				if (line[0] == '\"' || line[0] == '\'')
-				{
-					i = skip_to_quote(line, i, line[0]);
-					ops->in_quotes = 1;
-				}
-				if (ops->in_quotes == 0)
-					ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
-				else
-					ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
-				line += i + 1;
-				i = -1;
+				i = skip_to_quote(line, i, line[0]);
+				ops->in_quotes = 1;
 			}
+			if (ops->in_quotes == 0)
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
+			else
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
+			if (line[i] == '\0')
+				break;
+			line += 1 + i;
+			i = -1;
+		}
 		i++;
 	}
 	return (list_to_arr(list));

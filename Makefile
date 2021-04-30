@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/03/03 11:01:13 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/03/17 12:40:50 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS            =   main.c \
 					utils.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS          =   -Wall -Wextra -Werror -g
 INCLUDES        =   -I includes \
                     -I lib/libft
 LIBS            =   lib/libft/libft.a

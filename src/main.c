@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/10 09:40:46 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/03/03 12:14:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*g_shell_bnames[] =
 	"pwd",
 };
 
-int		(*g_shell_builtins[]) (t_shell *) =
+int		(*g_shell_builtins[])(t_shell *) =
 {
 	&shell_cd,
 	&shell_echo,
@@ -48,9 +48,9 @@ int		(*g_shell_builtins[]) (t_shell *) =
 ** find in the PATH, and attempt to execute it in shell_execpath.
 */
 
-int		shell_execute(t_shell *shell, char **args)
+int	shell_execute(t_shell *shell, char **args)
 {
-	unsigned long i;
+	unsigned long	i;
 
 	i = 0;
 	args = transl_env(shell, args);
@@ -58,8 +58,7 @@ int		shell_execute(t_shell *shell, char **args)
 		return (0);
 	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
 	{
-		if (ft_strncmp(args[0], g_shell_bnames[i],
-			ft_strlen(args[0])) == 0)
+		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)
 			return (g_shell_builtins[i](shell));
 		i++;
 	}
@@ -111,7 +110,7 @@ void	shell_loop(t_shell *shell)
 ** shell loop.
 */
 
-int		main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 

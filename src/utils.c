@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:31:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/03/03 11:59:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 ** This function frees strings in an array, and then the top level pointer.
 */
 
-void		free_args(char **args)
+void	free_args(char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (args)
@@ -38,13 +38,13 @@ void		free_args(char **args)
 ** otherwise appear in the command line and overwrite them with spaces.
 */
 
-void		ctrlchandler(int n)
+void	ctrlchandler(int n)
 {
 	(void)n;
 	ft_printf("\b\b  \n<$ ");
 }
 
-void		ctrlbshandler(int n)
+void	ctrlbshandler(int n)
 {
 	(void)n;
 	ft_printf("\b\b  \b\b");
@@ -55,7 +55,7 @@ void		ctrlbshandler(int n)
 ** This function finds the correct ev in the array and returns its position.
 */
 
-int			find_ev(char **evs, char *target)
+int	find_ev(char **evs, char *target)
 {
 	int		i;
 

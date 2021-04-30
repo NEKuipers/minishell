@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 11:04:01 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/13 12:27:06 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/03/03 12:10:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	pipe_error(t_list *tlist, t_shell *shell)
 
 static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strdup(paths[i]);
 	free_args(paths);
@@ -80,7 +80,7 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
-int			shell_execpath(t_shell *shell)
+int	shell_execpath(t_shell *shell)
 {
 	char	**paths;
 	int		i;
