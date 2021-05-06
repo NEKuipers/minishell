@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/03/17 11:38:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/05/06 14:44:59 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-int	operator_exec(t_list *tlist, t_shell *shell)
+int	operator_exec(t_list *tlist, t_shell *shell, t_pipeline *pipeline)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
-		return (operator_pipe(tlist, shell));
+		return (operator_pipe(tlist, shell, pipeline));
 	else if (((t_ops *)(tlist->content))->type == '>')
 		return (operator_redirect_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '}')

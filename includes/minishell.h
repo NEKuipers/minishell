@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/10 11:21:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/05/06 16:08:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ typedef struct		s_ops
 	struct s_ops	*next;
 }					t_ops;
 
+typedef struct		s_pipeline
+{
+	int				*pipes;
+	int				amount;
+	int				pipecount;
+	pid_t			pid;
+	char			**envp;
+}					t_pipeline;
+
 typedef struct		s_shell
 {
 	t_list			*ops;
@@ -37,7 +46,7 @@ typedef struct		s_shell
 	char			**evs;
 	int				rv;
 	int				fds[2];
-	int				prev_pipe;
+	// int				prev_pipe;
 	int				count;
 	int				stdin;
 	int				stdout;
@@ -74,10 +83,10 @@ int					parse_inputstring(t_shell *shell, char *input);
 int					run_cmds(t_shell *shell, t_list *tlist);
 void				clear_ops(void *ops);
 
-int					operator_exec(t_list *tlist, t_shell *shell);
+int					operator_exec(t_list *tlist, t_shell *shell, t_pipeline *pipeline);
 int					operator_redirect_output(t_list *tlist, t_shell *shell);
 int					operator_append_output(t_list *tlist, t_shell *shell);
-int					operator_pipe(t_list *tlist, t_shell *shell);
+int					operator_pipe(t_list *tlist, t_shell *shell, t_pipeline *pipeline);
 int					operator_redirect_input(t_list *tlist, t_shell *shell);
 void				pipe_error(t_list *tlist, t_shell *shell);
 

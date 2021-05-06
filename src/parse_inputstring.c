@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/03/17 14:26:41 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/05/06 16:18:54 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int		parse_inputstring(t_shell *shell, char *input)
 	tlist = list;
 	free(input);
 	shell->ops = list;
-	shell->prev_pipe = STDIN_FILENO;
+	// shell->prev_pipe = STDIN_FILENO;
 	shell->count = ft_lstsize(tlist);
 	run_cmds(shell, tlist);
 	reset_std_fds(shell);
@@ -152,16 +152,59 @@ int		parse_inputstring(t_shell *shell, char *input)
 	return (0);
 }
 
+static int	count_pipes(t_list *tlist)
+{
+	int		count;
+	t_list	*temp;
+
+	temp = tlist;
+	count = 0;
+	while (temp && ((t_ops *)(temp->content))->type == '|')
+	{
+		count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+
+int		set_pipes(t_pipeline *pipeline, t_shell *shell, t_list *tlist)
+{
+	int i;
+	int	count;
+	
+	i = 0;
+	count = pipeline->amount;
+	pipeline->pipes = (int *)malloc(sizeof(int) * pipeline->amount + 1);
+	if (!pipeline->pipes)
+		pipe_error(tlist, shell);
+	while (count > 0)
+	{
+		if (pipe(pipeline->pipes + i * 2) < 0)
+			pipe_error(tlist, shell);
+		i += 2;
+		count--;
+	}
+	return (0);
+}
+
 int		run_cmds(t_shell *shell, t_list *tlist)
 {
+	t_pipeline	pipeline;
+
+	pipeline.amount = count_pipes(tlist);
+	pipeline.pipecount = 0;
+	if (pipeline.amount > 0)
+		set_pipes(&pipeline, shell, tlist);
+	// for (int i = 0; pipeline.pipes[i]; i++)
+	// 	ft_printf("filedescriptor pipe %d is %d\n", i, pipeline.pipes[i]);
 	while (shell->count > 1)
 	{
 		shell->stdin = dup(0);
 		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type > ';')
 		{
-			dupclose_fd(shell->prev_pipe, STDIN_FILENO);
-			operator_exec(tlist, shell);
+			// dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+			operator_exec(tlist, shell, &pipeline);
 			if (((t_ops *)(tlist->content))->type != '|')
 				tlist = tlist->next;
 		}
@@ -169,13 +212,16 @@ int		run_cmds(t_shell *shell, t_list *tlist)
 			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
 		shell->count = ft_lstsize(tlist);
+		pipeline.pipecount += 2;
 	}
 	if (tlist)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
-		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+		// dupclose_fd(shell->prev_pipe, STDIN_FILENO);
 		shell->rv = shell_execute(shell, shell->args);
 		dup2(shell->stdin, STDIN_FILENO);
 	}
+	// if (pipeline.pipes)
+	// 	free(pipeline.pipes);
 	return (0);
 }
