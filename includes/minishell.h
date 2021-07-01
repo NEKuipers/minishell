@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/05/06 16:08:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/07/01 12:51:48 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ typedef struct		s_ops
 
 typedef struct		s_pipeline
 {
-	int				*pipes;
-	int				amount;
+	int				*fd[2];
 	int				pipecount;
 	pid_t			pid;
-	char			**envp;
+	int				amount;
 }					t_pipeline;
 
 typedef struct		s_shell
@@ -46,7 +45,6 @@ typedef struct		s_shell
 	char			**evs;
 	int				rv;
 	int				fds[2];
-	// int				prev_pipe;
 	int				count;
 	int				stdin;
 	int				stdout;

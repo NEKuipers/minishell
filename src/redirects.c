@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/05/06 14:44:59 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/07/01 12:59:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,20 @@ int	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
+int	operator_pipe(t_list *tlist, t_shell *shell, t_pipeline *pipeline)
+{
+	// pid_t pid;
+	// int	i;
+	(void)tlist;
+	(void)pipeline;
+
+	shell->rv = shell_execute(shell, shell->args);
+	return (0);
+}
+
 int	operator_exec(t_list *tlist, t_shell *shell, t_pipeline *pipeline)
 {
+	shell->args = ((t_ops *)(tlist->content))->args;
 	if (((t_ops *)(tlist->content))->type == '|')
 		return (operator_pipe(tlist, shell, pipeline));
 	else if (((t_ops *)(tlist->content))->type == '>')
@@ -78,4 +90,40 @@ int	operator_exec(t_list *tlist, t_shell *shell, t_pipeline *pipeline)
 		return (operator_redirect_input(tlist, shell));
 	else
 		return (-1);
+}
+
+static void	count_pipes(t_list *tlist, t_pipeline *pipeline)
+{
+	pipeline->amount = 1;
+	while (tlist->next != NULL)
+	{
+		tlist = tlist->next;
+		if (((t_ops *)(tlist->content))->type != '|')
+			break;
+		pipeline->amount += 1;
+	}
+	return ;
+}
+
+int		run_cmds(t_shell *shell, t_list *tlist)
+{
+	t_pipeline pipeline;
+
+	pipeline.amount = 0;
+	if (((t_ops *)(tlist->content))->type == '|')
+		count_pipes(tlist, &pipeline);
+	if (((t_ops *)(tlist->content))->type > ';')
+	{
+		operator_exec(tlist, shell, &pipeline);
+		if (((t_ops *)(tlist->content))->type != '|')
+			tlist = tlist->next;
+	}
+	while (shell->count > 0)
+	{
+		shell->args = ((t_ops *)(tlist->content))->args;
+		shell->rv = shell_execute(shell, shell->args);
+		tlist = tlist->next;
+		shell->count = ft_lstsize(tlist);
+	}
+	return (0);
 }

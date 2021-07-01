@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/03/03 11:01:07 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/07/01 12:03:00 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,28 @@ BONUS =		ft_lstadd_back_bonus.o ft_lstadd_front_bonus.o \
 FLAGS = 	-Wall -Werror -Wextra
 INCLUDES = 	.
 
-# COLOURS
-GREEN	= \x1b[32;01m
-WHITE	= \x1b[29;01m
-RESET	= \x1b[0m
+# COLORS
+ifeq ($(WSL_DISTRO_NAME), Ubuntu)
+	WHITE   = \e[37;01m
+	CYAN    = \e[36;01m
+	PINK    = \e[35;01m
+	BLUE    = \e[34;01m
+	YELLOW  = \e[33;01m
+	GREEN   = \e[32;01m
+	RED     = \e[31;01m
+	BLACK   = \e[30;01m
+	RESET   = \e[0m
+else
+	WHITE   = \x1b[37;01m
+	CYAN    = \x1b[36;01m
+	PINK    = \x1b[35;01m
+	BLUE    = \x1b[34;01m
+	YELLOW  = \x1b[33;01m
+	GREEN   = \x1b[32;01m
+	RED     = \x1b[31;01m
+	BLACK   = \x1b[30;01m
+	RESET   = \x1b[0m
+endif
 
 all: $(NAME)
 
