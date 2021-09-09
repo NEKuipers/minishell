@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/07/01 12:59:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/09 13:25:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,38 @@ int	operator_redirect_input(t_list *tlist, t_shell *shell)
 
 int	operator_pipe(t_list *tlist, t_shell *shell, t_pipeline *pipeline)
 {
-	// pid_t pid;
-	// int	i;
-	(void)tlist;
-	(void)pipeline;
+	int	fds[pipeline->amount];
+	int i;
+	int cmdcount;
 
-	shell->rv = shell_execute(shell, shell->args);
+	i = 0;
+	while (i < pipeline->amount)
+	{
+		if (pipe(fds + i * 2) < 0)
+			return (-1);
+		i++;
+	}
+	cmdcount = 0;
+	while (((t_ops *)(tlist->content))->type == '|')
+	{
+		pipeline->pid = fork();
+		if (pipeline->pid == 0)
+		{
+			if (cmdcount != 0)
+				if (dup2(fds[(cmdcount - 1) * 2], 0) < 0)
+					return (-1);
+			if (cmdcount != pipeline->amount)
+				if (dup2(fds[(cmdcount * 2 + 1)], 1) < 0)
+					return (-1);
+			for (int j = 0; j < 2 * pipeline->amount; j++)
+                close(fds[j]);
+			shell->rv = shell_execute(shell, shell->args);
+		}
+		else if (pipeline->pid < 0)
+			return (-1);
+		tlist = tlist->next;
+		cmdcount++;
+	}
 	return (0);
 }
 
@@ -112,16 +138,17 @@ int		run_cmds(t_shell *shell, t_list *tlist)
 	pipeline.amount = 0;
 	if (((t_ops *)(tlist->content))->type == '|')
 		count_pipes(tlist, &pipeline);
-	if (((t_ops *)(tlist->content))->type > ';')
-	{
-		operator_exec(tlist, shell, &pipeline);
-		if (((t_ops *)(tlist->content))->type != '|')
-			tlist = tlist->next;
-	}
 	while (shell->count > 0)
 	{
 		shell->args = ((t_ops *)(tlist->content))->args;
-		shell->rv = shell_execute(shell, shell->args);
+		if (((t_ops *)(tlist->content))->type > ';')
+		{
+			operator_exec(tlist, shell, &pipeline);
+			if (((t_ops *)(tlist->content))->type != '|')
+				tlist = tlist->next;
+		}
+		else
+			shell->rv = shell_execute(shell, shell->args);
 		tlist = tlist->next;
 		shell->count = ft_lstsize(tlist);
 	}
