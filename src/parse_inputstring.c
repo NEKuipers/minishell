@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/07/01 12:42:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/22 16:05:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,23 @@ static int	skip_to_quote(char *line, int index, char type)
 	}
 }
 
+static void parse_args_2(char *line, int i, t_ops *ops, t_list **list)
+{
+	if (line[0] == '\"' || line[0] == '\'')
+	{
+		i = skip_to_quote(line, i, line[0]);
+		ops->in_quotes = 1;
+	}
+	if (ops->in_quotes == 0)
+		ft_lstadd_back(list, ft_lstnew(ft_substr(line, 0, i + 1)));
+	else
+		ft_lstadd_back(list, ft_lstnew(ft_substr(line, 1, i - 1)));
+	if (line[i] == '\0')
+		return;
+	line += 1 + i;
+	i = -1;
+}
+
 char	**parse_args(char *line, t_ops *ops)
 {
 	t_list	*list;
@@ -65,21 +82,7 @@ char	**parse_args(char *line, t_ops *ops)
 		if (!line[0])
 			break ;
 		if ((line[0] == '\"' || line[0] == '\'' || !line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
-		{
-			if (line[0] == '\"' || line[0] == '\'')
-			{
-				i = skip_to_quote(line, i, line[0]);
-				ops->in_quotes = 1;
-			}
-			if (ops->in_quotes == 0)
-				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
-			else
-				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
-			if (line[i] == '\0')
-				break;
-			line += 1 + i;
-			i = -1;
-		}
+			parse_args_2(line, i, ops, &list);
 		i++;
 	}
 	return (list_to_arr(list));
