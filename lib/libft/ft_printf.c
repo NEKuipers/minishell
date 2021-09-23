@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/25 13:58:36 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:24:15 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:53:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void			(*g_func[])(t_print *) = {&ft_print_char, \
 	&ft_print_string, &ft_print_ptr, &ft_print_int, &ft_print_int, \
 	&ft_print_uint, &ft_print_uint, &ft_print_uint, &ft_print_char};
 
-static void			formatprint(t_print *print)
+static void	formatprint(t_print *print)
 {
 	print->width = 0;
 	print->prec = -1;
@@ -35,7 +35,7 @@ static void			formatprint(t_print *print)
 	}
 }
 
-static void			normalprint(t_print *print)
+static void	normalprint(t_print *print)
 {
 	char	*end;
 
@@ -50,7 +50,7 @@ static void			normalprint(t_print *print)
 	}
 }
 
-int					ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	t_print	print;
 
@@ -71,7 +71,7 @@ int					ft_printf(const char *format, ...)
 	return (print.len);
 }
 
-int					ft_printf_fd(int fd, const char *format, ...)
+int	ft_printf_fd(int fd, const char *format, ...)
 {
 	t_print	print;
 

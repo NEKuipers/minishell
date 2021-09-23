@@ -6,13 +6,13 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:28:35 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:23:48 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:45:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		print_width(t_print *print)
+static void	print_width(t_print *print)
 {
 	if (ft_isdigit(*(print->form)))
 	{
@@ -33,7 +33,7 @@ static void		print_width(t_print *print)
 	}
 }
 
-static void		print_prec(t_print *print)
+static void	print_prec(t_print *print)
 {
 	if (*(print->form) == '.')
 	{
@@ -57,7 +57,7 @@ static void		print_prec(t_print *print)
 	}
 }
 
-void			ft_print_flags(t_print *print)
+void	ft_print_flags(t_print *print)
 {
 	while (ft_strchr("-0+ ", *(print->form)) != NULL)
 	{

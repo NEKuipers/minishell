@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/25 13:58:47 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/15 14:51:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:45:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_print_string(t_print *print)
 	char	*tstr;
 	char	*str;
 
-	tstr = va_arg(print->ap, char*);
+	tstr = va_arg(print->ap, char *);
 	if (!tstr)
 		tstr = "(null)";
 	if ((int)ft_strlen(tstr) < print->prec || print->prec == -1)

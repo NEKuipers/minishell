@@ -6,16 +6,16 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 13:28:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:22:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:44:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-static void		*free_all(char **strings)
+static void	*free_all(char **strings)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (strings[i] != 0)
@@ -27,10 +27,10 @@ static void		*free_all(char **strings)
 	return (NULL);
 }
 
-static int		segcount(char *s, char c)
+static int	segcount(char *s, char c)
 {
-	int in_string;
-	int count;
+	int	in_string;
+	int	count;
 
 	in_string = 0;
 	count = 0;
@@ -50,9 +50,9 @@ static int		segcount(char *s, char c)
 	return (count);
 }
 
-static int		seglen(char *s, int i, char c)
+static int	seglen(char *s, int i, char c)
 {
-	int length;
+	int	length;
 
 	length = 0;
 	while (s[i] != c && s[i] != '\0')
@@ -63,7 +63,7 @@ static int		seglen(char *s, int i, char c)
 	return (length);
 }
 
-static char		**makestrings(char **strings, char const *s, char c)
+static char	**makestrings(char **strings, char const *s, char c)
 {
 	int		i;
 	int		j;
@@ -76,7 +76,7 @@ static char		**makestrings(char **strings, char const *s, char c)
 		k = 0;
 		while (s[i] == c)
 			i++;
-		strings[j] = (char*)malloc(sizeof(char) * seglen((char *)s, i, c) + 1);
+		strings[j] = (char *)malloc(sizeof(char) * seglen((char *)s, i, c) + 1);
 		if (!(strings[j]))
 			return (free_all(strings));
 		while (s[i] != c && s[i] != '\0')
@@ -92,11 +92,11 @@ static char		**makestrings(char **strings, char const *s, char c)
 	return (strings);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**strings;
 
-	strings = (char**)malloc(sizeof(char*) * (segcount((char *)s, c) + 1));
+	strings = (char **)malloc(sizeof(char *) * (segcount((char *)s, c) + 1));
 	if (!(strings) || !(s))
 		return (0);
 	strings = makestrings(strings, s, c);

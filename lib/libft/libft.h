@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 15:04:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 14:29:22 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:38:50 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #  define CONV_LIST "cspdiuxX%"
 # endif
 
-typedef struct		s_print
+typedef struct s_print
 {
 	va_list			ap;
 	char			*form;
@@ -39,13 +39,13 @@ typedef struct		s_print
 	int				out;
 }					t_print;
 
-typedef struct		s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
 
-typedef struct		s_flags
+typedef struct s_flags
 {
 	int				width;
 	int				precision;
@@ -74,7 +74,7 @@ void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstlast(t_list *lst);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
-					void (*del)(void *));
+						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
@@ -98,7 +98,7 @@ size_t				ft_strlen(const char *s);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
-					size_t len);
+						size_t len);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
@@ -107,10 +107,10 @@ int					ft_toupper(int c);
 int					get_next_line(int fd, char **line);
 
 int					parse_spec(char **start, t_flags *flags,
-					va_list list, int *rv);
+						va_list list, int *rv);
 void				parse_flags(char **start, t_flags *flags);
 void				parse_hub(char **start, t_flags *flags,
-					va_list list, int *rv);
+						va_list list, int *rv);
 void				parse_length(char **start, t_flags *flags);
 void				parse_precision(char **start, t_flags *flags, va_list list);
 void				parse_width(char **start, t_flags *flags, va_list list);

@@ -6,14 +6,14 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 09:44:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 11:19:49 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:47:27 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	int		len;

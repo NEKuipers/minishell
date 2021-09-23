@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 16:38:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:20:12 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:49:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *new;
+	void	*new;
 
 	new = (void *)malloc(count * size);
 	if (!(new))

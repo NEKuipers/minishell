@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 15:59:22 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:27:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:32:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** '\t', in order to correctly cut out the arguments entered in the cmd line.
 */
 
-static void		*free_all(char **strs)
+static void	*free_all(char **strs)
 {
 	int i;
 
@@ -31,7 +31,7 @@ static void		*free_all(char **strs)
 	return (NULL);
 }
 
-static int		segcount(char *s, char c, char d)
+static int	segcount(char *s, char c, char d)
 {
 	int in_string;
 	int count;
@@ -54,7 +54,7 @@ static int		segcount(char *s, char c, char d)
 	return (count);
 }
 
-static int		seglen(char *s, int i, char c, char d)
+static int	seglen(char *s, int i, char c, char d)
 {
 	int length;
 
@@ -67,7 +67,7 @@ static int		seglen(char *s, int i, char c, char d)
 	return (length);
 }
 
-static char		**makestrs(char **strs, char const *s, char c, char d)
+static char	**makestrs(char **strs, char const *s, char c, char d)
 {
 	int		i;
 	int		j;
@@ -96,7 +96,7 @@ static char		**makestrs(char **strs, char const *s, char c, char d)
 	return (strs);
 }
 
-char			**ft_token(char const *s, char c, char d)
+char	**ft_token(char const *s, char c, char d)
 {
 	char	**strs;
 

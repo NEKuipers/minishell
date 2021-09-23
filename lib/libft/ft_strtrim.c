@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 11:51:25 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:22:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:42:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	char_check(const char *set, char c)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*beg;
 	char	*end;
@@ -39,7 +39,10 @@ char		*ft_strtrim(char const *s1, char const *set)
 	while (char_check(set, *end) && &*end != &s1[0])
 		end--;
 	end++;
-	new = (char*)malloc((beg >= end) ? 1 : (end - beg + 1));
+	if (beg >= end)
+		new = (char *)malloc(1);
+	else
+		new = (char *)malloc(end - beg + 1);
 	if (new == 0)
 		return (NULL);
 	if (beg >= end)

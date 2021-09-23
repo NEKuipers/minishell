@@ -6,15 +6,15 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 13:18:24 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:22:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:42:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (n == 0 || s1 == s2)

@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 15:32:32 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:20:02 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:49:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_bzero(void *s, size_t n)
 	i = 0;
 	while (n > i)
 	{
-		((char*)s)[i] = 0;
+		((char *)s)[i] = 0;
 		i++;
 	}
 }

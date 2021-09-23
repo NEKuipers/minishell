@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 14:11:36 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:22:34 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:42:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ char	*ft_strrchr(const char *s, int c)
 	char	*temp;
 	char	d;
 
-	d = (char)c;
+	d = (char) c;
 	temp = 0;
 	while (*s && *s != '\0')
 	{
 		if (*s == d)
-			temp = (char*)s;
+			temp = (char *)s;
 		s++;
 	}
 	if (d == '\0')
-		return ((char*)s);
+		return ((char *)s);
 	if (temp != 0)
 		return (temp);
 	else

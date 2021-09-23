@@ -6,13 +6,13 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 12:10:25 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:20:18 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:47:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A'))
 		return (1);

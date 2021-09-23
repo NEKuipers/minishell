@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:40:54 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:24:03 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:51:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	fix_exceptions(char *str, t_print *print)
 	}
 }
 
-char		*ft_print_resize(char *str, t_print *print)
+char	*ft_print_resize(char *str, t_print *print)
 {
 	u_int32_t	size;
 	char		*newstr;

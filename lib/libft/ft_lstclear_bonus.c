@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/05 17:15:57 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:20:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:47:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list *link;
-	t_list *next_link;
+	t_list	*link;
+	t_list	*next_link;
 
 	link = *lst;
 	while (link)

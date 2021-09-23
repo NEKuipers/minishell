@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:35:55 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:24:26 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:51:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static u_int32_t	ft_digitcount(int n)
 {
-	unsigned int digits;
+	unsigned int	digits;
 
 	digits = 1;
 	while (n > 9 || n < -9)
@@ -25,7 +25,14 @@ static u_int32_t	ft_digitcount(int n)
 	return (digits);
 }
 
-char				*ft_itoa_prec(int n, int prec)
+static unsigned int	digitct(int digits, char neg)
+{
+	if (neg)
+		digits += 1;
+	return (digits);
+}
+
+char	*ft_itoa_prec(int n, int prec)
 {
 	char			*a;
 	unsigned int	digits;
@@ -37,7 +44,7 @@ char				*ft_itoa_prec(int n, int prec)
 	digits = ft_digitcount(n);
 	if (digits < (u_int32_t)prec && prec != -1)
 		digits = prec;
-	digits += (neg ? 1 : 0);
+	digits = digitct(digits, neg);
 	a = malloc(sizeof(char) * (digits + 1));
 	if (a)
 	{

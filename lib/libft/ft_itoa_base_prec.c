@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:36:04 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:24:20 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/23 15:47:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static u_int32_t	ft_digitcount_base(u_int64_t n, u_int32_t base)
 	return (digits);
 }
 
-char				*ft_itoa_base_prec(u_int64_t n, char *basedigits, int prec)
+char	*ft_itoa_base_prec(u_int64_t n, char *basedigits, int prec)
 {
 	char		*a;
 	u_int32_t	digits;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/02 10:51:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 19:32:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:39:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*read_line(int fd, char *store)
 
 	if (store == NULL)
 		store = ft_strdup("");
-	buf = (char*)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf || store == NULL)
 		return (0);
 	while (ft_strchr(store, '\n') == 0)
@@ -61,7 +61,7 @@ static char	*read_line(int fd, char *store)
 	return (store);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*store[FD_SIZE];
 	char		*temp;

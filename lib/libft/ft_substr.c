@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 17:48:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:22:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:39:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*empty_string(char *new)
 	return (new);
 }
 
-char		*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*new;
 	size_t	i;

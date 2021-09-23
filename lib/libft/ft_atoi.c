@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 11:48:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:19:59 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/23 15:48:48 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static long int	ft_atoi_part_two(const char *str, int i, int pn)
 	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
 	{
 		if ((result > 922337203685477580 || (result == 922337203685477580
-			&& (str[i] - '0') > 7)) && pn == 1)
+					&& (str[i] - '0') > 7)) && pn == 1)
 			return (-1);
 		else if ((result > 922337203685477580 || (result == 922337203685477580
-			&& (str[i] - '0') > 8)) && pn == -1)
+					&& (str[i] - '0') > 8)) && pn == -1)
 			return (0);
 		result = result * 10 + (str[i] - '0');
 		i++;
@@ -31,15 +31,15 @@ static long int	ft_atoi_part_two(const char *str, int i, int pn)
 	return (result * pn);
 }
 
-int				ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int					i;
 	int					pn;
 	long int			result;
 
 	i = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13) ||
-			(str[i] == '+' && str[i + 1] >= '0' && str[i + 1] <= '9'))
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13) || \
+		(str[i] == '+' && str[i + 1] >= '0' && str[i + 1] <= '9'))
 		i++;
 	pn = 1;
 	if (str[i] == '-')
