@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/07/01 12:31:34 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/01/13 13:47:43 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS            =   main.c \
 					fds.c \
 					ft_token.c \
 					parse_inputstring.c \
+					pipes.c \
 					redirects.c \
 					shell_export.c \
 					shell_unset.c \
@@ -32,27 +33,15 @@ LIBS            =   lib/libft/libft.a
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 # COLORS
-ifeq ($(WSL_DISTRO_NAME), Ubuntu)
-	WHITE   = \e[37;01m
-	CYAN    = \e[36;01m
-	PINK    = \e[35;01m
-	BLUE    = \e[34;01m
-	YELLOW  = \e[33;01m
-	GREEN   = \e[32;01m
-	RED     = \e[31;01m
-	BLACK   = \e[30;01m
-	RESET   = \e[0m
-else
-	WHITE   = \x1b[37;01m
-	CYAN    = \x1b[36;01m
-	PINK    = \x1b[35;01m
-	BLUE    = \x1b[34;01m
-	YELLOW  = \x1b[33;01m
-	GREEN   = \x1b[32;01m
-	RED     = \x1b[31;01m
-	BLACK   = \x1b[30;01m
-	RESET   = \x1b[0m
-endif
+WHITE   = \x1b[37;01m
+CYAN    = \x1b[36;01m
+PINK    = \x1b[35;01m
+BLUE    = \x1b[34;01m
+YELLOW  = \x1b[33;01m
+GREEN   = \x1b[32;01m
+RED     = \x1b[31;01m
+BLACK   = \x1b[30;01m
+RESET   = \x1b[0m
 
 all: $(NAME)
 

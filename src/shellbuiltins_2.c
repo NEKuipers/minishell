@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/03/03 12:07:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/01/10 16:45:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 ** nline at the end, except for when the -n flag is given.
 */
 
-int	shell_echo(t_shell *shell)
+int		shell_echo(t_shell *shell)
 {
-	int	i;
+	int i;
 	int	nflag;
 
 	i = 1;
@@ -45,6 +45,28 @@ int	shell_echo(t_shell *shell)
 }
 
 /*
+** This is a recreation of cat. It opens the target argument and
+** reads and prints the contents, line by line.
+*/
+
+/*int		shell_cat(t_shell *shell)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(shell->args[1], O_RDONLY);
+
+	while (get_next_line(fd, &line) > 0)
+	{
+		ft_printf("%s\n", line);
+		if (line)
+			free(line);
+	}
+	close(fd);
+	return (0);
+}*/
+
+/*
 ** Free the malloced stuff and exit.
 */
 
@@ -55,10 +77,12 @@ void	clear_ops(void *ops)
 	free(ops);
 }
 
-int	shell_exit(t_shell *shell)
+int		shell_exit(t_shell *shell)
 {
+
 	free_args(shell->evs);
 	ft_lstclear(&(shell->ops), &clear_ops);
+
 	exit(0);
 	return (0);
 }

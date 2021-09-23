@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/22 16:05:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/02/10 11:39:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,6 @@ static int	skip_to_quote(char *line, int index, char type)
 	}
 }
 
-static void parse_args_2(char *line, int i, t_ops *ops, t_list **list)
-{
-	if (line[0] == '\"' || line[0] == '\'')
-	{
-		i = skip_to_quote(line, i, line[0]);
-		ops->in_quotes = 1;
-	}
-	if (ops->in_quotes == 0)
-		ft_lstadd_back(list, ft_lstnew(ft_substr(line, 0, i + 1)));
-	else
-		ft_lstadd_back(list, ft_lstnew(ft_substr(line, 1, i - 1)));
-	if (line[i] == '\0')
-		return;
-	line += 1 + i;
-	i = -1;
-}
-
 char	**parse_args(char *line, t_ops *ops)
 {
 	t_list	*list;
@@ -73,7 +56,7 @@ char	**parse_args(char *line, t_ops *ops)
 	ops->in_quotes = 0;
 	i = 0;
 	list = NULL;
-	while (line[i] != '\0')
+	while (line[i])
 	{
 		while (line[i] == ' ')
 			i++;
@@ -81,8 +64,21 @@ char	**parse_args(char *line, t_ops *ops)
 			line++;
 		if (!line[0])
 			break ;
-		if ((line[0] == '\"' || line[0] == '\'' || !line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
-			parse_args_2(line, i, ops, &list);
+		if ((line[0] == '\"' || line[0] == '\'' || \
+			!line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
+		{
+			if (line[0] == '\"' || line[0] == '\'')
+			{
+				i = skip_to_quote(line, i, line[0]);
+				ops->in_quotes = 1;
+			}
+			if (ops->in_quotes == 0)
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 0, i + 1)));
+			else
+				ft_lstadd_back(&list, ft_lstnew(ft_substr(line, 1, i - 1)));
+			line += i + 1;
+			i = -1;
+		}
 		i++;
 	}
 	return (list_to_arr(list));
@@ -147,9 +143,38 @@ int		parse_inputstring(t_shell *shell, char *input)
 	tlist = list;
 	free(input);
 	shell->ops = list;
+	shell->prev_pipe = STDIN_FILENO;
 	shell->count = ft_lstsize(tlist);
 	run_cmds(shell, tlist);
 	reset_std_fds(shell);
 	ft_lstclear(&list, &clear_ops);
+	return (0);
+}
+
+int		run_cmds(t_shell *shell, t_list *tlist)
+{
+	while (shell->count > 1)
+	{
+		shell->stdin = dup(0);
+		shell->args = ((t_ops *)(tlist->content))->args;
+		if (((t_ops *)(tlist->content))->type > ';')
+		{
+			dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+			operator_exec(tlist, shell);
+			if (((t_ops *)(tlist->content))->type != '|')
+				tlist = tlist->next;
+		}
+		else
+			shell->rv = shell_execute(shell, shell->args);
+		tlist = tlist->next;
+		shell->count = ft_lstsize(tlist);
+	}
+	if (tlist)
+	{
+		shell->args = ((t_ops *)(tlist->content))->args;
+		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+		shell->rv = shell_execute(shell, shell->args);
+		dup2(shell->stdin, STDIN_FILENO);
+	}
 	return (0);
 }
