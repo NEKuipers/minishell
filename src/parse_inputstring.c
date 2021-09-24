@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/07 14:18:35 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 09:20:50 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 16:07:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	skip_to_quote(char *line, int index, char type)
 	}
 }
 
+//BUG: heap buffer overflow
 char	**parse_args(char *line, t_ops *ops)
 {
 	t_list	*list;
@@ -64,8 +65,7 @@ char	**parse_args(char *line, t_ops *ops)
 			line++;
 		if (!line[0])
 			break ;
-		if ((line[0] == '\"' || line[0] == '\'' || \
-			!line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
+		if ((line[0] == '\"' || line[0] == '\'' || !line[i + 1] || (line[i] != ' ' && line[i + 1] == ' ')) && i > 0)
 		{
 			if (line[0] == '\"' || line[0] == '\'')
 			{
@@ -151,15 +151,19 @@ int	parse_inputstring(t_shell *shell, char *input)
 	return (0);
 }
 
+/*
+** TODO
+** combineer run_cmds en shell_exec in 1 functie
+*/
+
 int	run_cmds(t_shell *shell, t_list *tlist)
 {
 	while (shell->count > 1)
 	{
-		shell->stdin = dup(0);
 		shell->args = ((t_ops *)(tlist->content))->args;
 		if (((t_ops *)(tlist->content))->type > ';')
 		{
-			dupclose_fd(shell->prev_pipe, STDIN_FILENO);
+			dup2(shell->prev_pipe, STDIN_FILENO);
 			operator_exec(tlist, shell);
 			if (((t_ops *)(tlist->content))->type != '|')
 				tlist = tlist->next;
@@ -171,10 +175,9 @@ int	run_cmds(t_shell *shell, t_list *tlist)
 	}
 	if (tlist)
 	{
+		dup2(shell->prev_pipe, STDIN_FILENO);
 		shell->args = ((t_ops *)(tlist->content))->args;
-		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
 		shell->rv = shell_execute(shell, shell->args);
-		dup2(shell->stdin, STDIN_FILENO);
 	}
 	return (0);
 }

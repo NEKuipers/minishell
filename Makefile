@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/01/13 13:47:43 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/09/24 15:03:18 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,10 @@ GREEN   = \x1b[32;01m
 RED     = \x1b[31;01m
 BLACK   = \x1b[30;01m
 RESET   = \x1b[0m
+
+ifdef DEBUG
+	CFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 

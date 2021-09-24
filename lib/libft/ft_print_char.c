@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/25 13:59:42 by bmans         #+#    #+#                 */
-/*   Updated: 2020/10/07 14:23:55 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/24 10:43:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_char(t_print *print)
 {
-	int c;
+	int	c;
 
 	if (print->conv == '%')
 		c = '%';
@@ -25,5 +25,8 @@ void	ft_print_char(t_print *print)
 	ft_putchar_fd(c, print->out);
 	if (print->width > 1 && print->left)
 		ft_putnchar_fd(print->pad, print->width - 1, print->out);
-	(print->len) += print->width > 1 ? print->width : 1;
+	if (print->width > 1)
+		print->len += print->width;
+	else
+		print->len += 1;
 }

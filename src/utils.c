@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 12:01:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/23 15:31:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 11:25:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,14 @@ char	**copy_evs(char **inputs)
 	}
 	ret[i] = NULL;
 	return (ret);
+}
+
+t_list	*cycle_tlist(t_list *tlist)
+{
+	t_ops *temp;
+
+	temp = tlist->content;
+	tlist = tlist->next;
+	((t_ops *)(tlist->content))->prev = temp;
+	return (tlist);
 }

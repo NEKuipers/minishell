@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:35:55 by bmans         #+#    #+#                 */
-/*   Updated: 2021/09/23 15:51:19 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 11:09:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ static unsigned int	digitct(int digits, char neg)
 	return (digits);
 }
 
+static int ternaryfixone(int n)
+{
+	int	o;
+
+	if (n > 0)
+		o = n % 10;
+	else
+		o = -(n % 10);
+	return (o + '0');
+}
+
+static int	ternaryfixtwo(int n)
+{
+	if (n > 0)
+		n = n / 10;
+	else
+		n = -(n / 10);
+	return (n);
+}
+
 char	*ft_itoa_prec(int n, int prec)
 {
 	char			*a;
@@ -52,8 +72,8 @@ char	*ft_itoa_prec(int n, int prec)
 		while (digits > 0)
 		{
 			digits--;
-			a[digits] = ((n > 0) ? (n % 10) : -(n % 10)) + '0';
-			n = (n > 0) ? (n / 10) : -(n / 10);
+			a[digits] = ternaryfixone(n) + '0';
+			n = ternaryfixtwo(n);
 		}
 		if (neg)
 			a[0] = '-';

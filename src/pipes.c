@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 13:46:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 09:27:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 16:04:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,21 @@ int	operator_pipe(t_list *tlist, t_shell *shell)
 	pid_t	pid;
 
 	shell->args = ((t_ops *)(tlist->content))->args;
-	if (pipe(shell->fds) == -1)
+	if (pipe(((t_ops *)(tlist->content))->fds) == -1)
 		pipe_error(tlist, shell);
 	pid = fork();
 	if (pid < 0)
 		pipe_error(tlist, shell);
 	if (pid == 0)
 	{
-		close(shell->fds[0]);
-		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
-		dup2(shell->fds[1], 1);
+		close(((t_ops *)(tlist->content))->fds[0]);
+		dup2(shell->prev_pipe, STDIN_FILENO);
+		dup2(((t_ops *)(tlist->content))->fds[1], 1);
 		shell->rv = shell_execute(shell, shell->args);
-		perror("child");
-		close (shell->fds[1]);
 		exit(0);
 	}
-	wait(0);
-	close(shell->fds[1]);
-	perror("parent");
-	shell->prev_pipe = shell->fds[0];
-	if (dup2(shell->fds[0], 0) == -1)
-		return (-1);
-	close(shell->fds[0]);
+	wait(NULL); // cat < /dev/urandom | 
+	close(((t_ops *)(tlist->content))->fds[1]);
+	shell->prev_pipe = ((t_ops *)(tlist->content))->fds[0];
 	return (0);
 }
