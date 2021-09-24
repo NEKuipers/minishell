@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/18 14:21:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/23 15:31:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:15:14 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_close_fd(int fd)
 {
-    if (fd > 0)
-        close(fd);
+	if (fd > 0)
+		close(fd);
 }
 
 void	reset_std_fds(t_shell *shell)

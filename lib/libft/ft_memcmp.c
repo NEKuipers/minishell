@@ -6,13 +6,13 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 16:25:14 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:21:34 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:28:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	unsigned char	*cs1;
 	unsigned char	*cs2;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/10 11:21:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:30:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/wait.h>
 # include "../lib/libft/libft.h"
 
-typedef struct		s_ops
+typedef struct s_ops
 {
 	char			*operation;
 	char			**args;
@@ -30,7 +30,7 @@ typedef struct		s_ops
 	struct s_ops	*next;
 }					t_ops;
 
-typedef struct		s_shell
+typedef struct s_shell
 {
 	t_list			*ops;
 	char			**args;

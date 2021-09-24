@@ -6,20 +6,21 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 12:26:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/05 09:45:32 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:27:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int 	operator_redirect_output(t_list *tlist, t_shell *shell)
+int	operator_redirect_output(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
 
 	shell->fds[0] = dup(STDOUT_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == -1)
 		return (-1);
 	dup2(fd, STDOUT_FILENO);
 	shell->rv = shell_execute(shell, shell->args);
@@ -28,14 +29,15 @@ int 	operator_redirect_output(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-int 	operator_append_output(t_list *tlist, t_shell *shell)
+int	operator_append_output(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
 
 	shell->fds[0] = dup(STDOUT_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666)) == -1)
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+	if (fd == -1)
 		return (-1);
 	dup2(fd, STDOUT_FILENO);
 	shell->rv = shell_execute(shell, shell->args);
@@ -44,15 +46,16 @@ int 	operator_append_output(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-int 	operator_redirect_input(t_list *tlist, t_shell *shell)
+int	operator_redirect_input(t_list *tlist, t_shell *shell)
 {
 	int		fd;
 	char	*filename;
 
 	shell->fds[0] = dup(STDIN_FILENO);
 	filename = ((t_ops *)(tlist->next->content))->args[0];
-	if ((fd = open(filename, O_RDONLY)) == -1)
-    {
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
 		ft_printf_fd(2, "%s: no such file or directory\n", filename);
 		return (-1);
 	}
@@ -63,16 +66,16 @@ int 	operator_redirect_input(t_list *tlist, t_shell *shell)
 	return (0);
 }
 
-int		operator_exec(t_list *tlist, t_shell *shell)
+int	operator_exec(t_list *tlist, t_shell *shell)
 {
 	if (((t_ops *)(tlist->content))->type == '|')
-		return(operator_pipe(tlist, shell));
+		return (operator_pipe(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '>')
-		return(operator_redirect_output(tlist, shell));
+		return (operator_redirect_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '}')
-		return(operator_append_output(tlist, shell));
+		return (operator_append_output(tlist, shell));
 	else if (((t_ops *)(tlist->content))->type == '<')
-		return(operator_redirect_input(tlist, shell));
+		return (operator_redirect_input(tlist, shell));
 	else
 		return (-1);
 }

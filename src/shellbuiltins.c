@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 16:06:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/01 16:20:47 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:23:30 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** to put it in anyway because the person who wrote it is bad at his job.
 */
 
-int			shell_pwd(t_shell *shell)
+int	shell_pwd(t_shell *shell)
 {
 	char	*path;
 
@@ -56,7 +56,7 @@ static int	set_new_pwd(char **evs, int i, char *old)
 	return (0);
 }
 
-int			shell_cd(t_shell *shell)
+int	shell_cd(t_shell *shell)
 {
 	int		i;
 	char	*old;
@@ -88,7 +88,7 @@ int			shell_cd(t_shell *shell)
 ** Wrote a little help function to show off what we can do.
 */
 
-int			shell_help(t_shell *shell)
+int	shell_help(t_shell *shell)
 {
 	(void)shell;
 	ft_printf("You can try one of the following commands:\n");
@@ -105,7 +105,7 @@ int			shell_help(t_shell *shell)
 **	The command env prints all the environment variables with a value.
 */
 
-int			shell_env(t_shell *shell)
+int	shell_env(t_shell *shell)
 {
 	int		i;
 	int		j;

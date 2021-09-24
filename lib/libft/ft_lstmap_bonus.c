@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/05 17:18:47 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:21:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:27:50 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list *newstart;
-	t_list *new;
+	t_list	*newstart;
+	t_list	*new;
 
 	if (!lst)
 		return (0);

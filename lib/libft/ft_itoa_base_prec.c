@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:36:04 by bmans         #+#    #+#                 */
-/*   Updated: 2021/09/23 15:47:20 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:29:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static u_int32_t	ft_digitcount_base(u_int64_t n, u_int32_t base)
 {
-	unsigned int digits;
+	unsigned int	digits;
 
 	digits = 1;
 	while (n > base - 1)

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/07 16:00:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:25:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** variable is added with no value (test='').
 */
 
-char		**sort_alpha(char **evs)
+char	**sort_alpha(char **evs)
 {
 	char	**n;
 	char	*temp;
@@ -37,7 +37,7 @@ char		**sort_alpha(char **evs)
 		while (n[j] != NULL)
 		{
 			if (ft_strncmp(n[i], n[j], (ft_strlen(n[i]) > ft_strlen(n[j])
-			? ft_strlen(n[i]) : ft_strlen(n[j]))) > 0)
+						? ft_strlen(n[i]) : ft_strlen(n[j]))) > 0)
 			{
 				temp = n[i];
 				n[i] = n[j];
@@ -50,7 +50,7 @@ char		**sort_alpha(char **evs)
 	return (n);
 }
 
-char		**set_new_env(char **evs, char *arg)
+char	**set_new_env(char **evs, char *arg)
 {
 	int		i;
 	char	**ret;
@@ -76,8 +76,8 @@ char		**set_new_env(char **evs, char *arg)
 
 static int	match_env(char **evs, char *arg)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (evs[i])
@@ -101,7 +101,7 @@ static void	replace_env(char **evs, char *arg, int index)
 	}
 }
 
-int			shell_export(t_shell *shell)
+int	shell_export(t_shell *shell)
 {
 	char	**temp[2];
 	int		i;

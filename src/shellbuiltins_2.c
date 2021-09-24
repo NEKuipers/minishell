@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 10:05:56 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/01/10 16:45:31 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:21:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 ** nline at the end, except for when the -n flag is given.
 */
 
-int		shell_echo(t_shell *shell)
+int	shell_echo(t_shell *shell)
 {
-	int i;
+	int	i;
 	int	nflag;
 
 	i = 1;
@@ -77,12 +77,10 @@ void	clear_ops(void *ops)
 	free(ops);
 }
 
-int		shell_exit(t_shell *shell)
+int	shell_exit(t_shell *shell)
 {
-
 	free_args(shell->evs);
 	ft_lstclear(&(shell->ops), &clear_ops);
-
 	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 15:59:22 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/23 15:32:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:15:56 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static void	*free_all(char **strs)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (strs[i] != 0)
@@ -33,8 +33,8 @@ static void	*free_all(char **strs)
 
 static int	segcount(char *s, char c, char d)
 {
-	int in_string;
-	int count;
+	int	in_string;
+	int	count;
 
 	in_string = 0;
 	count = 0;
@@ -56,7 +56,7 @@ static int	segcount(char *s, char c, char d)
 
 static int	seglen(char *s, int i, char c, char d)
 {
-	int length;
+	int	length;
 
 	length = 0;
 	while (s[i] != c && s[i] != d && s[i] != '\0')
@@ -69,9 +69,9 @@ static int	seglen(char *s, int i, char c, char d)
 
 static char	**makestrs(char **strs, char const *s, char c, char d)
 {
-	int		i;
-	int		j;
-	int		k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	j = 0;
@@ -80,7 +80,7 @@ static char	**makestrs(char **strs, char const *s, char c, char d)
 		k = 0;
 		while (s[i] == c || s[i] == d)
 			i++;
-		strs[j] = (char*)malloc(sizeof(char) * seglen((char *)s, i, c, d) + 1);
+		strs[j] = (char *)malloc(sizeof(char) * seglen((char *)s, i, c, d) + 1);
 		if (!(strs[j]))
 			return (free_all(strs));
 		while (s[i] != c && s[i] != d && s[i] != '\0')
@@ -100,7 +100,7 @@ char	**ft_token(char const *s, char c, char d)
 {
 	char	**strs;
 
-	strs = (char**)malloc(sizeof(char*) * (segcount((char *)s, c, d) + 1));
+	strs = (char **)malloc(sizeof(char *) * (segcount((char *)s, c, d) + 1));
 	if (!(strs) || !(s))
 		return (0);
 	strs = makestrs(strs, s, c, d);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 14:57:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:21:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:28:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_memset(void *b, int c, size_t len)
 	i = 0;
 	while (i < len)
 	{
-		((unsigned char*)b)[i] = (unsigned char)c;
+		((unsigned char *)b)[i] = (unsigned char)c;
 		i++;
 	}
 	return (b);

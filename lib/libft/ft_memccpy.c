@@ -6,7 +6,7 @@
 /*   By: nkuipers <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 15:50:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/09/24 15:21:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:28:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	{
 		cdst[i] = csrc[i];
 		if (csrc[i] == (unsigned char)c)
-			return ((void*)(dst + i + 1));
+			return ((void *)(dst + i + 1));
 		i++;
 	}
 	return (NULL);

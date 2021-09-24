@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/10/14 15:29:01 by bmans         ########   odam.nl         */
+/*   Updated: 2021/09/24 09:23:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** ly executed function.
 */
 
-char		*insert_rv(char *rv, char *arg)
+char	*insert_rv(char *rv, char *arg)
 {
 	int		i;
 	int		j;
@@ -46,9 +46,9 @@ char		*insert_rv(char *rv, char *arg)
 	return (new);
 }
 
-size_t		ft_evlen(char *ev)
+size_t	ft_evlen(char *ev)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (ev[i] != '=')
@@ -91,10 +91,10 @@ static char	*swap_env(char *arg, char **evs)
 	return (arg);
 }
 
-char		**transl_env(t_shell *shell, char **args)
+char	**transl_env(t_shell *shell, char **args)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (args && args[i])
@@ -105,11 +105,13 @@ char		**transl_env(t_shell *shell, char **args)
 		while (args[i][j])
 		{
 			if (args[i][j] == '?' && j > 0)
+			{
 				if (args[i][j - 1] == '$')
 				{
 					args[i] = insert_rv(ft_itoa(shell->rv), args[i]);
 					j = 0;
 				}
+			}
 			j++;
 		}
 		i++;

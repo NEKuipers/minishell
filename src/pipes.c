@@ -6,15 +6,16 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/13 13:46:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/02/10 11:38:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/09/24 09:27:27 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
-int		operator_pipe(t_list *tlist, t_shell *shell)
+int	operator_pipe(t_list *tlist, t_shell *shell)
 {
-	pid_t		pid;
+	pid_t	pid;
 
 	shell->args = ((t_ops *)(tlist->content))->args;
 	if (pipe(shell->fds) == -1)
@@ -28,11 +29,13 @@ int		operator_pipe(t_list *tlist, t_shell *shell)
 		dupclose_fd(shell->prev_pipe, STDIN_FILENO);
 		dup2(shell->fds[1], 1);
 		shell->rv = shell_execute(shell, shell->args);
+		perror("child");
 		close (shell->fds[1]);
 		exit(0);
 	}
 	wait(0);
 	close(shell->fds[1]);
+	perror("parent");
 	shell->prev_pipe = shell->fds[0];
 	if (dup2(shell->fds[0], 0) == -1)
 		return (-1);
