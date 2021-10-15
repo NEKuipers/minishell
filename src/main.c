@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 11:36:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 12:34:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,10 @@ int	builtin_check(char *command)
 		return (1);
 	if (ft_strcmp(command, "unset") == 0)
 		return (1);
+	if (ft_strcmp(command, "unsetenv") == 0)
+		return (1);
+	if (ft_strcmp(command, "setenv") == 0)
+		return (1);	
 	return (0);
 }
 
@@ -256,9 +260,11 @@ int	execute_builtin(char **commands, t_shell *shell)
 		returnvalue = shell_pwd();
 	if (ft_strcmp(commands[0], "env") == 0)
 		shell_env(shell);
-	if (ft_strcmp(commands[0], "export") == 0)
+	if (ft_strcmp(commands[0], "export") == 0 || \
+			ft_strcmp(commands[0], "setenv") == 0)
 		returnvalue = shell_export(commands, shell);
-	if (ft_strcmp(commands[0], "unset") == 0)
+	if (ft_strcmp(commands[0], "unset") == 0 || \
+			ft_strcmp(commands[0], "unsetenv") == 0)
 		returnvalue = shell_unset(commands, shell);
 	return (0);
 }
