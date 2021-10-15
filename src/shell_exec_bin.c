@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 11:49:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 12:29:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	pid_error(char **paths, char **args)
 {
 	free_array(args);
 	free_array(paths);
-	return (-1);
+	exit(1);
 }
 
 int	find_ev(char **evs, char *target)
@@ -83,7 +83,7 @@ char	**set_new_env(char **evs, char *arg)
 		ret[i] = ft_strdup(evs[i]);
 		i++;
 	}
-	if (ft_strchr(arg, '=') != NULL)
+	if (ft_strchr(arg, '=') != NULL || ft_strcmp("/", arg) == 0)
 		ret[i] = ft_strdup(arg);
 	else
 		ret[i] = ft_strjoin(arg, "=''");
