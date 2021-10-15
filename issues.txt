@@ -1,0 +1,7 @@
+- Prints prompt twice sometimes when exiting cat/tail/head with ctrl+C
+- echo does not print env variables right next to each other
+- Apostrophes shouldn't process env variables
+- "unset ''" crashes program sometimes
+- Doesn't parse env variables
+- Still numerous leaks, perhaps parser is not freed
+- Norme

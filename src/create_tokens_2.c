@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/13 12:46:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 11:49:58 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,22 @@ void	squish_args(t_shell *shell)
 	}
 }
 
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 void	parse(t_shell *shell)
 {
 	char	*line;
 	t_token	*token;
 
-	ft_putstr_fd("<$ ", STDERR);
-	if (get_next_line(0, &line) == -1 && (shell->exit = 1))
+//	ft_putstr_fd("<$ ", STDERR);
+//	if (get_next_line(0, &line) == -1 && (shell->exit = 1))
+//		ft_putendl_fd("exit", STDERR);
+	line = readline("<$");
+	if (line == NULL && shell->exit == 1)
 		ft_putendl_fd("exit", STDERR);
+	add_history(line);
 	if (g_signal.sigint == 1)
 		shell->rv = g_signal.exit_status;
 	if (quote_check(shell, &line))

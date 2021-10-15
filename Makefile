@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/06 12:23:38 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/10/15 10:42:47 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
 INCLUDES        =   -I includes \
                     -I lib/libft
-LIBS            =   lib/libft/libft.a
+LIBS            =   lib/libft/libft.a -lreadline
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 # COLORS
