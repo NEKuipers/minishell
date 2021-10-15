@@ -6,38 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/14 16:58:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 11:07:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	shell_exec_error(char *path)
-{
-	DIR	*folder;
-	int	fd;
-	int	returnvalue;
-
-	fd = open(path, O_WRONLY);
-	folder = opendir(path);
-	ft_printf_fd(STDERR, "minishell: %s", path);
-	if (ft_strchr(path, '/') == NULL)
-		ft_printf_fd(STDERR, ": command not found\n");
-	else if (fd == -1 && folder == NULL)
-		ft_printf_fd(STDERR, ": no such file or directory\n");
-	else if (fd == -1 && folder != NULL)
-		ft_printf_fd(STDERR, ": is a directory\n");
-	else if (fd != -1 && folder == NULL)
-		ft_printf_fd(STDERR, ": permission denied\n");
-	if (ft_strchr(path, '/') == NULL || (fd == -1 && folder == NULL))
-		returnvalue = 127;
-	else
-		returnvalue = 126;
-	if (folder)
-		closedir(folder);
-	close(fd);
-	return (returnvalue);
-}
 
 static int	pid_error(char **paths, char **args, char **evs)
 {
@@ -52,8 +25,12 @@ int	find_ev(char **evs, char *target)
 	int		i;
 
 	i = 0;
-	while (ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
+	while (evs[i] && ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
 		i++;
+	// if (ft_strncmp(evs[i], target, ft_strlen(target) == 0))
+	// 	return (i);
+	// else
+	// 	return (-1);
 	return (i);
 }
 
@@ -130,6 +107,8 @@ int	execute_bin(char **commands, t_shell *shell)
 	returnvalue = 127;
 	newpath = ft_strjoin("/", commands[0]);
 	i = find_ev(shell->evs, "PATH=");
+	if (i == -1)
+		return (-1);
 	paths = ft_split(&((shell->evs)[i][5]), ':');
 	i = 0;
 	paths = set_new_env(paths, "/");
