@@ -6,24 +6,22 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/09/24 15:03:18 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/10/06 12:23:38 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            =   minishell
 SRCS            =   main.c \
+					create_tokens.c \
+					create_tokens_2.c \
+					signal.c \
 					fds.c \
-					ft_token.c \
-					parse_inputstring.c \
-					pipes.c \
-					redirects.c \
-					shell_export.c \
+					shell_cd.c \
+					shell_exec_bin.c \
 					shell_unset.c \
-					shellbuiltins.c \
-					shellbuiltins_2.c \
-					shell_exec.c \
-					translate_envs.c \
-					utils.c
+					shell_export.c \
+					translate_envs.c
+					
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
@@ -42,10 +40,6 @@ GREEN   = \x1b[32;01m
 RED     = \x1b[31;01m
 BLACK   = \x1b[30;01m
 RESET   = \x1b[0m
-
-ifdef DEBUG
-	CFLAGS += -g -fsanitize=address
-endif
 
 all: $(NAME)
 

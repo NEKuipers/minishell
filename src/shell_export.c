@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 09:25:02 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/14 16:51:21 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,6 @@ char	**sort_alpha(char **evs)
 	return (n);
 }
 
-char	**set_new_env(char **evs, char *arg)
-{
-	int		i;
-	char	**ret;
-
-	i = 0;
-	while (evs[i])
-		i++;
-	ret = malloc((i + 2) * (sizeof(char *)));
-	if (!ret)
-		return (NULL);
-	i = 0;
-	while (evs[i])
-	{
-		ret[i] = ft_strdup(evs[i]);
-		i++;
-	}
-	ret[i] = ft_strdup(arg);
-	i++;
-	ret[i] = NULL;
-	free_args(evs);
-	return (ret);
-}
-
 static int	match_env(char **evs, char *arg)
 {
 	int	i;
@@ -101,30 +77,30 @@ static void	replace_env(char **evs, char *arg, int index)
 	}
 }
 
-int	shell_export(t_shell *shell)
+int	shell_export(char **commands, t_shell *shell)
 {
 	char	**temp[2];
 	int		i;
 	int		index;
 
 	i = 1;
-	while (shell->args[i] != NULL)
+	while (commands[i] != NULL)
 	{
-		index = match_env(shell->evs, shell->args[i]);
+		index = match_env(shell->evs, commands[i]);
 		if (index >= 0)
-			replace_env(shell->evs, shell->args[i], index);
+			replace_env(shell->evs, commands[i], index);
 		else
-			shell->evs = set_new_env(shell->evs, shell->args[i]);
+			shell->evs = set_new_env(shell->evs, commands[i]);
 		i++;
 	}
-	if (shell->args[1] == NULL)
+	if (commands[1] == NULL)
 	{
 		temp[0] = sort_alpha(shell->evs);
 		temp[1] = shell->evs;
 		shell->evs = temp[0];
 		shell_env(shell);
 		shell->evs = temp[1];
-		free_args(temp[0]);
+		free_array(temp[0]);
 	}
 	return (0);
 }

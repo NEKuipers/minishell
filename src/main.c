@@ -6,127 +6,407 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/23 15:33:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/13 16:58:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-** TO DO:
-**   - make sure the shell->rv is always given the correct rv
-**   - multiple pipes don't work yet
-**   - thorough testing (unit test?)
-**   - check for and fix memory leaks
-**	 - norme
-*/
+t_signal	g_signal;
 
-char	*g_shell_bnames[] =
+//TODO expansions, history
+
+static void	levelup_shell(t_shell *shell)
 {
-	"cd",
-	"echo",
-	"env",
-	"exit",
-	"help",
-	"pwd",
-};
+	char	**commands;
+	char	*temp;
+	int		lvl;
 
-int		(*g_shell_builtins[])(t_shell *) =
+	commands = (char **)malloc(sizeof(char *) * 3);
+	commands[0] = ft_strdup("export");
+	lvl = ft_atoi(getenv("SHLVL"));
+	lvl += 1;
+	temp = ft_strjoin("SHLVL=", ft_itoa(lvl));
+	commands[1] = ft_strdup(temp);
+	commands[2] = NULL;
+	free(temp);
+	shell_export(commands, shell);
+	free_array(commands);
+}
+
+static void	init_shell_values(t_shell *shell, char **envp)
 {
-	&shell_cd,
-	&shell_echo,
-	&shell_env,
-	&shell_exit,
-	&shell_help,
-	&shell_pwd,
-};
+	shell->evs = copy_evs(envp);
+	shell->in = dup(STDIN);
+	shell->out = dup(STDOUT);
+	shell->exit = 0;
+	shell->rv = 0;
+	shell->no_exec = 0;
+	reset_fds(shell);
+	levelup_shell(shell);
+}
 
-/*
-** This function simply looks up the first argument in the name table above, and
-** then enters the corresponding function in the function table if it exists.
-** Otherwise, it will check if the first argument is an existing program it can
-** find in the PATH, and attempt to execute it in shell_execpath.
-*/
-
-int	shell_execute(t_shell *shell, char **args)
+void	ft_skip_spacenl(const char *str, int *i)
 {
-	unsigned long	i;
+	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n')
+	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+		(*i)++;
+}
 
-	i = 0;
-	args = transl_env(shell, args);
-	if (args == NULL)
-		return (0);
-	while (i < (sizeof(g_shell_bnames) / sizeof(char *)))
+void	free_tokens(t_token *start)
+{
+	while (start && start->next)
 	{
-		if (ft_strncmp(args[0], g_shell_bnames[i], ft_strlen(args[0])) == 0)
-			return (g_shell_builtins[i](shell));
+		start = start->next;
+		if (start->prev)
+			ft_memdel(start->prev);
+	}
+	if (start)
+		free(start);
+}
+
+void	operator_redirect(t_shell *shell, t_token *token, int type)
+{
+	ft_close(shell->fdout);
+	if (type == TRUNC)
+		shell->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+	else
+		shell->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+	if (shell->fdout == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(token->str, STDERR);
+		ft_putendl_fd(": No such file or directory", STDERR);
+		shell->rv = 1;
+		shell->no_exec = 1;
+		return ;
+	}
+	dup2(shell->fdout, STDOUT);
+}
+
+void	operator_input(t_shell *shell, t_token *token)
+{
+	ft_close(shell->fdin);
+	shell->fdin = open(token->str, O_RDONLY, S_IRWXU);
+	if (shell->fdin == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(token->str, STDERR);
+		ft_putendl_fd(": No such file or directory", STDERR);
+		shell->rv = 1;
+		shell->no_exec = 1;
+		return ;
+	}
+	dup2(shell->fdin, STDIN);
+}
+
+int	operator_pipe(t_shell *shell)
+{
+	pid_t	pid;
+	int		fds[2];
+
+	pipe(fds);
+	pid = fork();
+	if (pid == 0)
+	{
+		ft_close(fds[1]);
+		dup2(fds[0], STDIN);
+		shell->pipin = fds[0];
+		shell->pid = -1;
+		shell->parent = 0;
+		shell->no_exec = 0;
+		return (2);
+	}
+	ft_close(fds[0]);
+	dup2(fds[1], STDOUT);
+	shell->pipout = fds[1];
+	shell->pid = pid;
+	shell->last = 0;
+	return (1);
+}
+
+char	**create_command_array(t_token *start)
+{
+	t_token *token;
+	char	**array;
+	int		i;
+
+	if (start == NULL)
+		return (NULL);
+	token = start->next;
+	i = 2;
+	while (token && token->type < TRUNC)
+	{
+		token = token->next;
 		i++;
 	}
-	if (ft_strncmp(args[0], "export", 7) == 0)
-		return (shell_export(shell));
-	if (ft_strncmp(args[0], "unset", 5) == 0)
-		return (shell_unset(shell));
-	return (shell_execpath(shell));
+	array = (char **)malloc(sizeof(char *) * i);
+	if (!array)
+		return (NULL);
+	token = start->next;
+	array[0] = start->str;
+	i = 1;
+	while (token && token->type < TRUNC)
+	{
+		array[i] = token->str;
+		token = token->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }
 
-/*
-** The main loop. Here, we print the prompt; we read the standard input
-** for instructions; we cut them up into arguments by splitting the
-** spaces/tabs, and then we free the input. Then it's time to execute whatever
-** the input wants.
-**
-** The signal(SIGINT) catches the interruption signal caused by ctrl-c and,
-** instead of exiting the program, calls the function ctrlchandler.
-** That function prints a new prompt.
-**
-** The signal(SIGTERM) catches the quit signal caused by ctrl-\, which
-** would normally cause a core dump and force the minishell to exit.
-** Instead it does nothing, like in bash.
-*/
-
-void	shell_loop(t_shell *shell)
+int		has_pipe(t_token *token)
 {
-	char	*input;
-
-	input = NULL;
-	while (1)
+	while (token && is_type(token, END) == 0)
 	{
-		signal(SIGINT, ctrlchandler);
-		signal(SIGQUIT, ctrlbshandler);
-		ft_printf("<$ ");
-		if (get_next_line(0, &input) == 0)
+		if (is_type(token, PIPE))
+			return (1);
+		token = token->next;
+	}
+	return (0);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		if (array[i])
+			free(array[i]);
+		i++;
+	}
+	if (array)
+		free(array);
+}
+
+int	builtin_check(char *command)
+{
+	if (ft_strcmp(command, "cd") == 0)
+		return (1);
+	if (ft_strcmp(command, "echo") == 0)
+		return (1);
+	if (ft_strcmp(command, "env") == 0)
+		return (1);
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	if (ft_strcmp(command, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(command, "unset") == 0)
+		return (1);
+	return (0);
+}
+
+int	shell_pwd(void)
+{
+	char	*path;
+
+	path = getcwd(NULL, BUFF_SIZE);
+	if (path)
+	{
+		ft_printf("%s\n", path);
+		free(path);
+		return (0);
+	}
+	return (1);
+}
+
+
+int	shell_echo(char **commands)
+{
+	int	i;
+	int	nflag;
+
+	i = 1;
+	nflag = 0;
+	while (commands[i])
+	{
+		if (ft_strncmp(commands[i], "-n", 3) == 0)
 		{
-			free_args(shell->evs);
-			exit(0);
+			i++;
+			nflag = 1;
 		}
-		parse_inputstring(shell, input);
+		if (commands[i] == NULL)
+			return (0);
+		else if (commands[i + 1] == NULL && nflag == 0)
+			ft_printf("%s\n", commands[i]);
+		else if (commands[i + 1] == NULL)
+			ft_printf("%s", commands[i]);
+		else
+			ft_printf("%s ", commands[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	execute_builtin(char **commands, t_shell *shell)
+{
+	int	returnvalue;
+
+	returnvalue = 0;
+	if (ft_strcmp(commands[0], "cd") == 0)
+		returnvalue = shell_cd(commands, shell);
+	if (ft_strcmp(commands[0], "echo") == 0)
+		returnvalue = shell_echo(commands);
+	if (ft_strcmp(commands[0], "pwd") == 0)
+		returnvalue = shell_pwd();
+	if (ft_strcmp(commands[0], "env") == 0)
+		shell_env(shell);
+	if (ft_strcmp(commands[0], "export") == 0)
+		returnvalue = shell_export(commands, shell);
+	if (ft_strcmp(commands[0], "unset") == 0)
+		returnvalue = shell_unset(commands, shell);
+	return (0);
+}
+
+void	shell_exit(t_shell *shell, char **commands)
+{
+	shell->exit = 1;
+	if (commands[1] && commands[2])
+	{
+		shell->rv = 1;
+		ft_printf_fd(STDERR, "minishell: exit: too many arguments");
+	}
+	else if (commands[1] && ft_strisnum(commands[1]) == 0)
+	{
+		shell->rv = 255;
+		ft_printf_fd(STDERR, "minishell: exit: %s: numeric argument required"\
+			, commands[1]);
+	}
+	else if (commands[1])
+		shell->rv = ft_atoi(commands[1]);
+	else
+		shell->rv = 0;
+}
+
+void	run_commands(t_shell *shell, t_token *token)
+{
+	char 	**commands;
+	int		i;
+
+	if (shell->charge == 0)
+		return ;
+	commands = create_command_array(token);
+	i = 0;
+	expand_commands(shell, commands);
+	if (commands && ft_strcmp(commands[0], "exit") == 0 && has_pipe(token) == 0)
+		shell_exit(shell, commands);
+	else if (commands && builtin_check(commands[0])) 
+		shell->rv = execute_builtin(commands, shell);
+	else if (commands)
+		shell->rv = execute_bin(commands, shell);
+	if (commands)
+		free_array(commands);
+	ft_close(shell->pipin);
+	ft_close(shell->pipout);
+	shell->pipin = -1;
+	shell->pipout = -1;
+	shell->charge = 0;
+}
+
+void	shell_execute(t_shell *shell, t_token *token)
+{
+	t_token *prev;
+	t_token *next;
+	int		pipe;
+
+	prev = previous_separator(token, 0);
+	next = next_separator(token, 0);
+	pipe = 0;
+	if (is_type(prev, TRUNC))
+		operator_redirect(shell, token, TRUNC);
+	else if (is_type(prev, APPEND))
+		operator_redirect(shell, token, APPEND);
+	else if (is_type(prev, INPUT))
+		operator_input(shell, token);
+	else if (is_type(prev, PIPE))
+		pipe = operator_pipe(shell);
+	if (next && is_type(next, END) == 0 && pipe != 1)
+		shell_execute(shell, next->next);
+	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev) \
+			&& pipe != 1 && shell->no_exec == 0)
+		run_commands(shell, token);
+}
+
+void	minishell(t_shell *shell)
+{
+	t_token *token;
+	int		status;
+
+	token = next_run(shell->start, 0);
+	if (is_types(shell->start, "TAI"))
+		token = shell->start->next;
+	while (token && shell->exit == 0)
+	{
+		shell->charge = 1;
+		shell->parent = 1;
+		shell->last = 1;
+		shell_execute(shell, token);
+		reset_std(shell);
+		close_fds(shell);
+		reset_fds(shell);
+		waitpid(-1, &status, 0);
+		status = WEXITSTATUS(status);
+		if (shell->last == 0)
+			shell->rv = status;
+		if (shell->parent == 0)
+		{
+			free_tokens(shell->start);
+			exit(shell->rv);
+		}
+		shell->no_exec = 0;
+		token = next_run(token, 1);
 	}
 }
 
-/*
-** The main is called with a third argument: envp, which are the
-** environment variables. Since they are inmutable, we copy them
-** to a new string array using copy_evs. After that, we enter the main
-** shell loop.
-*/
+char	**copy_evs(char **inputs)
+{
+	int		i;
+	char	**ret;
+
+	i = 0;
+	while (inputs[i])
+		i++;
+	ret = malloc((i + 1) * (sizeof(char *)));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (inputs[i])
+	{
+		ret[i] = ft_strdup(inputs[i]);
+		i++;
+	}
+	ret[i] = NULL;
+	return (ret);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
-	shell.rv = 0;
-	shell.fds[0] = dup(0);
-	shell.fds[1] = dup(1);
-	shell.evs = copy_evs(envp);
-	if (shell.evs == NULL)
-		shell_exit(&shell);
-	(void)argv;
-	if (argc == 1)
+	if (argc > 1)
 	{
-		ft_printf("Hi %s! Welcome to ~~minishell~~. ", getenv("USER"));
-		ft_printf("Enter 'exit' at any time to leave.\n");
-		ft_printf("_______________________________________________________\n");
-		shell_loop(&shell);
+		ft_printf_fd(2, "minishell: %s: No such file \
+				or directory\n", argv[1]);
+		return (127);
 	}
+	init_shell_values(&shell, envp);
+	ft_printf("Hi %s! Welcome to ~~minishell~~. ", getenv("USER"));
+	ft_printf("Enter 'exit' at any time to leave.\n");
+	ft_printf("_______________________________________________________\n");
+	while (shell.exit == 0)
+	{
+		init_signal();
+		signal(SIGINT, &signal_int_handler);
+		signal(SIGQUIT, &signal_quit_handler);
+		parse(&shell);
+		if (shell.start != NULL && check_line(&shell, shell.start))
+			minishell(&shell);
+		free_tokens(shell.start);
+	}
+	ft_printf("exit\n");
+	free_array(shell.evs);
 	return (0);
 }

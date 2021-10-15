@@ -5,39 +5,38 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/18 14:21:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 13:38:54 by nkuipers      ########   odam.nl         */
+/*   Created: 2021/09/29 11:02:03 by nkuipers      #+#    #+#                 */
+/*   Updated: 2021/09/29 11:02:21 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_close_fd(int fd)
+void	ft_close(int fd)
 {
 	if (fd > 0)
 		close(fd);
 }
 
-void	reset_std_fds(t_shell *shell)
+void	reset_std(t_shell *shell)
 {
-	dup2(shell->fds[0], 0);
-	dup2(shell->fds[1], 1);
-	dup2(shell->stdinp, 0);
-	dup2(shell->stdout, 1);
+	dup2(shell->in, STDIN);
+	dup2(shell->out, STDOUT);
 }
 
-void	dupclose_fd(int fd, int sec_fd)
+void	close_fds(t_shell *shell)
 {
-	if (fd != sec_fd)
-	{
-		dup2(fd, sec_fd);
-		close(fd);
-	}
+	ft_close(shell->fdin);
+	ft_close(shell->fdout);
+	ft_close(shell->pipin);
+	ft_close(shell->pipout);
 }
 
-void	dup_and_close_pipe(int pipe[2], int dupped)
+void	reset_fds(t_shell *shell)
 {
-	dup2(pipe[dupped], dupped);
-	close(pipe[0]);
-	close(pipe[1]);
+	shell->fdin = -1;
+	shell->fdout = -1;
+	shell->pipin = -1;
+	shell->pipout = -1;
+	shell->pid = -1;
 }

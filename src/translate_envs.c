@@ -6,16 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 09:23:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/13 15:57:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-** The function below converts any occurrence of '$?' to the rv of the previous-
-** ly executed function.
-*/
 
 char	*insert_rv(char *rv, char *arg)
 {
@@ -56,16 +51,6 @@ size_t	ft_evlen(char *ev)
 	return (i);
 }
 
-/*
-** Environment variables called in the terminal should translate to their value.
-** These functions check if any argument begins with $ and if there is an
-** environment variable called, will then translate it to the corresponding
-** value.
-**
-** Example: environment variable $USER=nkuipers;
-** 'echo $USER' prints 'nkuipers' to the terminal.
-*/
-
 static char	*swap_env(char *arg, char **evs)
 {
 	int		i;
@@ -76,8 +61,7 @@ static char	*swap_env(char *arg, char **evs)
 	while (evs[i])
 	{
 		j = 0;
-		if (ft_strncmp(evs[i], &arg[1], ft_strlen(&arg[1])) == 0
-			&& ft_strlen(&arg[1]) == ft_evlen((evs[i])))
+		if (ft_strncmp(evs[i], &arg[1], ft_evlen(evs[i])) == 0)
 		{
 			while (evs[i][j] != '=')
 				j++;
@@ -91,7 +75,49 @@ static char	*swap_env(char *arg, char **evs)
 	return (arg);
 }
 
-char	**transl_env(t_shell *shell, char **args)
+static int	escapecheck(char *arg, int dollar)
+{
+	if (dollar == 0)
+		return (0);
+	if (ft_strncmp(&arg[dollar - 1], "\\$", 2) == 0)
+		return (1);
+	return (0);
+}
+
+static char	*remove_backslash(char *arg)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	new = (char *)malloc(sizeof(ft_strlen(arg)));
+	if (new == NULL)
+		return (NULL);
+	while (arg[i])
+	{
+		if (!(arg[i] == '\\' && arg[i + 1] == '$'))
+		{
+			new[j] = arg[i];
+			j++;
+		}
+		i++;
+	}
+	new[j] = '\0';
+	free(arg);
+	return (new);
+}
+
+static char	*choose_expansion(char **args, t_shell *shell, int i, int j)
+{
+	if (args[i][j + 1] == '?')
+		return (insert_rv(ft_itoa(shell->rv), args[i]));
+	else
+		return (swap_env(args[i], shell->evs));
+}
+
+char	**expand_commands(t_shell *shell, char **args)
 {
 	int	i;
 	int	j;
@@ -99,16 +125,16 @@ char	**transl_env(t_shell *shell, char **args)
 	i = 0;
 	while (args && args[i])
 	{
-		if (args[i][0] == '$' && args[i][1] != '?')
-			args[i] = swap_env(args[i], shell->evs);
 		j = 0;
 		while (args[i][j])
 		{
-			if (args[i][j] == '?' && j > 0)
+			if (args[i][j] == '$')
 			{
-				if (args[i][j - 1] == '$')
+				if (escapecheck(args[i], j) == 1)
+					args[i] = remove_backslash(args[i]);
+				else
 				{
-					args[i] = insert_rv(ft_itoa(shell->rv), args[i]);
+					args[i] = choose_expansion(args, shell, i, j);
 					j = 0;
 				}
 			}

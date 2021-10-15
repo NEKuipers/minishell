@@ -6,15 +6,29 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/24 09:23:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/01 12:21:57 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-** Unset removes an environment variable from the list.
-*/
+int	shell_env(t_shell *shell)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (shell->evs[i])
+	{
+		j = 0;
+		while (shell->evs[i][j + 1] != '\0')
+			j++;
+		if (shell->evs[i][j] != '=')
+			ft_printf("%s\n", shell->evs[i]);
+		i++;
+	}
+	return (0);
+}
 
 static void	replace_array(char **ret, char **evs, char *arg)
 {
@@ -49,23 +63,23 @@ char	**remove_env(char **evs, char *arg)
 	if (!ret)
 		return (NULL);
 	replace_array(ret, evs, arg);
-	free_args(evs);
+	free_array(evs);
 	return (ret);
 }
 
-int	shell_unset(t_shell *shell)
+int	shell_unset(char **commands, t_shell *shell)
 {
 	int	i;
 
 	i = 1;
-	if (shell->args[1] == NULL)
+	if (commands[1] == NULL)
 	{
 		ft_printf("unset: not enough arguments\n");
 		return (1);
 	}
-	while (shell->args[i] != NULL)
+	while (commands[i] != NULL)
 	{
-		shell->evs = remove_env(shell->evs, shell->args[i]);
+		shell->evs = remove_env(shell->evs, commands[i]);
 		i++;
 	}
 	return (0);

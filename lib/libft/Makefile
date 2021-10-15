@@ -6,7 +6,7 @@
 #    By: nkuipers <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/10/28 13:56:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/01/13 12:39:14 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/09/30 16:02:19 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ OBJECTS = 	ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o \
 			ft_print_uint.o \
 			ft_printf.o \
 			ft_putnchar_fd.o \
-			ft_nbrlen.o
+			ft_nbrlen.o \
+			ft_memdel.o \
+			ft_strcmp.o \
+			ft_strisnum.o
 
 BONUS =		ft_lstadd_back_bonus.o ft_lstadd_front_bonus.o \
 			ft_lstclear_bonus.o ft_lstclear_bonus.o ft_lstdelone_bonus.o \
