@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 11:33:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 11:49:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 			i++;
 		}
 		ft_printf("minishell: command not found: %s.\n", args[0]);
-		pid_error(paths, args);
+		return(pid_error(paths, args));
 	}
 	else if (pid < 0)
 		pid_error(paths, args);
@@ -93,31 +93,39 @@ char	**set_new_env(char **evs, char *arg)
 	return (ret);
 }
 
+char	**paths_without_path(char **commands)
+{
+	char	**paths;
+
+	paths = (char **)malloc(sizeof(char *) * 2);
+	paths[0] = ft_strdup(commands[0]);
+	paths[1] = NULL;
+	return (paths);
+}
+
 int	execute_bin(char **commands, t_shell *shell)
 {
 	char	**paths;
 	int		i;
 	char	*temp;
 	char	*newpath;
-	int		returnvalue;
 
-	returnvalue = 127;
 	newpath = ft_strjoin("/", commands[0]);
 	i = find_ev(shell->evs, "PATH=");
 	if (i == -1)
+		paths = paths_without_path(commands);
+	else
 	{
-		ft_printf("minishell: command not found: %s.\n", commands[0]);
-		return (pid_error(NULL, commands));
-	}
-	paths = ft_split(&((shell->evs)[i][5]), ':');
-	i = 0;
-	paths = set_new_env(paths, "/");
-	while (paths[i])
-	{
-		temp = paths[i];
-		paths[i] = ft_strjoin(paths[i], newpath);
-		free(temp);
-		i++;
+		paths = ft_split(&((shell->evs)[i][5]), ':');
+		i = 0;
+		paths = set_new_env(paths, "/");
+		while (paths[i])
+		{
+			temp = paths[i];
+			paths[i] = ft_strjoin(paths[i], newpath);
+			free(temp);
+			i++;
+		}
 	}
 	free(newpath);
 	return (shell_execpath_2(paths, commands, shell->evs));
