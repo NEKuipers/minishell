@@ -6,45 +6,17 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/14 16:58:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 11:33:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	shell_exec_error(char *path)
-{
-	DIR	*folder;
-	int	fd;
-	int	returnvalue;
-
-	fd = open(path, O_WRONLY);
-	folder = opendir(path);
-	ft_printf_fd(STDERR, "minishell: %s", path);
-	if (ft_strchr(path, '/') == NULL)
-		ft_printf_fd(STDERR, ": command not found\n");
-	else if (fd == -1 && folder == NULL)
-		ft_printf_fd(STDERR, ": no such file or directory\n");
-	else if (fd == -1 && folder != NULL)
-		ft_printf_fd(STDERR, ": is a directory\n");
-	else if (fd != -1 && folder == NULL)
-		ft_printf_fd(STDERR, ": permission denied\n");
-	if (ft_strchr(path, '/') == NULL || (fd == -1 && folder == NULL))
-		returnvalue = 127;
-	else
-		returnvalue = 126;
-	if (folder)
-		closedir(folder);
-	close(fd);
-	return (returnvalue);
-}
-
-static int	pid_error(char **paths, char **args, char **evs)
+static int	pid_error(char **paths, char **args)
 {
 	free_array(args);
-	free_array(evs);
 	free_array(paths);
-	exit(-1);
+	return (-1);
 }
 
 int	find_ev(char **evs, char *target)
@@ -52,8 +24,10 @@ int	find_ev(char **evs, char *target)
 	int		i;
 
 	i = 0;
-	while (ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
+	while (evs[i] && ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
 		i++;
+	if (evs[i] == NULL)
+		return (-1);
 	return (i);
 }
 
@@ -83,10 +57,10 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 			i++;
 		}
 		ft_printf("minishell: command not found: %s.\n", args[0]);
-		pid_error(paths, args, evs);
+		pid_error(paths, args);
 	}
 	else if (pid < 0)
-		pid_error(paths, args, evs);
+		pid_error(paths, args);
 	free_array(paths);
 	wait(0);
 	return (0);
@@ -130,6 +104,11 @@ int	execute_bin(char **commands, t_shell *shell)
 	returnvalue = 127;
 	newpath = ft_strjoin("/", commands[0]);
 	i = find_ev(shell->evs, "PATH=");
+	if (i == -1)
+	{
+		ft_printf("minishell: command not found: %s.\n", commands[0]);
+		return (pid_error(NULL, commands));
+	}
 	paths = ft_split(&((shell->evs)[i][5]), ':');
 	i = 0;
 	paths = set_new_env(paths, "/");

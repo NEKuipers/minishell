@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/13 16:58:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/15 11:36:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
+	if (array == NULL)
+		return ;
 	while (array[i])
 	{
 		if (array[i])
@@ -297,7 +299,7 @@ void	run_commands(t_shell *shell, t_token *token)
 		shell->rv = execute_builtin(commands, shell);
 	else if (commands)
 		shell->rv = execute_bin(commands, shell);
-	if (commands)
+	if (commands && shell->rv != -1)
 		free_array(commands);
 	ft_close(shell->pipin);
 	ft_close(shell->pipout);
