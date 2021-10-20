@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char	*glue(char **temp)
+static char	*repl_glue(char **temp)
 {
 	char	*out[2];
 
@@ -13,46 +13,61 @@ char	*glue(char **temp)
 	return (out[1]);
 }
 
-char	*change(char *in, int *i, char **env)
+static char	*repl_change(char *in, char *search, int *i, char **env)
 {
 	char	*temp[3];
 	int		j;
 	int		k;
 
 	j = 0;
+	temp[1] = "";
 	while (env[j])
 	{
-		k = 0;
-		while (env[j][k] != '=')
-			k++;
-		if (!ft_strncmp(env[j], in + (*i) + 1, k))
+		k = ft_strnstr(env[j], "=", ft_strlen(env[j])) - env[j];
+		if (!ft_strncmp(env[j], search, ft_strlen(search)))
 		{
 			temp[1] = env[j] + k + 1;
 			break ;
 		}
 		j++;
 		if (env[j] == NULL)
-			return (NULL);
+			k = ft_strlen(search);
 	}
 	temp[2] = in + *i + 1 + k;
 	temp[0] = ft_substr(in, 0, *i);
 	if (!temp[0])
 		return (NULL);
-	*i += ft_strlen(temp[1]);
-	return (glue(temp));
+	*i += ft_strlen(temp[1]) - 1;
+	return (repl_glue(temp));
 }
 
-char	*process(char *in, char **env)
+static char	*repl_env_name(char *in, int i)
+{
+	int		clip;
+
+	clip = 0;
+	while (in[i + 1 + clip] && !ft_strchr(" \t$", in[i + 1 + clip]))
+		clip++;
+	return (ft_substr(in, i + 1, clip));
+}
+
+static char	*repl_process(char *in, char **env)
 {
 	int		i;
 	char	*out;
+	char	*search;
 
 	i = 0;
+	out = in;
 	while (in[i])
 	{
-		if (in[i] == '$')
+		if (in[i] == '$' && in[i + 1] && in[i + 1] != '$')
 		{
-			out = change(in, &i, env);
+			search = repl_env_name(in, i);
+			if (!search)
+				return (NULL);
+			out = repl_change(in, search, &i, env);
+			free(search);
 			if (!out)
 				return (NULL);
 			free(in);
@@ -72,7 +87,7 @@ int	main(int ac, char **av, char **env)
 	{
 		in = ft_strdup(av[1]);
 		ft_printf_fd(1, "in: %s\n", in);
-		out = process(in, env);
+		out = repl_process(in, env);
 		ft_printf_fd(1, "out: %s\n", out);
 	}
 	system("leaks a.out");
