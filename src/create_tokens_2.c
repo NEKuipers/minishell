@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 14:52:18 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/20 11:27:23 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,11 +239,16 @@ void	parse(t_shell *shell)
 //	if (get_next_line(0, &line) == -1 && (shell->exit = 1))
 //		ft_putendl_fd("exit", STDERR);
 	line = readline("<$ ");
-	if (line == NULL && shell->exit == 1)
-		ft_putendl_fd("exit", STDERR);
-	add_history(line);
+	if (line == NULL)
+	{
+		shell->exit = 1;
+		//ft_putendl_fd("exit", STDERR);
+		line = ft_strdup("");
+	}
+	else
+		add_history(line);
 	if (g_signal.sigint == 1)
-		shell->rv = g_signal.exit_status;
+	shell->rv = g_signal.exit_status;
 	if (quote_check(shell, &line))
 		return ;
 	rl_redisplay();
@@ -257,7 +262,7 @@ void	parse(t_shell *shell)
 		if (is_type(token, ARG))
 			apply_token_type(token, 0);
 		token = token->next;
-	}
+	}	
 }
 
 int		check_line(t_shell *shell, t_token *token)
