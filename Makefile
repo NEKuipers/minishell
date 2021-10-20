@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/15 10:42:47 by bmans         ########   odam.nl          #
+#    Updated: 2021/10/20 13:10:00 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
 INCLUDES        =   -I includes \
-                    -I lib/libft
-LIBS            =   lib/libft/libft.a -lreadline
+                    -I lib/libft \
+					-I ~/homebrew/opt/readline/include
+LIBS            =   lib/libft/libft.a -lreadline -L ~/homebrew/opt/readline/lib
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 # COLORS

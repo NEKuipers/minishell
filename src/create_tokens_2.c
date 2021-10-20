@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/20 11:27:23 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/20 13:10:57 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void	parse(t_shell *shell)
 	line = readline("<$ ");
 	if (line == NULL)
 	{
+		rl_replace_line("", 0);
 		shell->exit = 1;
 		//ft_putendl_fd("exit", STDERR);
 		line = ft_strdup("");
