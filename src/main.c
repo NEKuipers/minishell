@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/20 12:15:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 14:09:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,8 @@ void	shell_exit(t_shell *shell, char **commands)
 	if (commands[1] && commands[2])
 	{
 		shell->rv = 1;
-		ft_printf_fd(STDERR, "minishell: exit: too many arguments");
+		shell->exit = 0;
+		ft_printf_fd(STDERR, "exit\nminishell: exit: too many arguments\n");
 	}
 	else if (commands[1] && ft_strisnum(commands[1]) == 0)
 	{
@@ -416,5 +417,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	ft_printf("exit\n");
 	free_array(shell.evs);
-	return (0);
+	return (shell.rv);
 }
