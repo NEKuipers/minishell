@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/20 13:10:00 by bmans         ########   odam.nl          #
+#    Updated: 2021/10/21 11:01:15 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS            =   main.c \
 					shell_exec_bin.c \
 					shell_unset.c \
 					shell_export.c \
-					translate_envs.c
+					translate_envs.c \
+					env_replace.c
 					
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)

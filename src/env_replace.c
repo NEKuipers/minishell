@@ -51,7 +51,7 @@ static char	*repl_env_name(char *in, int i)
 	return (ft_substr(in, i + 1, clip));
 }
 
-static char	*repl_process(char *in, char **env)
+char	*repl_process(char *in, char **env)
 {
 	int		i;
 	char	*out;
@@ -78,7 +78,7 @@ static char	*repl_process(char *in, char **env)
 	return (out);
 }
 
-int	main(int ac, char **av, char **env)
+/* int	main(int ac, char **av, char **env)
 {
 	char	*in;
 	char	*out;
@@ -93,3 +93,4 @@ int	main(int ac, char **av, char **env)
 	system("leaks a.out");
 	return (0);
 }
+*/
