@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/21 12:11:24 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/10/21 14:29:52 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS            =   main.c \
 					create_tokens_2.c \
 					signal.c \
 					fds.c \
+					shell_builtins.c \
 					shell_cd.c \
 					shell_exec_bin.c \
 					shell_unset.c \

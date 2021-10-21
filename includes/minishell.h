@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 11:00:37 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/21 14:30:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,13 @@ char				**expand_commands(t_shell *shell, char **args);
 
 void				minishell(t_shell *shell);
 void				shell_execute(t_shell *shell, t_token *token);
+int					execute_builtin(char **commands, t_shell *shell);
 int					shell_pwd(void);
 int					shell_echo(char **commands);
 int					shell_env(t_shell *shell);
 int					shell_cd(char **commands, t_shell *shell);
 int					shell_export(char **commands, t_shell *shell);
+void				shell_exit(t_shell *shell, char **commands);
 int					shell_unset(char **commands, t_shell *shell);
 int					execute_bin(char **commands, t_shell *shell);
 
