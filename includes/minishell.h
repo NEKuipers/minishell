@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 14:30:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 17:07:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <dirent.h>
 # include <errno.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../lib/libft/libft.h"
 
 # define STDIN 0

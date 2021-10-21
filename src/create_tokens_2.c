@@ -6,13 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 12:19:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 17:08:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int quotes(char *line, int index)
+int	quotes(char *line, int index)
 {
 	int	i;
 	int	is_open;
@@ -36,7 +36,7 @@ int quotes(char *line, int index)
 	return (is_open);
 }
 
-int quote_check(t_shell *shell, char **line)
+int	quote_check(t_shell *shell, char **line)
 {
 	if (quotes(*line, __INT_MAX__))
 	{
@@ -49,7 +49,7 @@ int quote_check(t_shell *shell, char **line)
 	return (0);
 }
 
-int		is_separator(char *line, int i)
+int	is_separator(char *line, int i)
 {
 	if (i > 0 && line[i - 1] == '\\' && ft_strchr(";|<>", line[i]))
 		return (0);
@@ -107,7 +107,7 @@ char	*space_out_line(char *line)
 void	skip_space(const char *str, int *i)
 {
 	while ((str[*i] == ' ' || str[*i] == '\t')
-	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+			|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }
 
@@ -155,7 +155,7 @@ t_token	*next_run(t_token *token, int skip)
 	return (token);
 }
 
-int		is_type(t_token *token, int type)
+int	is_type(t_token *token, int type)
 {
 	if (token && token->type == type)
 		return (1);
@@ -163,7 +163,7 @@ int		is_type(t_token *token, int type)
 		return (0);
 }
 
-int		is_types(t_token *token, char *types)
+int	is_types(t_token *token, char *types)
 {
 	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
 		return (1);
@@ -184,7 +184,7 @@ int		is_types(t_token *token, char *types)
 	return (0);
 }
 
-int		is_last_valid_arg(t_token *token)
+int	is_last_valid_arg(t_token *token)
 {
 	t_token	*prev;
 
@@ -226,10 +226,6 @@ void	squish_args(t_shell *shell)
 	}
 }
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
 void	parse(t_shell *shell)
 {
 	char	*line;
@@ -239,8 +235,6 @@ void	parse(t_shell *shell)
 //	if (get_next_line(0, &line) == -1 && (shell->exit = 1))
 //		ft_putendl_fd("exit", STDERR);
 	line = readline("<$ ");
-	if (ft_strncmp("   ^C", line, 5) == 0)
-		printf("check\n");
 	if (line == NULL)
 	{
 		rl_replace_line("", 0);

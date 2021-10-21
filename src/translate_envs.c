@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 10:54:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 17:09:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,67 +51,6 @@ size_t	ft_evlen(char *ev)
 	return (i);
 }
 
-char	**insert_arg(char **args, char *new, int pos)
-{
-	int 	i;
-	char	**newargs;
-
-	i = 0;
-	while (args[i] != NULL)
-		i++;
-	newargs = (char **)malloc(sizeof(char *) * i + 1);
-	i = 0;
-	while (i <= pos)
-	{
-		newargs[i] = ft_strdup(args[i]);
-		i++;
-	}
-	newargs[i] = ft_strdup(new);
-	free(new);
-	while (args[i])
-	{		
-		newargs[i] = ft_strdup(args[i - 1]);
-		i++;
-	}
-	newargs[i] = NULL;
-	free_array(args);
-	return (newargs);
-}
-
-int	check_env_space(char **args, int p)
-{
-	int		i;
-	int		j;
-	char	*temp;
-	char	*old;
-
-	i = 0;
-	old = NULL;
-	while (args[p][i] && !(args[p][i] == ' ' || args[p][i] == '\t'))
-		i++;
-	j = i;
-	while (args[p][i] == ' ' || args[p][i] == '\t')
-		i++;
-	if (args[p][i])
-	{
-		// for (int k = 0; args[k]; k++)
-		// 	printf("%i : %s\n", k, args[k]);
-		temp = ft_strdup(&args[p][i]);
-		printf("temp dupped, temp is %s\n", temp);
-		ft_strlcpy(old, args[p], j);
-		old = (char *)malloc(sizeof(char) * i + 1);
-		printf("strlcpy done, old is %s\n", old);
-		free(args[p]);
-		args[p] = ft_strdup(old);
-		printf("args[p] dupped, arg is %s\n", args[p]);
-		args = insert_arg(args, temp, p);
-		// for (int k = 0; args[k]; k++)
-		// 	printf("%i : %s\n", k, args[k]);
-		return (1);
-	}
-	return (0);
-}
-
 static char	*swap_env(char **args, int p, char **evs)
 {
 	int		i;
@@ -132,11 +71,6 @@ static char	*swap_env(char **args, int p, char **evs)
 			free(temp);
 		}
 		i++;
-	}
-	while (1)
-	{
-		if (check_env_space(args, p) == 0)
-			break;
 	}
 	return (args[p]);
 }

@@ -6,12 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 14:33:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 14:34:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 int	shell_pwd(void)
 {
@@ -26,7 +25,6 @@ int	shell_pwd(void)
 	}
 	return (1);
 }
-
 
 int	shell_echo(char **commands)
 {
@@ -58,7 +56,7 @@ int	shell_echo(char **commands)
 void	shell_exit(t_shell *shell, char **commands)
 {
 	shell->exit = 1;
-    ft_printf("exit\n");
+	ft_printf("exit\n");
 	if (commands[1] && commands[2])
 	{
 		shell->rv = 1;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/01 12:21:57 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 16:34:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	replace_array(char **ret, char **evs, char *arg)
 		}
 		evs++;
 	}
-	ret[i] = NULL;
 }
 
 char	**remove_env(char **evs, char *arg)
@@ -62,6 +61,7 @@ char	**remove_env(char **evs, char *arg)
 	ret = malloc(i * (sizeof(char *)));
 	if (!ret)
 		return (NULL);
+	ret[i - 1] = NULL;
 	replace_array(ret, evs, arg);
 	free_array(evs);
 	return (ret);
