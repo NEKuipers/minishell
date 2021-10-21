@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/13 11:24:31 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 11:00:37 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,10 @@ void				signal_int_handler(int code);
 void				signal_quit_handler(int code);
 void				init_signal(void);
 
+//Added in beta 3
+//_____________________________________________________________________________
+char				*repl_process(char *in, char **env);
+//_____________________________________________________________________________
 extern t_signal	g_signal;
 
 #endif
