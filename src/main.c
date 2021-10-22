@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 14:31:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:07:07 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 t_signal	g_signal;
 
-//TODO expansions, history
-
 static void	levelup_shell(t_shell *shell)
 {
 	char	**commands;
 	char	*temp;
+	char	*levelstring;
 	int		lvl;
 
 	commands = (char **)malloc(sizeof(char *) * 3);
 	commands[0] = ft_strdup("export");
 	lvl = ft_atoi(getenv("SHLVL"));
 	lvl += 1;
-	temp = ft_strjoin("SHLVL=", ft_itoa(lvl));
+	levelstring = ft_itoa(lvl);
+	temp = ft_strjoin("SHLVL=", levelstring);
+	free(levelstring);
 	commands[1] = ft_strdup(temp);
-	commands[2] = NULL;
 	free(temp);
+	commands[2] = NULL;
 	shell_export(commands, shell);
 	free_array(commands);
 }
