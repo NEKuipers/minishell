@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/21 17:01:49 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/10/22 16:24:06 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,24 @@ SRCS            =   main.c \
 					create_tokens_2.c \
 					signal.c \
 					fds.c \
+					init_shell.c \
 					shell_builtins.c \
 					shell_cd.c \
 					shell_exec_bin.c \
 					shell_unset.c \
 					shell_export.c \
 					translate_envs.c \
-					env_replace.c
-					
+					env_replace.c \
+					pipes_redirs.c \
+					utils.c
+
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
 INCLUDES        =   -I includes \
                     -I lib/libft \
 					-I ~/.brew/opt/readline/include
-LIBS            =   lib/libft/libft.a -lreadline -L ~/.brew/opt/readline/lib 
+LIBS            =   lib/libft/libft.a -lreadline -L ~/.brew/opt/readline/lib
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 # COLORS

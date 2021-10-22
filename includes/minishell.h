@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 17:07:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:44:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,15 @@ void				ft_close(int fd);
 void				reset_std(t_shell *shell);
 void				close_fds(t_shell *shell);
 void				reset_fds(t_shell *shell);
+void				full_fd_reset(t_shell *shell);
 
 void				ft_skip_spacenl(const char *str, int *i);
-
 int					quotes(char *line, int index);
 int					quote_check(t_shell *shell, char **line);
 int					is_separator(char *line, int i);
 char				*space_alloc(char *line);
 char				*space_out_line(char *line);
+void				init_shell_values(t_shell *shell, char **envp);
 void				skip_space(const char *str, int *i);
 t_token				*next_separator(t_token *token, int skip);
 t_token				*previous_separator(t_token *token, int skip);
@@ -97,6 +98,7 @@ t_token				*next_run(t_token *token, int skip);
 int					is_type(t_token *token, int type);
 int					find_separator(char *line, int i);
 int					is_types(t_token *token, char *types);
+int					has_pipe(t_token *token);
 int					is_last_valid_arg(t_token *token);
 void				squish_args(t_shell *shell);
 void				parse(t_shell *shell);
@@ -109,13 +111,19 @@ int					next_alloc(char *line, int *i);
 void				free_tokens(t_token *token);
 void				free_array(char **array);
 
+int					operator_pipe(t_shell *shell);
+void				operator_input(t_shell *shell, t_token *token);
+void				operator_redirect(t_shell *shell, t_token *token, int type);
+
 char				**set_new_env(char **evs, char *arg);
 int					find_ev(char **evs, char *target);
+size_t				ft_evlen(char *ev);
 char				**copy_evs(char **inputs);
 char				**expand_commands(t_shell *shell, char **args);
 
 void				minishell(t_shell *shell);
 void				shell_execute(t_shell *shell, t_token *token);
+int					builtin_check(char *command);
 int					execute_builtin(char **commands, t_shell *shell);
 int					shell_pwd(void);
 int					shell_echo(char **commands);

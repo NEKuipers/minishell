@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 17:08:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:51:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void	parse(t_shell *shell)
 	if (quote_check(shell, &line))
 		return ;
 	rl_redisplay();
-	line = repl_process(line, shell->evs);
+	// line = repl_process(line, shell->evs);
 	line = space_out_line(line);
 	shell->start = create_tokens(line);
 	free(line);

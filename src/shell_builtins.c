@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 14:34:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:40:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,26 @@ int	execute_builtin(char **commands, t_shell *shell)
 	if (ft_strcmp(commands[0], "unset") == 0 || \
 			ft_strcmp(commands[0], "unsetenv") == 0)
 		returnvalue = shell_unset(commands, shell);
+	return (0);
+}
+
+int	builtin_check(char *command)
+{
+	if (ft_strcmp(command, "cd") == 0)
+		return (1);
+	if (ft_strcmp(command, "echo") == 0)
+		return (1);
+	if (ft_strcmp(command, "env") == 0)
+		return (1);
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	if (ft_strcmp(command, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(command, "unset") == 0)
+		return (1);
+	if (ft_strcmp(command, "unsetenv") == 0)
+		return (1);
+	if (ft_strcmp(command, "setenv") == 0)
+		return (1);
 	return (0);
 }

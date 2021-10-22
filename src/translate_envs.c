@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 17:09:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:44:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ char	*insert_rv(char *rv, char *arg)
 	}
 	free(arg);
 	return (new);
-}
-
-size_t	ft_evlen(char *ev)
-{
-	int	i;
-
-	i = 0;
-	while (ev[i] != '=')
-		i++;
-	return (i);
 }
 
 static char	*swap_env(char **args, int p, char **evs)
