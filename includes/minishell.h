@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/25 09:53:58 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/25 14:17:41 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void				init_signal(void);
 
 //Added in beta 3
 //_____________________________________________________________________________
-char				*repl_process(char *in, char **env);
+char				*repl_process(char *in, t_shell *shell);
 //_____________________________________________________________________________
 extern t_signal	g_signal;
 
