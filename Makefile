@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/21 11:01:15 by bmans         ########   odam.nl          #
+#    Updated: 2021/10/25 10:00:06 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,17 @@ SRCS            =   main.c \
 					create_tokens_2.c \
 					signal.c \
 					fds.c \
+					init_shell.c \
+					shell_builtins.c \
 					shell_cd.c \
 					shell_exec_bin.c \
 					shell_unset.c \
 					shell_export.c \
 					translate_envs.c \
-					env_replace.c
-					
+					env_replace.c \
+					pipes_redirs.c \
+					utils.c
+
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g

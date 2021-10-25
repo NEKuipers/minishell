@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/24 16:04:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/13 15:57:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:44:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,7 @@ char	*insert_rv(char *rv, char *arg)
 	return (new);
 }
 
-size_t	ft_evlen(char *ev)
-{
-	int	i;
-
-	i = 0;
-	while (ev[i] != '=')
-		i++;
-	return (i);
-}
-
-static char	*swap_env(char *arg, char **evs)
+static char	*swap_env(char **args, int p, char **evs)
 {
 	int		i;
 	int		j;
@@ -61,18 +51,18 @@ static char	*swap_env(char *arg, char **evs)
 	while (evs[i])
 	{
 		j = 0;
-		if (ft_strncmp(evs[i], &arg[1], ft_evlen(evs[i])) == 0)
+		if (ft_strncmp(evs[i], &args[p][1], ft_evlen(evs[i])) == 0)
 		{
 			while (evs[i][j] != '=')
 				j++;
 			j++;
-			temp = arg;
-			arg = ft_strdup(&evs[i][j]);
+			temp = args[p];
+			args[p] = ft_strdup(&evs[i][j]);
 			free(temp);
 		}
 		i++;
 	}
-	return (arg);
+	return (args[p]);
 }
 
 static int	escapecheck(char *arg, int dollar)
@@ -114,7 +104,7 @@ static char	*choose_expansion(char **args, t_shell *shell, int i, int j)
 	if (args[i][j + 1] == '?')
 		return (insert_rv(ft_itoa(shell->rv), args[i]));
 	else
-		return (swap_env(args[i], shell->evs));
+		return (swap_env(args, i, shell->evs));
 }
 
 char	**expand_commands(t_shell *shell, char **args)

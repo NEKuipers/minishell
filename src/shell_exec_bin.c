@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:29:31 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/21 17:06:15 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 			i++;
 		}
 		ft_printf("minishell: command not found: %s.\n", args[0]);
-		return(pid_error(paths, args));
+		return (pid_error(paths, args));
 	}
 	else if (pid < 0)
 		pid_error(paths, args);

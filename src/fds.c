@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 11:02:03 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/09/29 11:02:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/22 16:39:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,11 @@ void	reset_fds(t_shell *shell)
 	shell->pipin = -1;
 	shell->pipout = -1;
 	shell->pid = -1;
+}
+
+void	full_fd_reset(t_shell *shell)
+{
+	reset_std(shell);
+	close_fds(shell);
+	reset_fds(shell);
 }
