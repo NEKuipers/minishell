@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:06:48 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 14:26:06 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse(t_shell *shell)
 	else
 		add_history(line);
 	if (g_signal.sigint == 1)
-	shell->rv = g_signal.exit_status;
+		shell->rv = g_signal.exit_status;
 	if (quote_check(shell, &line))
 		return ;
 	rl_redisplay();
@@ -78,22 +78,24 @@ void	parse(t_shell *shell)
 	}	
 }
 
-int		check_line(t_shell *shell, t_token *token)
+int	check_line(t_shell *shell, t_token *token)
 {
 	while (token)
 	{
-		if (is_types(token, "TAI")
-		&& (!token->next || is_types(token->next, "TAIPE")))
+		if (is_types(token, "TAI") \
+			&& (!token->next || is_types(token->next, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			token->next ? ft_putstr_fd(token->next->str, STDERR) : 0;
-			token->next ? 0 : ft_putstr_fd("newline", STDERR);
+			if (token->next)
+				ft_putstr_fd(token->next->str, STDERR);
+			else
+				ft_putstr_fd("newline", STDERR);
 			ft_putendl_fd("'", STDERR);
 			shell->rv = 258;
 			return (0);
 		}
-		if (is_types(token, "PE")
-		&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
+		if (is_types(token, "PE") \
+			&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);
