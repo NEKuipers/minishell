@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 10:47:46 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 14:21:20 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	repl_env_name(char *in, int i, char **env, char **val)
 	char	*tkn;
 
 	clip = 0;
-	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'", in[i + 1 + clip]))
+	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'\\", in[i + 1 + clip]))
 		clip++;
 	tkn = in + i + 1;
 	j = 0;
@@ -156,9 +156,8 @@ char	*repl_process(char *in, t_shell *shell)
 		if (in[i] == '\\' && in[i + 1] == '$')
 			in = repl_change(in, i, 2, ft_strdup("$"));
 		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$')
-			i += repl_env(i, &in, shell);
-		else
-			i++;
+			i += repl_env(i, &in, shell) - 1;
+		i++;
 	}
 	return (in);
 }

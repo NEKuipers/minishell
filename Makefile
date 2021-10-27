@@ -6,9 +6,11 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/27 11:05:07 by bmans         ########   odam.nl          #
+#    Updated: 2021/10/27 14:30:17 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+#					translate_envs.c
 
 NAME            =   minishell
 SRCS            =   main.c \
@@ -22,7 +24,6 @@ SRCS            =   main.c \
 					shell_exec_bin.c \
 					shell_unset.c \
 					shell_export.c \
-					translate_envs.c \
 					env_replace.c \
 					pipes_redirs.c \
 					utils.c
