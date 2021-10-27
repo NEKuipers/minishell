@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:11:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 15:49:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 	temp = ft_strdup(paths[i]);
 	free_array(paths);
 	execve(temp, args, evs);
+	ft_printf("minishell: command not found: %s.\n", args[0]);
 }
 
 static int	shell_execpath_2(char **paths, char **args, char **evs)
@@ -44,7 +45,6 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 				shell_execpath_3(paths, args, evs, i);
 			i++;
 		}
-		ft_printf("minishell: command not found: %s.\n", args[0]);
 		return (pid_error(paths, args));
 	}
 	else if (pid < 0)

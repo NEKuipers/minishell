@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:38:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 15:52:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,7 @@ void	minishell(t_shell *shell)
 		if (shell->last == 0)
 			shell->rv = status;
 		if (shell->parent == 0)
-		{
-			free_tokens(shell->start);
 			exit(shell->rv);
-		}
 		shell->no_exec = 0;
 		token = next_run(token, 1);
 	}
