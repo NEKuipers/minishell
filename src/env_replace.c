@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/26 15:42:06 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 10:47:46 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static char	*repl_change(char *in, int i, int len, char *val)
 
 	if (val)
 	{
-		//ft_printf_fd(1, "%i\n", ft_strlen(in) - len + ft_strlen(val));
 		out = malloc(ft_strlen(in) - len + ft_strlen(val) + 1);
 		if (!out)
 			return (NULL);
@@ -73,14 +72,12 @@ static char	*repl_change(char *in, int i, int len, char *val)
 	}
 	else
 	{
-		//ft_printf_fd(1, "%i\n", ft_strlen(in) - len);
 		out = malloc(ft_strlen(in) - len);
 		if (!out)
 			return (NULL);
 		ft_strlcpy(out, in, i + 1);
 		ft_strlcpy(out + i, in + i + len, ft_strlen(in) - i - len + 1);
 	}
-	//ft_printf_fd(1, "%s\n", out);
 	free(val);
 	return (out);
 }
@@ -125,13 +122,15 @@ int	repl_env(int i, char **in, t_shell *shell)
 	val = NULL;
 	if ((*in)[i + 1] == '?')
 	{
-		len = 1;
-		val = ft_itoa(shell->rv);
+		*in = repl_change(*in, i, 2, ft_itoa(shell->rv));
+		return (1);
 	}
 	else
 	{
 		len = repl_env_name(*in, i, shell->evs, &val) + 1;
 		*in = repl_change(*in, i, len, val);
+		if (!val)
+			return (0);
 		return (len);
 	}
 }
@@ -139,12 +138,16 @@ int	repl_env(int i, char **in, t_shell *shell)
 char	*repl_process(char *in, t_shell *shell)
 {
 	int		i;
+	char	inquotes;
 
 	i = 0;
+	inquotes = 0;
 	while (in && in[i])
 	{
-		ft_printf_fd(1, "%c\n", in[i]);
-		if (in[i] == '\'' && (i == 0 || (i > 0 && in[i - 1] != '\\')))
+		if (in[i] == '\"' && (i == 0 || (i > 0 && in[i - 1] != '\\')))
+			inquotes = (inquotes + 1) % 2;
+		if (in[i] == '\'' && (i == 0 || (i > 0 && in[i - 1] != '\\')) \
+			&& !inquotes)
 		{
 			i++;
 			while (!(in[i] == '\'' && in[i - 1] != '\\'))
