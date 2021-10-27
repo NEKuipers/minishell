@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:10:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 14:38:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int					has_pipe(t_token *token);
 int					is_last_valid_arg(t_token *token);
 void				arrange_tokens(t_shell *shell);
 void				parse(t_shell *shell);
-int					check_line(t_shell *shell, t_token *token);
+int					check_syntax(t_shell *shell, t_token *token);
 char				**paths_without_path(char **commands);
 t_token				*create_tokens(char *line);
 void				apply_token_type(t_token *token, int separator);

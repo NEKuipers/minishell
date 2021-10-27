@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:10:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:11:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 14:32:30 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,33 @@ int	find_ev(char **evs, char *target)
 	if (evs[i] == NULL)
 		return (-1);
 	return (i);
+}
+
+int	is_type(t_token *token, int type)
+{
+	if (token && token->type == type)
+		return (1);
+	else
+		return (0);
+}
+
+int	is_types(t_token *token, char *types)
+{
+	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
+		return (1);
+	else if (ft_strchr(types, 'X') && is_type(token, CMD))
+		return (1);
+	else if (ft_strchr(types, 'x') && is_type(token, ARG))
+		return (1);
+	else if (ft_strchr(types, 'T') && is_type(token, TRUNC))
+		return (1);
+	else if (ft_strchr(types, 'A') && is_type(token, APPEND))
+		return (1);
+	else if (ft_strchr(types, 'I') && is_type(token, INPUT))
+		return (1);
+	else if (ft_strchr(types, 'P') && is_type(token, PIPE))
+		return (1);
+	else if (ft_strchr(types, 'E') && is_type(token, END))
+		return (1);
+	return (0);
 }
