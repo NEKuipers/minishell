@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:35:55 by bmans         #+#    #+#                 */
-/*   Updated: 2021/10/25 14:51:45 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 14:13:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static unsigned int	digitct(int digits, char neg)
 	return (digits);
 }
 
-static int ternaryfixone(int n)
+static int	ternaryfixone(int n)
 {
 	int	o;
 

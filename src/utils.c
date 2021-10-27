@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:21:20 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/22 16:44:32 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 14:09:07 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_skip_spacenl(const char *str, int *i)
 			|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }
-
 
 size_t	ft_evlen(char *ev)
 {
