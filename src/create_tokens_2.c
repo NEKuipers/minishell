@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/22 16:56:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/25 14:38:18 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,10 @@ void	squish_args(t_shell *shell)
 	}
 }
 
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 void	parse(t_shell *shell)
 {
 	char	*line;
@@ -245,11 +249,11 @@ void	parse(t_shell *shell)
 	else
 		add_history(line);
 	if (g_signal.sigint == 1)
-		shell->rv = g_signal.exit_status;
+	shell->rv = g_signal.exit_status;
 	if (quote_check(shell, &line))
 		return ;
 	rl_redisplay();
-	line = repl_process(line, shell->evs);
+	line = repl_process(line, shell);
 	line = space_out_line(line);
 	shell->start = create_tokens(line);
 	free(line);

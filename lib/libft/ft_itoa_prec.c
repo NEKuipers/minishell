@@ -6,7 +6,7 @@
 /*   By: bmans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/13 15:35:55 by bmans         #+#    #+#                 */
-/*   Updated: 2021/09/24 11:09:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/25 14:51:45 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_itoa_prec(int n, int prec)
 		while (digits > 0)
 		{
 			digits--;
-			a[digits] = ternaryfixone(n) + '0';
+			a[digits] = ternaryfixone(n);
 			n = ternaryfixtwo(n);
 		}
 		if (neg)
