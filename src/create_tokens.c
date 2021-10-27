@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/13 13:23:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 13:21:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,15 @@ t_token	*next_token(char *line, int *i)
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
-			c = line[(*i)++];
+			c = line[(*i)];
 		else if (c != ' ' && line[*i] == c)
-		{
 			c = ' ';
-			(*i)++;
-		}
-		else if (line[*i] == '\\' && line[*i + 1] != '$' && (*i)++)
-			token->str[j++] = line[(*i)++];
 		else
-			token->str[j++] = line[(*i)++];
+		{
+			token->str[j] = line[(*i)];
+			j++;
+		}
+		(*i)++;
 	}
 	token->str[j] = '\0';
 	return (token);

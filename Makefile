@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/27 14:30:17 by bmans         ########   odam.nl          #
+#    Updated: 2021/10/27 15:54:41 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,23 @@
 
 NAME            =   minishell
 SRCS            =   main.c \
+					arrange_tokens.c \
 					create_tokens.c \
 					create_tokens_2.c \
-					signal.c \
+					create_tokens_utils.c \
+					create_tokens_utils_2.c \
+					env_replace.c \
 					fds.c \
 					init_shell.c \
+					pipes_redirs.c \
+					signal.c \
 					shell_builtins.c \
 					shell_cd.c \
 					shell_exec_bin.c \
-					shell_unset.c \
 					shell_export.c \
-					env_replace.c \
-					pipes_redirs.c \
-					utils.c
+					shell_unset.c \
+					utils.c \
+					utils_2.c
 
 BREW_DIR		=	.brew
 CFILES          =   $(SRCS:%=src/%)
@@ -35,7 +39,8 @@ CFLAGS          =   -Wall -Wextra -Werror -g
 INCLUDES        =   -I includes \
                     -I lib/libft \
 					-I ~/$(BREW_DIR)/opt/readline/include
-LIBS            =   lib/libft/libft.a -lreadline -L ~/$(BREW_DIR)/opt/readline/lib
+LIBS            =   lib/libft/libft.a -lreadline \
+					-L ~/$(BREW_DIR)/opt/readline/lib
 # LIB LOCATIONS
 LIBFT_LOC       =   lib/libft
 # COLORS

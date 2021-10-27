@@ -6,55 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:21:20 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 15:56:16 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-/*
-static char	*repl_glue(char **temp)
-{
-	char	*out[2];
-
-	out[0] = ft_strjoin(temp[0], temp[1]);
-	free(temp[0]);
-	if (!out[0])
-		return (NULL);
-	out[1] = ft_strjoin(out[0], temp[2]);
-	free(out[0]);
-	return (out[1]);
-}
-
-static char	*repl_change(char *in, char *search, int *i, char **env)
-{
-	char	*temp[3];
-	int		j;
-	int		k;
-
-	j = 0;
-	temp[1] = "";
-	while (env[j])
-	{
-		k = ft_strnstr(env[j], "=", ft_strlen(env[j])) - env[j];
-		if (!ft_strncmp(env[j], search, ft_strlen(search)))
-		{
-			temp[1] = env[j] + k + 1;
-			break ;
-		}
-		j++;
-		if (env[j] == NULL)
-			k = ft_strlen(search);
-	}
-	temp[2] = in + *i + 1 + k;
-	temp[0] = ft_substr(in, 0, *i);
-	if (!temp[0])
-		return (NULL);
-	*i += ft_strlen(temp[1]) - 1;
-	return (repl_glue(temp));
-}
-*/
 
 static char	*repl_change(char *in, int i, int len, char *val)
 {

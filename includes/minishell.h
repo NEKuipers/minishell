@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/25 14:17:41 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 15:26:27 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,10 @@ int					find_separator(char *line, int i);
 int					is_types(t_token *token, char *types);
 int					has_pipe(t_token *token);
 int					is_last_valid_arg(t_token *token);
-void				squish_args(t_shell *shell);
+void				arrange_tokens(t_shell *shell);
 void				parse(t_shell *shell);
-int					check_line(t_shell *shell, t_token *token);
+int					check_syntax(t_shell *shell, t_token *token);
+char				**paths_without_path(char **commands);
 t_token				*create_tokens(char *line);
 void				apply_token_type(t_token *token, int separator);
 t_token				*next_token(char *line, int *i);
@@ -119,7 +120,6 @@ char				**set_new_env(char **evs, char *arg);
 int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				**copy_evs(char **inputs);
-char				**expand_commands(t_shell *shell, char **args);
 
 void				minishell(t_shell *shell);
 void				shell_execute(t_shell *shell, t_token *token);
@@ -138,10 +138,7 @@ void				signal_int_handler(int code);
 void				signal_quit_handler(int code);
 void				init_signal(void);
 
-//Added in beta 3
-//_____________________________________________________________________________
 char				*repl_process(char *in, t_shell *shell);
-//_____________________________________________________________________________
 extern t_signal	g_signal;
 
 #endif

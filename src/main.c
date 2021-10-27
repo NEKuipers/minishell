@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/26 09:52:45 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/27 15:55:46 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	run_commands(t_shell *shell, t_token *token)
 		return ;
 	commands = create_command_array(token);
 	i = 0;
-	//expand_commands(shell, commands);
 	if (commands && ft_strcmp(commands[0], "exit") == 0 \
 			 && has_pipe(token) == 0)
 		shell_exit(shell, commands);
@@ -142,7 +141,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, &signal_int_handler);
 		signal(SIGQUIT, &signal_quit_handler);
 		parse(&shell);
-		if (shell.start != NULL && check_line(&shell, shell.start))
+		if (shell.start != NULL && check_syntax(&shell, shell.start))
 			minishell(&shell);
 		free_tokens(shell.start);
 	}

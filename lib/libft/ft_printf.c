@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/25 13:58:36 by bmans         #+#    #+#                 */
-/*   Updated: 2021/09/24 10:52:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 15:47:57 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static const char	g_lex[] = CONV_LIST;
 
-static	void (*g_func[])(t_print *) = {&ft_print_char, \
+static	void		(*g_func[])(t_print *) = {&ft_print_char, \
 	&ft_print_string, &ft_print_ptr, &ft_print_int, &ft_print_int, \
 	&ft_print_uint, &ft_print_uint, &ft_print_uint, &ft_print_char};
 
