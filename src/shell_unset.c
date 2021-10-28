@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 09:38:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 09:40:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,17 @@ int	shell_unset(char **commands, t_shell *shell)
 	i = 1;
 	if (commands[1] == NULL)
 	{
-		ft_printf("unset: not enough arguments\n");
+		ft_printf("minishell: unset: not enough arguments\n");
 		return (1);
 	}
 	while (commands[i] != NULL)
 	{
-		if (ft_strcmp(commands[i], "") != 0)
-			shell->evs = remove_env(shell->evs, commands[i]);
+		if (ft_strcmp(commands[i], "") == 0)
+		{
+			ft_printf("minishell: unset: `': not a valid identifier\n");
+			return (1);
+		}
+		shell->evs = remove_env(shell->evs, commands[i]);
 		i++;
 	}
 	return (0);

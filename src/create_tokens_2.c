@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:01:48 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 09:41:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	parse_part_two(t_shell *shell, char *line)
 {
-	t_token *token;
+	t_token	*token;
 
-	
 	line = repl_process(line, shell);
 	line = space_out_line(line);
 	shell->start = create_tokens(line);
@@ -55,7 +54,7 @@ void	parse(t_shell *shell)
 
 static void	syntax_errormessage(char *str, int type)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR);
 	if (type == 1)
 		ft_putstr_fd("newline", STDERR);
 	else if (type == 2)
