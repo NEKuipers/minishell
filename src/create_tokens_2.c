@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 09:41:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 14:11:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_part_two(t_shell *shell, char *line)
 void	parse(t_shell *shell)
 {
 	char	*line;
-
+	
 	line = readline("<$ ");
 	if (line == NULL)
 	{

@@ -1,4 +1,2 @@
-- ctrl+C during cat does prints "ˆC" in bash
-- escaping dollar sign doesn't work
-- Prints prompt twice sometimes when exiting cat/tail/head with ctrl+C (FIXED??)
-- "unset ''" crashes program sometimes
+- Prints prompt twice when exiting cat/tail/head with ctrl+C 
+- escaping dollar sign doesn't work	
