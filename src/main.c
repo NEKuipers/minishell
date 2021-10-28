@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 11:17:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 11:59:14 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	**create_command_array(t_token *start)
 	}
 	array = (char **)malloc(sizeof(char *) * i);
 	token = start->next;
-	array[0] = start->str;
+	array[0] = ft_strdup(start->str);
 	i = 1;
 	while (token && token->type < TRUNC)
 	{
-		array[i] = token->str;
+		array[i] = ft_strdup(token->str);
 		token = token->next;
 		i++;
 	}
@@ -59,8 +59,8 @@ void	run_commands(t_shell *shell, t_token *token)
 		shell->rv = execute_builtin(commands, shell);
 	else if (commands)
 		shell->rv = execute_bin(commands, shell, token);
-	// if (commands && shell->rv != -1)
-	// 	free_array(commands);
+	if (commands && shell->rv != -1)
+		free_array(commands);
 	ft_close(shell->pipin);
 	ft_close(shell->pipout);
 	shell->pipin = -1;

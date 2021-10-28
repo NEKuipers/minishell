@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:21:20 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 11:16:59 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 11:53:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_array(char **array)
 		return ;
 	while (array[i])
 	{
-		if (array[i])
+		if (array[i] != NULL)
 			free(array[i]);
 		i++;
 	}
