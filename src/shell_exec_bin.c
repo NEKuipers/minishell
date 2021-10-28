@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 17:53:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 10:21:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 	execve(temp, args, evs);
 }
 
-static int	shell_execpath_2(char **paths, char **args, char **evs, t_token *token)
+static int	shell_execpath_2(char **paths, char **args, \
+	char **evs, t_token *token)
 {
 	int			pid;
 	int			i;

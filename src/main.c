@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 17:51:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 11:17:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	run_commands(t_shell *shell, t_token *token)
 		shell->rv = execute_builtin(commands, shell);
 	else if (commands)
 		shell->rv = execute_bin(commands, shell, token);
-	if (commands && shell->rv != -1)
-		free_array(commands);
+	// if (commands && shell->rv != -1)
+	// 	free_array(commands);
 	ft_close(shell->pipin);
 	ft_close(shell->pipout);
 	shell->pipin = -1;
