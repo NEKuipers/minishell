@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 09:40:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 12:42:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**remove_env(char **evs, char *arg)
 	char	**ret;
 
 	i = 0;
+	if (find_ev(evs, arg) == -1)
+		return (evs);
 	while (evs[i])
 		i++;
 	ret = malloc(i * (sizeof(char *)));
