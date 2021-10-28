@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 13:31:47 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 15:07:56 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	run_commands(t_shell *shell, t_token *token)
 		return ;
 	commands = create_command_array(token);
 	i = 0;
+	if (ft_strcmp(commands[0], "cat") == 0 || ft_strcmp(commands[0], "head") \
+		== 0 || ft_strcmp(commands[0], "tail") == 0)
+		g_signal.cht = 1;
 	if (commands && ft_strcmp(commands[0], "exit") == 0 \
 			 && has_pipe(token) == 0)
 		shell_exit(shell, commands);
