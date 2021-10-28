@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:52:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 17:51:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	run_commands(t_shell *shell, t_token *token)
 	else if (commands && builtin_check(commands[0]))
 		shell->rv = execute_builtin(commands, shell);
 	else if (commands)
-		shell->rv = execute_bin(commands, shell);
+		shell->rv = execute_bin(commands, shell, token);
 	if (commands && shell->rv != -1)
 		free_array(commands);
 	ft_close(shell->pipin);
@@ -112,7 +112,10 @@ void	minishell(t_shell *shell)
 		if (shell->last == 0)
 			shell->rv = status;
 		if (shell->parent == 0)
+		{
+			free_tokens(token);
 			exit(shell->rv);
+		}
 		shell->no_exec = 0;
 		token = next_run(token, 1);
 	}

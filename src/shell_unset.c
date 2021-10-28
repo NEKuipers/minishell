@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/21 16:34:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 09:38:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	shell_unset(char **commands, t_shell *shell)
 	}
 	while (commands[i] != NULL)
 	{
-		shell->evs = remove_env(shell->evs, commands[i]);
+		if (ft_strcmp(commands[i], "") != 0)
+			shell->evs = remove_env(shell->evs, commands[i]);
 		i++;
 	}
 	return (0);

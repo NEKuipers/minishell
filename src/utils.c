@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:21:20 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:51:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 17:49:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	free_tokens(t_token *start)
 		start = start->next;
 		if (start->prev)
 			ft_memdel(start->prev);
-		if (start->str)
-			free(start->str);
 	}
 	if (start)
 		free(start);

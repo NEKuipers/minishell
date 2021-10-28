@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:38:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/27 17:51:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int					shell_cd(char **commands, t_shell *shell);
 int					shell_export(char **commands, t_shell *shell);
 void				shell_exit(t_shell *shell, char **commands);
 int					shell_unset(char **commands, t_shell *shell);
-int					execute_bin(char **commands, t_shell *shell);
+int					execute_bin(char **commands, t_shell *shell, t_token *token);
 
 void				signal_int_handler(int code);
 void				signal_quit_handler(int code);
