@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:29:13 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 17:22:13 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char	**sort_alpha(char **evs)
 		j = i + 1;
 		while (n[j] != NULL)
 		{
-			if (ft_strncmp(n[i], n[j], (ft_strlen(n[i]) > ft_strlen(n[j])
-						? ft_strlen(n[i]) : ft_strlen(n[j]))) > 0)
+			if (ft_strncmp(n[i], n[j], max(ft_strlen(n[i]), \
+				ft_strlen(n[j]))) > 0)
 			{
 				temp = n[i];
 				n[i] = n[j];

@@ -6,12 +6,19 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:56:16 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/28 17:23:05 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+int	max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
 static char	*repl_change(char *in, int i, int len, char *val)
 {
@@ -37,13 +44,6 @@ static char	*repl_change(char *in, int i, int len, char *val)
 	}
 	free(val);
 	return (out);
-}
-
-static char	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
 }
 
 static int	repl_env_name(char *in, int i, char **env, char **val)

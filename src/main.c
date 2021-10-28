@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:55:46 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/28 17:02:32 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	**create_command_array(t_token *start)
 	}
 	array = (char **)malloc(sizeof(char *) * i);
 	token = start->next;
-	array[0] = start->str;
+	array[0] = ft_strdup(start->str);
 	i = 1;
 	while (token && token->type < TRUNC)
 	{
-		array[i] = token->str;
+		array[i] = ft_strdup(token->str);
 		token = token->next;
 		i++;
 	}
@@ -46,19 +46,20 @@ char	**create_command_array(t_token *start)
 void	run_commands(t_shell *shell, t_token *token)
 {
 	char	**commands;
-	int		i;
 
 	if (shell->charge == 0)
 		return ;
 	commands = create_command_array(token);
-	i = 0;
+	if (ft_strcmp(commands[0], "cat") == 0 || ft_strcmp(commands[0], "head") \
+		== 0 || ft_strcmp(commands[0], "tail") == 0)
+		g_signal.cht = 1;
 	if (commands && ft_strcmp(commands[0], "exit") == 0 \
 			 && has_pipe(token) == 0)
 		shell_exit(shell, commands);
 	else if (commands && builtin_check(commands[0]))
 		shell->rv = execute_builtin(commands, shell);
 	else if (commands)
-		shell->rv = execute_bin(commands, shell);
+		shell->rv = execute_bin(commands, shell, token);
 	if (commands && shell->rv != -1)
 		free_array(commands);
 	ft_close(shell->pipin);
@@ -113,7 +114,7 @@ void	minishell(t_shell *shell)
 			shell->rv = status;
 		if (shell->parent == 0)
 		{
-			free_tokens(shell->start);
+			free_tokens(token);
 			exit(shell->rv);
 		}
 		shell->no_exec = 0;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:57:22 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/28 16:20:37 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #include <readline/history.h>
 #include "../includes/minishell.h"
 
-void	parse_part_two(t_shell *shell, t_token *token, char *line)
+void	parse_part_two(t_shell *shell, char *line)
 {
+	t_token	*token;
+
 	line = repl_process(line, shell);
 	line = space_out_line(line);
 	shell->start = create_tokens(line);
@@ -33,7 +35,6 @@ void	parse_part_two(t_shell *shell, t_token *token, char *line)
 void	parse(t_shell *shell)
 {
 	char	*line;
-	t_token	*token;
 
 	line = readline("<$ ");
 	if (line == NULL)
@@ -50,12 +51,12 @@ void	parse(t_shell *shell)
 	if (quote_check(shell, &line))
 		return ;
 	rl_redisplay();
-	parse_part_two(shell, token, line);
+	parse_part_two(shell, line);
 }
 
 static void	syntax_errormessage(char *str, int type)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR);
 	if (type == 1)
 		ft_putstr_fd("newline", STDERR);
 	else if (type == 2)

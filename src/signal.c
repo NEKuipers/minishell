@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 15:54:59 by bmans         ########   odam.nl         */
+/*   Updated: 2021/10/28 16:32:19 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	signal_int_handler(int code)
 	(void)code;
 	if (g_signal.pid == 0)
 	{
-		ft_putstr_fd("\b\b  ", STDERR);
 		ft_putstr_fd("\n", STDERR);
+		if (g_signal.cht == 0)
+			ft_putstr_fd("<$ ", STDERR);
 		g_signal.exit_status = 1;
 	}
 	else
@@ -27,6 +28,7 @@ void	signal_int_handler(int code)
 		g_signal.exit_status = 130;
 	}
 	g_signal.sigint = 1;
+	g_signal.cht = 0;
 }
 
 void	signal_quit_handler(int code)
@@ -41,8 +43,6 @@ void	signal_quit_handler(int code)
 		g_signal.exit_status = 131;
 		g_signal.sigquit = 1;
 	}
-	else
-		ft_putstr_fd("\b\b  \b\b", STDERR);
 	ft_memdel(nbr);
 }
 
@@ -52,4 +52,5 @@ void	init_signal(void)
 	g_signal.sigquit = 0;
 	g_signal.pid = 0;
 	g_signal.exit_status = 0;
+	g_signal.cht = 0;
 }

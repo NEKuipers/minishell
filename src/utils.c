@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:21:20 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:09:07 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 11:53:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ void	free_tokens(t_token *start)
 {
 	while (start && start->next)
 	{
+		if (start->str != NULL)
+			ft_memdel(start->str);
 		start = start->next;
-		if (start->prev)
-			ft_memdel(start->prev);
+		ft_memdel(start->prev);
 	}
 	if (start)
-		free(start);
+	{
+		ft_memdel(start->str);
+		ft_memdel(start);
+	}
 }
 
 int	has_pipe(t_token *token)
@@ -61,7 +65,7 @@ void	free_array(char **array)
 		return ;
 	while (array[i])
 	{
-		if (array[i])
+		if (array[i] != NULL)
 			free(array[i]);
 		i++;
 	}

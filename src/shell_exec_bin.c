@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:11:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 10:21:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 	execve(temp, args, evs);
 }
 
-static int	shell_execpath_2(char **paths, char **args, char **evs)
+static int	shell_execpath_2(char **paths, char **args, \
+	char **evs, t_token *token)
 {
 	int			pid;
 	int			i;
@@ -45,7 +46,8 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 			i++;
 		}
 		ft_printf("minishell: command not found: %s.\n", args[0]);
-		return (pid_error(paths, args));
+		free_tokens(token);
+		pid_error(paths, args);
 	}
 	else if (pid < 0)
 		pid_error(paths, args);
@@ -54,7 +56,7 @@ static int	shell_execpath_2(char **paths, char **args, char **evs)
 	return (0);
 }
 
-int	execute_bin(char **commands, t_shell *shell)
+int	execute_bin(char **commands, t_shell *shell, t_token *token)
 {
 	char	**paths;
 	int		i;
@@ -79,5 +81,5 @@ int	execute_bin(char **commands, t_shell *shell)
 		}
 	}
 	free(newpath);
-	return (shell_execpath_2(paths, commands, shell->evs));
+	return (shell_execpath_2(paths, commands, shell->evs, token));
 }

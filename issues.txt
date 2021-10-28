@@ -1,7 +1,1 @@
-- ctrl+C during cat does prints "ˆC" in bash
-- ctrl+C does not print prompt again
-- ctrl+D prints "exit" in bash
-- Prints prompt twice sometimes when exiting cat/tail/head with ctrl+C (FIXED??)
-- "unset ''" crashes program sometimes
-- Still numerous leaks, perhaps parser is not freed
-- Norme
+- escaping dollar sign doesn't work	
