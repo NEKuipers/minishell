@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 12:29:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 13:35:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char				**set_new_env(char **evs, char *arg, int mod);
 int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				**copy_evs(char **inputs);
+int					valid_identifier(char *cmd);
 
 void				minishell(t_shell *shell);
 void				shell_execute(t_shell *shell, t_token *token);

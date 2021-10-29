@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 11:00:50 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 13:43:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,39 +68,55 @@ static int	match_env(char **evs, char *arg)
 	return (-1);
 }
 
-static void	replace_env(char **evs, char *arg, int index)
+static void	replace_env(t_shell *shell, char *arg)
 {
-	if (ft_strchr(arg, '='))
+	int	index;
+
+	index = match_env(shell->evs, arg);
+	if (index >= 0)
 	{
-		free(evs[index]);
-		evs[index] = ft_strdup(arg);
+		if (ft_strchr(arg, '='))
+		{
+			free(shell->evs[index]);
+			shell->evs[index] = ft_strdup(arg);
+		}
 	}
+	else
+		shell->evs = set_new_env(shell->evs, arg, 0);
+}
+
+static void	empty_export(t_shell *shell)
+{
+	char	**temp[2];
+
+	temp[0] = sort_alpha(shell->evs);
+	temp[1] = shell->evs;
+	shell->evs = temp[0];
+	shell_env(shell);
+	shell->evs = temp[1];
+	free_array(temp[0]);
 }
 
 int	shell_export(char **commands, t_shell *shell)
 {
-	char	**temp[2];
 	int		i;
-	int		index;
+	int		rv;
 
 	i = 1;
+	rv = 0;
 	while (commands[i] != NULL)
 	{
-		index = match_env(shell->evs, commands[i]);
-		if (index >= 0)
-			replace_env(shell->evs, commands[i], index);
+		if (valid_identifier(commands[i]) == 1)
+		{
+			ft_printf("minishell: export: `%s': not a valid identifier\n", \
+				commands[i]);
+			rv = 1;
+		}
 		else
-			shell->evs = set_new_env(shell->evs, commands[i], 0);
+			replace_env(shell, commands[i]);
 		i++;
 	}
 	if (commands[1] == NULL)
-	{
-		temp[0] = sort_alpha(shell->evs);
-		temp[1] = shell->evs;
-		shell->evs = temp[0];
-		shell_env(shell);
-		shell->evs = temp[1];
-		free_array(temp[0]);
-	}
-	return (0);
+		empty_export(shell);
+	return (rv);
 }

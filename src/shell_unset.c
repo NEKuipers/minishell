@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 12:49:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 13:37:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,20 @@ char	**remove_env(char **evs, char *arg)
 	return (ret);
 }
 
-static int	valid_identifier(char *command)
+int	valid_identifier(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(command, "") == 0)
+	if (ft_strcmp(cmd, "") == 0)
 		return (1);
-	if (!ft_isalpha(command[0]) && command[0] != '_')
+	if (!ft_isalpha(cmd[0]) && cmd[0] != '_')
 		return (1);
-	while (command[i] != 0)
+	while (cmd[i] != 0)
 	{
-		if (command[i] > 'z' || command[i] == 96 || \
-		(command[i] >= 91 && command[i] <= 94) || \
-		(command[i] <= '@' && command[i] <= ':') || command[i] < '0')
+		if (cmd[i] < 34 || cmd[i] > 122 || cmd[i] == ':' || cmd[i] == ';' \
+			|| cmd[i] == '<' || cmd[i] == 96 || (cmd[i] < 95 && cmd[i] > 90) \
+				 || cmd[i] == '?' || cmd[i] == '@' || cmd[i] == '>')
 			return (1);
 		i++;
 	}
@@ -104,12 +104,14 @@ int	shell_unset(char **commands, t_shell *shell)
 	while (commands[i] != NULL)
 	{
 		if (valid_identifier(commands[i]) == 1)
+		{
+			ft_printf("minishell: unset: `%s': not a valid identifier\n", \
+				commands[i]);
 			rv = 1;
+		}
 		else
 			shell->evs = remove_env(shell->evs, commands[i]);
 		i++;
 	}
-	if (rv == 1)
-		ft_printf("minishell: unset: `': not a valid identifier\n");
 	return (rv);
 }
