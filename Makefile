@@ -6,9 +6,11 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/10/27 14:32:44 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/10/27 15:54:41 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+#					translate_envs.c
 
 NAME            =   minishell
 SRCS            =   main.c \

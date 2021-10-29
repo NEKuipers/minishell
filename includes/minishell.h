@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 15:03:13 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 17:23:34 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void				signal_quit_handler(int code);
 void				init_signal(void);
 
 char				*repl_process(char *in, t_shell *shell);
+int					max(int a, int b);
 extern t_signal	g_signal;
 
 #endif

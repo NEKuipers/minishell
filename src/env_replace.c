@@ -6,55 +6,19 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 12:05:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/28 17:23:05 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-/*
-static char	*repl_glue(char **temp)
+int	max(int a, int b)
 {
-	char	*out[2];
-
-	out[0] = ft_strjoin(temp[0], temp[1]);
-	free(temp[0]);
-	if (!out[0])
-		return (NULL);
-	out[1] = ft_strjoin(out[0], temp[2]);
-	free(out[0]);
-	return (out[1]);
+	if (a > b)
+		return (a);
+	return (b);
 }
-
-static char	*repl_change(char *in, char *search, int *i, char **env)
-{
-	char	*temp[3];
-	int		j;
-	int		k;
-
-	j = 0;
-	temp[1] = "";
-	while (env[j])
-	{
-		k = ft_strnstr(env[j], "=", ft_strlen(env[j])) - env[j];
-		if (!ft_strncmp(env[j], search, ft_strlen(search)))
-		{
-			temp[1] = env[j] + k + 1;
-			break ;
-		}
-		j++;
-		if (env[j] == NULL)
-			k = ft_strlen(search);
-	}
-	temp[2] = in + *i + 1 + k;
-	temp[0] = ft_substr(in, 0, *i);
-	if (!temp[0])
-		return (NULL);
-	*i += ft_strlen(temp[1]) - 1;
-	return (repl_glue(temp));
-}
-*/
 
 static char	*repl_change(char *in, int i, int len, char *val)
 {
@@ -82,13 +46,6 @@ static char	*repl_change(char *in, int i, int len, char *val)
 	return (out);
 }
 
-static char	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
 static int	repl_env_name(char *in, int i, char **env, char **val)
 {
 	int		clip;
@@ -97,7 +54,7 @@ static int	repl_env_name(char *in, int i, char **env, char **val)
 	char	*tkn;
 
 	clip = 0;
-	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'", in[i + 1 + clip]))
+	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'\\", in[i + 1 + clip]))
 		clip++;
 	tkn = in + i + 1;
 	j = 0;
@@ -156,9 +113,8 @@ char	*repl_process(char *in, t_shell *shell)
 		if (in[i] == '\\' && in[i + 1] == '$')
 			in = repl_change(in, i, 2, ft_strdup("$"));
 		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$')
-			i += repl_env(i, &in, shell);
-		else
-			i++;
+			i += repl_env(i, &in, shell) - 1;
+		i++;
 	}
 	return (in);
 }
