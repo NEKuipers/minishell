@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 16:32:19 by brendan       ########   odam.nl         */
+/*   Updated: 2021/10/29 12:01:37 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	signal_quit_handler(int code)
 	{
 		ft_putstr_fd("Quit: ", STDERR);
 		ft_putendl_fd(nbr, STDERR);
-		g_signal.exit_status = 131;
+		g_signal.exit_status = 130;
 		g_signal.sigquit = 1;
 	}
 	ft_memdel(nbr);

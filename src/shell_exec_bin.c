@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 11:33:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 12:00:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	pid_error(char **paths, char **args)
 {
 	free_array(args);
 	free_array(paths);
-	exit(1);
+	exit(127);
 }
 
 static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
