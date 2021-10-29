@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 13:43:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 17:04:54 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,61 +21,33 @@
 ** variable is added with no value (test='').
 */
 
-char	**sort_alpha(char **evs)
+static char	*envjoiner(char *dest, char *src)
 {
-	char	**n;
-	char	*temp;
 	int		i;
-	int		j;
-
-	n = copy_evs(evs);
-	i = 0;
-	j = 2;
-	while (n[i] != NULL && i < j - 1)
-	{
-		j = i + 1;
-		while (n[j] != NULL)
-		{
-			if (ft_strncmp(n[i], n[j], max(ft_strlen(n[i]), \
-				ft_strlen(n[j]))) > 0)
-			{
-				temp = n[i];
-				n[i] = n[j];
-				n[j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (n);
-}
-
-static int	match_env(char **evs, char *arg)
-{
-	int	i;
-	int	j;
+	char	*sub;
+	char	*temp;
 
 	i = 0;
-	while (evs[i])
-	{
-		j = 0;
-		while (evs[i][j] != '=')
-			j++;
-		if (ft_strncmp(evs[i], arg, j) == 0)
-			return (i);
+	while (src[i - 1] != '=')
 		i++;
-	}
-	return (-1);
+	sub = ft_substr(src, i, 2147483647);
+	temp = dest;
+	dest = ft_strjoin(temp, sub);
+	free(temp);
+	free(sub);
+	return (dest);
 }
 
-static void	replace_env(t_shell *shell, char *arg)
+static void	replace_env(t_shell *shell, char *arg, char op)
 {
-	int	index;
+	int		index;
 
 	index = match_env(shell->evs, arg);
 	if (index >= 0)
 	{
-		if (ft_strchr(arg, '='))
+		if (op == '+')
+			shell->evs[index] = envjoiner(shell->evs[index], arg);
+		else if (ft_strchr(arg, '='))
 		{
 			free(shell->evs[index]);
 			shell->evs[index] = ft_strdup(arg);
@@ -97,6 +69,23 @@ static void	empty_export(t_shell *shell)
 	free_array(temp[0]);
 }
 
+static int	envpluscheck(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '=' && i > 0)
+		{
+			if (arg[i - 1] == '+')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	shell_export(char **commands, t_shell *shell)
 {
 	int		i;
@@ -112,8 +101,10 @@ int	shell_export(char **commands, t_shell *shell)
 				commands[i]);
 			rv = 1;
 		}
+		else if (envpluscheck(commands[i]) == 1)
+			replace_env(shell, commands[i], '+');
 		else
-			replace_env(shell, commands[i]);
+			replace_env(shell, commands[i], ' ');
 		i++;
 	}
 	if (commands[1] == NULL)

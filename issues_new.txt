@@ -4,5 +4,4 @@
  - als je env | head doet sluit de shell zichzelf af
  - << redirect (HEREDOC)
  - "< Makefile cat" moet hetzelfde doen als "cat < Makefile"
-  - export += moet een strjoin doen
  - cd - naar een oldpwd folder die verwijderd is crasht het programma

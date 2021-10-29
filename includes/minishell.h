@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 13:35:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 17:05:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ int					shell_echo(char **commands);
 int					shell_env(t_shell *shell);
 int					shell_cd(char **c, t_shell *shell);
 int					shell_export(char **commands, t_shell *shell);
+char				**sort_alpha(char **evs);
+int					match_env(char **evs, char *arg);
 void				shell_exit(t_shell *shell, char **commands);
 int					shell_unset(char **commands, t_shell *shell);
 int					execute_bin(char **commands, t_shell *shell, \
