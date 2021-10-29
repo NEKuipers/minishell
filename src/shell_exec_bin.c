@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 10:21:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 11:02:36 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	shell_execpath_2(char **paths, char **args, \
 	struct stat	buf;
 
 	i = 0;
+	if (ft_strncmp(args[0], "./", 2) == 0)
+		paths = set_new_env(paths, args[0], 1);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -71,7 +73,7 @@ int	execute_bin(char **commands, t_shell *shell, t_token *token)
 	{
 		paths = ft_split(&((shell->evs)[i][5]), ':');
 		i = 0;
-		paths = set_new_env(paths, "/");
+		paths = set_new_env(paths, "/", 0);
 		while (paths[i])
 		{
 			temp = paths[i];

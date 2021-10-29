@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils_env.c                                        :+:    :+:            */
+/*   utils_2.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:10:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:32:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 10:59:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**paths_without_path(char **commands)
 	return (paths);
 }
 
-char	**set_new_env(char **evs, char *arg)
+char	**set_new_env(char **evs, char *arg, int mod)
 {
 	int		i;
 	char	**ret;
@@ -39,7 +39,7 @@ char	**set_new_env(char **evs, char *arg)
 		ret[i] = ft_strdup(evs[i]);
 		i++;
 	}
-	if (ft_strchr(arg, '=') != NULL || ft_strcmp("/", arg) == 0)
+	if (ft_strchr(arg, '=') != NULL || ft_strcmp("/", arg) == 0 || mod == 1)
 		ret[i] = ft_strdup(arg);
 	else
 		ret[i] = ft_strjoin(arg, "=''");

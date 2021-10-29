@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 17:22:13 by brendan       ########   odam.nl         */
+/*   Updated: 2021/10/29 11:00:50 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	shell_export(char **commands, t_shell *shell)
 		if (index >= 0)
 			replace_env(shell->evs, commands[i], index);
 		else
-			shell->evs = set_new_env(shell->evs, commands[i]);
+			shell->evs = set_new_env(shell->evs, commands[i], 0);
 		i++;
 	}
 	if (commands[1] == NULL)

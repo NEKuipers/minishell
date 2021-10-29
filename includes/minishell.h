@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 17:23:34 by brendan       ########   odam.nl         */
+/*   Updated: 2021/10/29 10:59:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int					operator_pipe(t_shell *shell);
 void				operator_input(t_shell *shell, t_token *token);
 void				operator_redirect(t_shell *shell, t_token *token, int type);
 
-char				**set_new_env(char **evs, char *arg);
+char				**set_new_env(char **evs, char *arg, int mod);
 int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				**copy_evs(char **inputs);
