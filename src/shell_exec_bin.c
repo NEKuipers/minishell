@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 11:02:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 11:33:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
 static int	shell_execpath_2(char **paths, char **args, \
 	char **evs, t_token *token)
 {
-	int			pid;
 	int			i;
 	struct stat	buf;
+	int			rv;
 
 	i = 0;
 	if (ft_strncmp(args[0], "./", 2) == 0)
 		paths = set_new_env(paths, args[0], 1);
-	pid = fork();
-	if (pid == 0)
+	g_signal.pid = fork();
+	if (g_signal.pid == 0)
 	{
 		while (paths[i])
 		{
@@ -51,11 +51,11 @@ static int	shell_execpath_2(char **paths, char **args, \
 		free_tokens(token);
 		pid_error(paths, args);
 	}
-	else if (pid < 0)
-		pid_error(paths, args);
+	waitpid(g_signal.pid, &rv, 0);
+	if (g_signal.sigint == 1 || g_signal.sigquit == 1)
+		return (g_signal.exit_status);
 	free_array(paths);
-	wait(0);
-	return (0);
+	return (WEXITSTATUS(rv));
 }
 
 int	execute_bin(char **commands, t_shell *shell, t_token *token)
