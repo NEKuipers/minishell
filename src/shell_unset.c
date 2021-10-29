@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 12:42:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 12:49:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,33 @@ char	**remove_env(char **evs, char *arg)
 	return (ret);
 }
 
-int	shell_unset(char **commands, t_shell *shell)
+static int	valid_identifier(char *command)
 {
 	int	i;
 
+	i = 0;
+	if (ft_strcmp(command, "") == 0)
+		return (1);
+	if (!ft_isalpha(command[0]) && command[0] != '_')
+		return (1);
+	while (command[i] != 0)
+	{
+		if (command[i] > 'z' || command[i] == 96 || \
+		(command[i] >= 91 && command[i] <= 94) || \
+		(command[i] <= '@' && command[i] <= ':') || command[i] < '0')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	shell_unset(char **commands, t_shell *shell)
+{
+	int	i;
+	int	rv;
+
 	i = 1;
+	rv = 0;
 	if (commands[1] == NULL)
 	{
 		ft_printf("minishell: unset: not enough arguments\n");
@@ -81,13 +103,13 @@ int	shell_unset(char **commands, t_shell *shell)
 	}
 	while (commands[i] != NULL)
 	{
-		if (ft_strcmp(commands[i], "") == 0)
-		{
-			ft_printf("minishell: unset: `': not a valid identifier\n");
-			return (1);
-		}
-		shell->evs = remove_env(shell->evs, commands[i]);
+		if (valid_identifier(commands[i]) == 1)
+			rv = 1;
+		else
+			shell->evs = remove_env(shell->evs, commands[i]);
 		i++;
 	}
-	return (0);
+	if (rv == 1)
+		ft_printf("minishell: unset: `': not a valid identifier\n");
+	return (rv);
 }
