@@ -6,13 +6,10 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 14:19:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:36:55 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "../includes/minishell.h"
 
 void	parse_part_two(t_shell *shell, char *line)
