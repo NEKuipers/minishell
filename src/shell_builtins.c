@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 16:59:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 08:47:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ int	shell_echo(char **commands)
 	while (commands[i])
 	{
 		if (ft_strncmp(commands[i], "-n", 3) == 0)
-		{
-			i++;
 			nflag = 1;
-		}
-		if (commands[i] == NULL)
+		else if (commands[i] == NULL)
 			return (0);
 		else if (commands[i + 1] == NULL && nflag == 0)
 			ft_printf("%s\n", commands[i]);

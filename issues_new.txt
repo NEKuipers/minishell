@@ -1,7 +1,5 @@
  - problemen wanneer je ./minishell opent in ./minishell en dan CTRL+C doet
- - Echo -n -n abc print op dit moment de tweede -n wel, moet dat niet doen
  - iets typen en dan CTRL+C maakt de buffer niet leeg
- - als je env | head doet sluit de shell zichzelf af
  - << redirect (HEREDOC)
  - "< Makefile cat" moet hetzelfde doen als "cat < Makefile"
  - cd - naar een oldpwd folder die verwijderd is crasht het programma
