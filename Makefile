@@ -6,11 +6,9 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/11/03 15:27:28 by bmans         ########   odam.nl          #
+#    Updated: 2021/11/03 15:41:15 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
-
-#					translate_envs.c
 
 NAME            =   minishell
 SRCS            =   main.c \
@@ -33,7 +31,7 @@ SRCS            =   main.c \
 					utils.c \
 					utils_2.c
 
-BREW_DIR		=	homebrew
+BREW_DIR		=	.brew
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
