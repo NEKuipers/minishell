@@ -1,5 +1,4 @@
  - problemen wanneer je ./minishell opent in ./minishell en dan CTRL+C doet
  - iets typen en dan CTRL+C maakt de buffer niet leeg
  - << redirect (HEREDOC)
- - "< Makefile cat" moet hetzelfde doen als "cat < Makefile"
- - cd - naar een oldpwd folder die verwijderd is crasht het programma
+ - ".." gives doublefree

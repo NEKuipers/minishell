@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 13:37:31 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:08:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 10:10:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*next_run(t_token *token, int skip)
 	return (token);
 }
 
-static void	arrange_tokens_2(t_shell *shell, t_token *token, t_token *prev)
+static void	arrange_tokens_two(t_shell *shell, t_token *token, t_token *prev)
 {
 	token->prev->next = token->next;
 	if (token->next)
@@ -59,10 +59,10 @@ static void	arrange_tokens_2(t_shell *shell, t_token *token, t_token *prev)
 		prev = token;
 	prev->next->prev = token;
 	if (!shell->start->prev)
-	{
 		prev->next = token;
-		shell->start->prev = shell->start;
-	}
+	if (shell->start->prev)
+		shell->start = shell->start->prev;
+	
 }
 
 void	arrange_tokens(t_shell *shell)
@@ -78,7 +78,7 @@ void	arrange_tokens(t_shell *shell)
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
-			arrange_tokens_2(shell, token, prev);
+			arrange_tokens_two(shell, token, prev);
 		}
 		token = token->next;
 	}
