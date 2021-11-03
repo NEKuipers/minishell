@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 13:22:14 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 13:34:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:12:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*space_out_line(char *line)
 			new[j] = ' ';
 			j++;
 			copy_and_increment_char(new, line, &i, &j);
-			if (quotes(line, i) == 0 && line[i] == '>')
+			if (quotes(line, i) == 0 && (line[i] == '>' || line[i] == '<'))
 				copy_and_increment_char(new, line, &i, &j);
 			new[j] = ' ';
 			j++;

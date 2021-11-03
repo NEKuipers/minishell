@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:13:53 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 09:23:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:22:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void	operator_redirect(t_shell *shell, t_token *token, int type)
 		return ;
 	}
 	dup2(shell->fdout, STDOUT);
+}
+
+void	operator_heredoc(t_shell *shell, t_token *token)
+{
+	ft_close(shell->fdin);
+	return ;
 }
 
 void	operator_input(t_shell *shell, t_token *token)

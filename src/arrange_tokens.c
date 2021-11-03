@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 13:37:31 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 10:10:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:22:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	arrange_tokens_two(t_shell *shell, t_token *token, t_token *prev)
 		prev->next = token;
 	if (shell->start->prev)
 		shell->start = shell->start->prev;
-	
 }
 
 void	arrange_tokens(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 09:54:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:13:52 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	shell_execute(t_shell *shell, t_token *token)
 		operator_redirect(shell, token, APPEND);
 	else if (is_type(prev, INPUT))
 		operator_input(shell, token);
+	else if (is_type(prev, HEREDOC))
+		operator_heredoc(shell, token);
 	else if (is_type(prev, PIPE))
 		pipe = operator_pipe(shell);
 	if (next && is_type(next, END) == 0 && pipe != 1)

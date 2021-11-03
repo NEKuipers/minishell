@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 13:31:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:22:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static int	shell_cd_do(char **c, t_shell *shell)
 
 int	shell_cd(char **c, t_shell *shell)
 {
-	char 	**newcmd;
-	
+	char	**newcmd;
+
 	if (ft_strcmp(c[0], ".") == 0)
 		return (0);
 	if (ft_strcmp(c[0], "..") == 0)

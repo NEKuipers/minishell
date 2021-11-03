@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 12:49:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:13:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 # define TRUNC 3
 # define APPEND 4
 # define INPUT 5
-# define PIPE 6
-# define END 7
+# define HEREDOC 6
+# define PIPE 7
+# define END 8
 
 # define BUFF_SIZE 4096
 
@@ -116,6 +117,7 @@ void				free_array(char **array);
 int					operator_pipe(t_shell *shell);
 void				operator_input(t_shell *shell, t_token *token);
 void				operator_redirect(t_shell *shell, t_token *token, int type);
+void				operator_heredoc(t_shell *shell, t_token *token);
 
 char				**set_new_env(char **evs, char *arg, int mod);
 int					find_ev(char **evs, char *target);

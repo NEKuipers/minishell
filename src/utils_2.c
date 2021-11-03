@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:10:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 10:59:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 14:11:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	is_types(t_token *token, char *types)
 	else if (ft_strchr(types, 'X') && is_type(token, CMD))
 		return (1);
 	else if (ft_strchr(types, 'x') && is_type(token, ARG))
+		return (1);
+	else if (ft_strchr(types, 'H') && is_type(token, HEREDOC))
 		return (1);
 	else if (ft_strchr(types, 'T') && is_type(token, TRUNC))
 		return (1);

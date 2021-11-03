@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 10:02:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 14:19:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	check_syntax(t_shell *shell, t_token *token)
 {
 	while (token)
 	{
-		if (is_types(token, "TAI") \
-			&& (!token->next || is_types(token->next, "TAIPE")))
+		if (is_types(token, "TAIH") \
+			&& (!token->next || is_types(token->next, "TAHPE")))
 		{
 			if (token->next)
 				syntax_errormessage(token->next->str, 2);
@@ -80,7 +80,8 @@ int	check_syntax(t_shell *shell, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE") \
-			&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
+			&& (!token->prev || !token->next || \
+				is_types(token->prev, "TAIHPE")))
 		{
 			syntax_errormessage(token->str, 2);
 			shell->rv = 258;

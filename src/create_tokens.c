@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/27 16:58:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 15:22:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	apply_token_type(t_token *token, int separator)
 		token->type = TRUNC;
 	else if (ft_strcmp(token->str, ">>") == 0 && separator == 0)
 		token->type = APPEND;
+	else if (ft_strcmp(token->str, "<<") == 0 && separator == 0)
+		token->type = HEREDOC;
 	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
 		token->type = INPUT;
 	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)
