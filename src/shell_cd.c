@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 11:50:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 13:31:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	shell_cd_do(char **c, t_shell *shell)
 
 int	shell_cd(char **c, t_shell *shell)
 {
-	char **newcmd;
+	char 	**newcmd;
 	
 	if (ft_strcmp(c[0], ".") == 0)
 		return (0);
@@ -72,8 +72,9 @@ int	shell_cd(char **c, t_shell *shell)
 		newcmd[0] = ft_strdup("cd");
 		newcmd[1] = ft_strdup("..");
 		newcmd[2] = NULL;
-		free_array(c);
-		return (shell_cd_do(newcmd, shell));
+		shell_cd_do(newcmd, shell);
+		free_array(newcmd);
+		return (0);
 	}
 	else
 		return (shell_cd_do(c, shell));
