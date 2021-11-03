@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 12:29:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 11:50:27 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	set_new_pwd(char **evs, int i, char *old)
 	return (0);
 }
 
-int	shell_cd(char **c, t_shell *shell)
+static int	shell_cd_do(char **c, t_shell *shell)
 {
 	int		i;
 	char	*old;
@@ -58,4 +58,23 @@ int	shell_cd(char **c, t_shell *shell)
 		}
 	}
 	return (set_new_pwd(shell->evs, i, old));
+}
+
+int	shell_cd(char **c, t_shell *shell)
+{
+	char **newcmd;
+	
+	if (ft_strcmp(c[0], ".") == 0)
+		return (0);
+	if (ft_strcmp(c[0], "..") == 0)
+	{
+		newcmd = (char **)malloc(sizeof(char *) * 3);
+		newcmd[0] = ft_strdup("cd");
+		newcmd[1] = ft_strdup("..");
+		newcmd[2] = NULL;
+		free_array(c);
+		return (shell_cd_do(newcmd, shell));
+	}
+	else
+		return (shell_cd_do(c, shell));
 }

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 16:03:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 11:56:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	signal_int_handler(int code)
 	if (g_signal.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
+		rl_replace_line("", 0);
 		if (g_signal.cht == 0)
 			ft_putstr_fd("<$ ", STDERR);
 		g_signal.exit_status = 1;
@@ -25,6 +26,7 @@ void	signal_int_handler(int code)
 	else
 	{
 		ft_putstr_fd("\n", STDERR);
+		rl_replace_line("", 0);
 		g_signal.exit_status = 130;
 	}
 	g_signal.sigint = 1;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 08:47:02 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/03 11:45:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	execute_builtin(char **commands, t_shell *shell)
 	int	returnvalue;
 
 	returnvalue = 0;
-	if (ft_strcmp(commands[0], "cd") == 0)
+	if (ft_strcmp(commands[0], "cd") == 0 || \
+	ft_strcmp(commands[0], "..") == 0 || ft_strcmp(commands[0], ".") == 0)
 		returnvalue = shell_cd(commands, shell);
 	if (ft_strcmp(commands[0], "echo") == 0)
 		returnvalue = shell_echo(commands);
@@ -99,6 +100,10 @@ int	execute_builtin(char **commands, t_shell *shell)
 
 int	builtin_check(char *command)
 {
+	if (ft_strcmp(command, "..") == 0)
+		return (1);
+	if (ft_strcmp(command, ".") == 0)
+		return (1);
 	if (ft_strcmp(command, "cd") == 0)
 		return (1);
 	if (ft_strcmp(command, "echo") == 0)
