@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 15:13:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 12:46:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,10 @@ int	main(int argc, char **argv, char **envp)
 		return (127);
 	}
 	init_shell_values(&shell, envp);
-	ft_printf("Hi %s! Welcome to ~~minishell~~. ", getenv("USER"));
+	ft_printf("\x1b[36;01mHi %s! Welcome to ~~minishell~~. ", getenv("USER"));
 	ft_printf("Enter 'exit' at any time to leave.\n");
 	ft_printf("_______________________________________________________\n");
+	ft_printf("\x1b[37;01m");
 	while (shell.exit == 0)
 	{
 		init_signal();
