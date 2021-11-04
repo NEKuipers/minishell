@@ -6,11 +6,19 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 10:04:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 15:55:54 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+void	stop_heredoc()
+{
+	int	fds[2];
+
+}
+*/
 
 void	signal_int_handler(int code)
 {
@@ -52,9 +60,14 @@ void	signal_quit_handler(int code)
 
 void	init_signal(void)
 {
+	struct sigaction	sig;
+
 	g_signal.sigint = 0;
 	g_signal.sigquit = 0;
 	g_signal.pid = 0;
 	g_signal.exit_status = 0;
 	g_signal.cht = 0;
+	sig.__sigaction_u.__sa_handler = signal_int_handler;
+	sig.sa_flags = 0;
+	sigaction(SIGINT, &sig, NULL);
 }

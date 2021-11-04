@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 12:46:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 15:55:01 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int	main(int argc, char **argv, char **envp)
 	while (shell.exit == 0)
 	{
 		init_signal();
-		signal(SIGINT, &signal_int_handler);
 		signal(SIGQUIT, &signal_quit_handler);
 		parse(&shell);
 		if (shell.start != NULL && check_syntax(&shell, shell.start))
