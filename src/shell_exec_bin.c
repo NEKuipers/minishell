@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 13:28:02 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 10:08:37 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,44 @@ static int	pid_error(char **paths, char **args)
 	exit(127);
 }
 
-static void	shell_execpath_3(char **paths, char **args, char **evs, int i)
+static void	shell_execpath_3(char **paths, char **args, char **evs)
 {
-	char	*temp;
+	char		*temp;
+	int			i;
+	struct stat	buf;
 
-	temp = ft_strdup(paths[i]);
-	free_array(paths);
-	execve(temp, args, evs);
+	i = 0;
+	while (paths[i])
+	{
+		if (stat(paths[i], &buf) == 0)
+		{
+			temp = ft_strdup(paths[i]);
+			free_array(paths);
+			execve(temp, args, evs);
+		}
+		i++;
+	}
 }
 
 static int	shell_execpath_2(char **paths, char **args, \
 	char **evs, t_token *token)
 {
-	int			i;
-	struct stat	buf;
-	int			rv;
+	int	rv;
 
-	i = 0;
+	if (ft_strcmp(args[0], "./minishell") == 0)
+		g_signal.shlvl = 1;
 	if (ft_strncmp(args[0], "./", 2) == 0)
 		paths = set_new_env(paths, args[0], 1);
 	g_signal.pid = fork();
 	if (g_signal.pid == 0)
 	{
-		while (paths[i])
-		{
-			if (stat(paths[i], &buf) == 0)
-				shell_execpath_3(paths, args, evs, i);
-			i++;
-		}
+		shell_execpath_3(paths, args, evs);
 		ft_printf("minishell: command not found: %s.\n", args[0]);
 		free_tokens(token);
 		pid_error(paths, args);
 	}
 	waitpid(g_signal.pid, &rv, 0);
+	g_signal.shlvl = 0;
 	if (g_signal.sigint == 1 || g_signal.sigquit == 1)
 		return (g_signal.exit_status);
 	free_array(paths);

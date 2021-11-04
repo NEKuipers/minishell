@@ -1,2 +1,1 @@
- - problemen wanneer je ./minishell opent in ./minishell en dan CTRL+C doet
  - ls | ls | ls | ls | ls

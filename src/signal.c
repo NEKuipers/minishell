@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 12:49:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 10:04:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	signal_int_handler(int code)
 {
+	if (g_signal.shlvl == 1)
+		return ;
 	(void)code;
 	if (g_signal.pid == 0)
 	{
