@@ -6,15 +6,43 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/04 13:05:57 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 13:18:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 13:29:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	shell_toggle(char **commands, t_shell *shell)
+static int	shell_toggle_bold(char **commands)
 {
-	(void)shell;
+	if (commands[3] != NULL)
+		ft_printf("error: too many arguments\n");
+	if (commands[2] == NULL)
+		ft_printf("\x1b[37;01m");
+	else if (ft_strcmp(commands[2], "black") == 0)
+		ft_printf("\x1b[30;01m");
+	else if (ft_strcmp(commands[2], "red") == 0)
+		ft_printf("\x1b[31;01m");
+	else if (ft_strcmp(commands[2], "green") == 0)
+		ft_printf("\x1b[32;01m");
+	else if (ft_strcmp(commands[2], "yellow") == 0)
+		ft_printf("\x1b[33;01m");
+	else if (ft_strcmp(commands[2], "blue") == 0)
+		ft_printf("\x1b[34;01m");
+	else if (ft_strcmp(commands[2], "purple") == 0)
+		ft_printf("\x1b[35;01m");
+	else if (ft_strcmp(commands[2], "cyan") == 0)
+		ft_printf("\x1b[36;01m");
+	else if (ft_strcmp(commands[2], "white") == 0)
+		ft_printf("\x1b[37;01m");
+	else
+		ft_printf("error: enter a valid color\n");
+	return (0);
+}
+
+int	shell_toggle(char **commands)
+{
+	if (ft_strcmp(commands[1], "bold") == 0)
+		return (shell_toggle_bold(commands));
 	if (commands[2] != NULL)
 		ft_printf("error: too many arguments\n");
 	if (commands[1] == NULL)
