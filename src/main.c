@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 15:55:01 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/04 15:59:22 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,15 +130,13 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc > 1)
 	{
-		ft_printf_fd(2, "minishell: %s: No such file \
-				or directory\n", argv[1]);
+		ft_printf_fd(2, "minishell: %s: No such file or directory\n", argv[1]);
 		return (127);
 	}
 	init_shell_values(&shell, envp);
-	ft_printf("\x1b[36;01mHi %s! Welcome to ~~minishell~~. ", getenv("USER"));
+	ft_printf("Hi %s! Welcome to ~~minishell~~. ", getenv("USER"));
 	ft_printf("Enter 'exit' at any time to leave.\n");
 	ft_printf("_______________________________________________________\n");
-	ft_printf("\x1b[37;01m");
 	while (shell.exit == 0)
 	{
 		init_signal();

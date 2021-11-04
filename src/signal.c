@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 15:55:54 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/04 15:59:41 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,10 @@ void	init_signal(void)
 	sig.__sigaction_u.__sa_handler = signal_int_handler;
 	sig.sa_flags = 0;
 	sigaction(SIGINT, &sig, NULL);
+}
+
+void	signal_dummy(int code)
+{
+	(void)code;
+	return ;
 }

@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/11/04 15:56:55 by bmans         ########   odam.nl          #
+#    Updated: 2021/11/04 16:01:26 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS            =   main.c \
 					shell_exec_bin.c \
 					shell_export.c \
 					shell_export_utils.c \
+					shell_toggle.c \
 					shell_unset.c \
 					utils.c \
 					utils_2.c
