@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 10:08:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 12:38:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static int	shell_execpath_2(char **paths, char **args, \
 	}
 	waitpid(g_signal.pid, &rv, 0);
 	g_signal.shlvl = 0;
+	free_array(paths);
 	if (g_signal.sigint == 1 || g_signal.sigquit == 1)
 		return (g_signal.exit_status);
-	free_array(paths);
 	return (WEXITSTATUS(rv));
 }
 

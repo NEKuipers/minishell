@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 16:32:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 12:17:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	valid_identifier(char *cmd)
 		return (1);
 	if (!ft_isalpha(cmd[0]) && cmd[0] != '_')
 		return (1);
-	while (cmd[i] != 0)
+	while (cmd[i] != 0 && cmd[i] != '=')
 	{
 		if (cmd[i] < 32 || cmd[i] > 122 || cmd[i] == ':' || cmd[i] == ';' \
 			|| cmd[i] == '<' || cmd[i] == 96 || (cmd[i] < 95 && cmd[i] > 90) \
