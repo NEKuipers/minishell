@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:15 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 12:56:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 13:47:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc > 1)
 	{
-		ft_printf_fd(2, "minishell: %s: No such file \
-				or directory\n", argv[1]);
+		ft_printf_fd(2, "minishell: %s: No such file or directory\n", argv[1]);
 		return (127);
 	}
 	init_shell_values(&shell, envp);

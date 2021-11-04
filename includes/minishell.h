@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 13:24:11 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 13:54:07 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,11 @@ int					execute_bin(char **commands, t_shell *shell, \
 
 void				signal_int_handler(int code);
 void				signal_quit_handler(int code);
+void				signal_dummy(int code);
 void				init_signal(void);
+
+void				signal_int_heredoc(int code);
+void				signal_quit_heredoc(int code);
 
 char				*repl_process(char *in, t_shell *shell);
 int					max(int a, int b);

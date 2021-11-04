@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 12:38:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 13:47:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	shell_execpath_3(char **paths, char **args, char **evs)
 	struct stat	buf;
 
 	i = 0;
+	signal(SIGINT, &signal_dummy);
+	signal(SIGQUIT, &signal_dummy);
 	while (paths[i])
 	{
 		if (stat(paths[i], &buf) == 0)
