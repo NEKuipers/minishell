@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/04 13:05:57 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 15:54:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/04 14:56:35 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	shell_toggle_bold(char **commands)
 {
 	if (commands[3] != NULL)
 		ft_printf("error: too many arguments\n");
-	else if (commands[2] == NULL)
+	if (commands[2] == NULL)
 		ft_printf("\x1b[37;01m");
 	else if (ft_strcmp(commands[2], "black") == 0)
 		ft_printf("\x1b[30;01m");

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 16:55:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/10/29 17:04:54 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	replace_env(t_shell *shell, char *arg, char op)
 {
 	int		index;
 
-	index = match_env(shell->evs, arg, op);
+	index = match_env(shell->evs, arg);
 	if (index >= 0)
 	{
 		if (op == '+')
