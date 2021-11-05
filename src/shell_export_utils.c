@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/29 17:04:33 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 17:04:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 16:58:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,25 @@ char	**sort_alpha(char **evs)
 	return (n);
 }
 
-int	match_env(char **evs, char *arg)
+int	match_env(char **evs, char *arg, char op)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (evs[i])
+	while (evs[i] && op == '+')
 	{
 		j = 0;
 		while (evs[i][j] != '=')
 			j++;
 		if (evs[i][j - 1] == '+')
 			j--;
-		if (ft_strncmp(evs[i], arg, j) == 0)
-			return (i);
+		if (op == '+')
+			if (!ft_strncmp(evs[i], arg, j))
+				return (i);
+		if (op != '+')
+			if (!ft_strcmp(evs[i], arg))
+				return (i);
 		i++;
 	}
 	return (-1);

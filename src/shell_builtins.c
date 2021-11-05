@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 13:31:20 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 16:05:52 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int	shell_pwd(void)
 	return (1);
 }
 
+static int	n_check(char *command)
+{
+	int	i;
+
+	i = 2;
+	if (ft_strncmp(command, "-n", 2) != 0)
+		return (0);
+	while (command[i])
+	{
+		if (command[i] != 'n' && command[i] != '\0')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	shell_echo(char **commands)
 {
 	int	i;
@@ -33,9 +49,11 @@ int	shell_echo(char **commands)
 
 	i = 1;
 	nflag = 0;
+	if (!commands[1])
+		ft_printf("\n");
 	while (commands[i])
 	{
-		if (ft_strncmp(commands[i], "-n", 3) == 0)
+		if (n_check(commands[i]) == 1)
 			nflag = 1;
 		else if (commands[i] == NULL)
 			return (0);
@@ -48,31 +66,6 @@ int	shell_echo(char **commands)
 		i++;
 	}
 	return (0);
-}
-
-void	shell_exit(t_shell *shell, char **commands)
-{
-	shell->exit = 1;
-	if (commands[1] && ft_strisnum(commands[1]) == 0)
-	{
-		shell->rv = 255;
-		ft_printf_fd(2, "exit\nminishell:");
-		ft_printf_fd(2, "exit: %s: numeric argument required\n", commands[1]);
-	}
-	else if (commands[1] && commands[2])
-	{
-		shell->rv = 1;
-		shell->exit = 0;
-		ft_printf_fd(STDERR, "exit\nminishell: exit: too many arguments\n");
-	}
-	else
-	{
-		if (commands[1])
-			shell->rv = ft_atoi(commands[1]);
-		else
-			shell->rv = 0;
-		ft_printf_fd(0, "exit\n");
-	}
 }
 
 int	execute_builtin(char **commands, t_shell *shell)
