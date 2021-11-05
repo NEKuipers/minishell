@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:13:53 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 14:48:42 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 11:29:31 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ static char	*heredoc(char *delim)
 	out = ft_strdup("");
 	while (1)
 	{
-		if (!out)
-			return (NULL);
 		line = readline("> ");
-		if (!line)
+		if (!out || g_signal.sigint)
 			return (NULL);
-		if (!ft_strncmp(delim, line, max(ft_strlen(delim), ft_strlen(line))))
+		if (!line || !ft_strncmp(delim, line, \
+			max(ft_strlen(delim), ft_strlen(line))))
 		{
 			free(line);
 			return (out);

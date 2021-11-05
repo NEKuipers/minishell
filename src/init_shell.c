@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:16:31 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 10:01:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 11:01:41 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	levelup_shell(t_shell *shell)
 void	init_shell_values(t_shell *shell, char **envp)
 {
 	rl_catch_signals = 0;
-	g_signal.shlvl = 0;
 	shell->evs = copy_evs(envp);
 	shell->in = dup(STDIN);
 	shell->out = dup(STDOUT);

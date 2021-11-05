@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 14:55:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 12:09:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	signal_int_handler(int code)
 {
-	if (g_signal.shlvl == 1)
-		return ;
 	(void)code;
 	if (g_signal.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
+		rl_on_new_line();
 		rl_replace_line("", 0);
-		if (g_signal.cht == 0)
-			ft_putstr_fd("<$ ", STDERR);
+		rl_redisplay();
 		g_signal.exit_status = 1;
 	}
 	else
@@ -52,11 +50,17 @@ void	signal_quit_handler(int code)
 
 void	init_signal(void)
 {
+	struct sigaction	sig;
+
 	g_signal.sigint = 0;
 	g_signal.sigquit = 0;
 	g_signal.pid = 0;
 	g_signal.exit_status = 0;
 	g_signal.cht = 0;
+	sig.__sigaction_u.__sa_handler = signal_int_handler;
+	sig.sa_mask = 0;
+	sig.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sig, NULL);
 }
 
 void	signal_dummy(int code)

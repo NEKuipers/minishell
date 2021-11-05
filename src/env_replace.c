@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/28 17:23:05 by brendan       ########   odam.nl         */
+/*   Updated: 2021/11/04 12:29:07 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	*repl_change(char *in, int i, int len, char *val)
 		ft_strlcpy(out + i, in + i + len, ft_strlen(in) - i - len + 1);
 	}
 	free(val);
+	free(in);
 	return (out);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 13:47:17 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 12:44:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static void	shell_execpath_3(char **paths, char **args, char **evs)
 	struct stat	buf;
 
 	i = 0;
-	signal(SIGINT, &signal_dummy);
-	signal(SIGQUIT, &signal_dummy);
 	while (paths[i])
 	{
 		if (stat(paths[i], &buf) == 0)
@@ -46,7 +44,7 @@ static int	shell_execpath_2(char **paths, char **args, \
 	int	rv;
 
 	if (ft_strcmp(args[0], "./minishell") == 0)
-		g_signal.shlvl = 1;
+		signal(SIGINT, &signal_dummy);
 	if (ft_strncmp(args[0], "./", 2) == 0)
 		paths = set_new_env(paths, args[0], 1);
 	g_signal.pid = fork();
@@ -58,7 +56,6 @@ static int	shell_execpath_2(char **paths, char **args, \
 		pid_error(paths, args);
 	}
 	waitpid(g_signal.pid, &rv, 0);
-	g_signal.shlvl = 0;
 	free_array(paths);
 	if (g_signal.sigint == 1 || g_signal.sigquit == 1)
 		return (g_signal.exit_status);
