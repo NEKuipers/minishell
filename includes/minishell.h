@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 10:48:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/08 11:02:40 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void				signal_quit_heredoc(int code);
 
 char				*repl_process(char *in, t_shell *shell);
 int					max(int a, int b);
+int					only_has(char *str, char c);
 extern t_signal	g_signal;
 
 #endif

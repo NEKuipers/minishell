@@ -6,11 +6,22 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/29 17:04:33 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 17:04:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/08 11:13:47 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	only_has(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str != c)
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 char	**sort_alpha(char **evs)
 {
