@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 13:54:07 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/05 10:48:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_signal
 	int				exit_status;
 	pid_t			pid;
 	int				cht;
-	int				shlvl;
 }					t_signal;
 
 typedef struct s_shell
