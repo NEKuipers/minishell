@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/08 11:14:46 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/08 11:31:20 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,22 @@ int	shell_echo(char **commands)
 
 	i = 1;
 	nflag = 0;
+	while (commands[i] && ft_strncmp(commands[i], "-n", 2) == 0 && \
+		only_has(commands[i] + 1, 'n'))
+	{
+		nflag = 1;
+		i++;
+	}
 	while (commands[i])
 	{
-		if (ft_strncmp(commands[i], "-n", 2) == 0 && \
-			only_has(commands[i] + 1, 'n'))
-			nflag = 1;
-		else if (commands[i] == NULL)
-			return (0);
-		else if (commands[i + 1] == NULL && nflag == 0)
-			ft_printf("%s\n", commands[i]);
-		else if (commands[i + 1] == NULL)
+		if (commands[i + 1] == NULL)
 			ft_printf("%s", commands[i]);
 		else
 			ft_printf("%s ", commands[i]);
 		i++;
 	}
+	if (nflag == 0)
+		ft_printf("\n");
 	return (0);
 }
 
