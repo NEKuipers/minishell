@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:16:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/08 11:42:02 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/08 12:53:51 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,17 @@ char	**remove_env(char **evs, char *arg)
 	return (ret);
 }
 
-int	valid_identifier(char *cmd)
+int	valid_identifier(char *cmd, char export)
 {
 	int	i;
 
 	i = 0;
 	if (ft_strcmp(cmd, "") == 0)
 		return (1);
-	while (cmd[i] && cmd[i] != '=')
+	while (cmd[i])
 	{
+		if (export && (cmd[i] == '=' || (cmd[i] == '+' && cmd[i + 1] == '=')))
+			return (0);
 		if (!(ft_isalpha(cmd[i]) || cmd[i] == '_' || \
 			(i > 0 && ft_isdigit(cmd[i]))))
 			return (1);
@@ -100,7 +102,7 @@ int	shell_unset(char **commands, t_shell *shell)
 	}
 	while (commands[i] != NULL)
 	{
-		if (valid_identifier(commands[i]) == 1)
+		if (valid_identifier(commands[i], 0) == 1)
 		{
 			ft_printf("minishell: unset: `%s': not a valid identifier\n", \
 				commands[i]);

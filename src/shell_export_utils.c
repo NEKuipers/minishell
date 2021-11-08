@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/29 17:04:33 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/08 11:13:47 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/08 14:38:18 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ int	match_env(char **evs, char *arg)
 {
 	int	i;
 	int	j;
+	int	k;
 
+	k = 0;
+	while (arg[k] && arg[k] != '+' && arg[k] != '=')
+		k++;
 	i = 0;
 	while (evs[i])
 	{
@@ -65,9 +69,23 @@ int	match_env(char **evs, char *arg)
 			j++;
 		if (evs[i][j - 1] == '+')
 			j--;
-		if (ft_strncmp(evs[i], arg, j) == 0)
+		if (ft_strncmp(evs[i], arg, max(j, k)) == 0)
 			return (i);
 		i++;
 	}
 	return (-1);
+}
+
+char	*env_reform(char *arg)
+{
+	char	*out;
+	char	*from_eq;
+
+	out = malloc(ft_strlen(arg));
+	if (!out)
+		return (NULL);
+	ft_strlcpy(out, arg, ft_strlen(arg));
+	from_eq = ft_strchr(arg, '=');
+	ft_strlcpy(ft_strchr(out, '+'), from_eq, ft_strlen(from_eq) + 1);
+	return (out);
 }

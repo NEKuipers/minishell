@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/10/29 17:04:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/08 14:34:38 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	*envjoiner(char *dest, char *src)
 static void	replace_env(t_shell *shell, char *arg, char op)
 {
 	int		index;
+	char	*reform;
 
 	index = match_env(shell->evs, arg);
 	if (index >= 0)
@@ -51,7 +52,15 @@ static void	replace_env(t_shell *shell, char *arg, char op)
 		{
 			free(shell->evs[index]);
 			shell->evs[index] = ft_strdup(arg);
+			if (ft_strlen(arg) > 0 && arg[ft_strlen(arg) - 1] == '=')
+				shell->evs[index] = envjoiner(shell->evs[index], "=\'\'");
 		}
+	}
+	else if (ft_strnstr(arg, "+=", (int)(ft_strchr(arg, '=') - arg) + 1))
+	{
+		reform = env_reform(arg);
+		shell->evs = set_new_env(shell->evs, reform, 0);
+		free(reform);
 	}
 	else
 		shell->evs = set_new_env(shell->evs, arg, 0);
@@ -95,7 +104,7 @@ int	shell_export(char **commands, t_shell *shell)
 	rv = 0;
 	while (commands[i] != NULL)
 	{
-		if (valid_identifier(commands[i]) == 1)
+		if (valid_identifier(commands[i], 1) == 1)
 		{
 			ft_printf("minishell: export: `%s': not a valid identifier\n", \
 				commands[i]);
