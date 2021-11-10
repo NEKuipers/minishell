@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/08 10:25:03 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 16:13:38 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	shell_execpath_3(char **paths, char **args, char **evs)
 		if (stat(paths[i], &buf) == 0)
 		{
 			temp = ft_strdup(paths[i]);
-			free_array(paths);
 			execve(temp, args, evs);
 		}
 		i++;
@@ -62,17 +61,17 @@ static int	shell_execpath_2(char **paths, char **args, \
 	return (WEXITSTATUS(rv));
 }
 
-int	execute_bin(char **commands, t_shell *shell, t_token *token)
+int	execute_bin(char **cmd, t_shell *shell, t_token *token)
 {
 	char	**paths;
 	int		i;
 	char	*temp;
 	char	*newpath;
 
-	newpath = ft_strjoin("/", commands[0]);
+	newpath = ft_strjoin("/", cmd[0]);
 	i = find_ev(shell->evs, "PATH=");
 	if (i == -1)
-		paths = paths_without_path(commands);
+		paths = paths_without_path(cmd);
 	else
 	{
 		paths = ft_split(&((shell->evs)[i][5]), ':');
@@ -87,5 +86,5 @@ int	execute_bin(char **commands, t_shell *shell, t_token *token)
 		}
 	}
 	free(newpath);
-	return (shell_execpath_2(paths, commands, shell->evs, token));
+	return (shell_execpath_2(paths, cmd, shell->evs, token));
 }
