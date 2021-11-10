@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 14:55:41 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/10 15:25:36 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,14 @@ static void	shell_execpath_3(char **paths, char **args, char **evs)
 	char		*temp;
 	int			i;
 	struct stat	buf;
-	int			len;
 
 	i = 0;
 	while (paths[i])
 	{
-		len = ft_strlen(paths[i]);
-		if (ft_strcmp("sbin", &paths[i][len - 4]) != 0)
+		if (stat(paths[i], &buf) == 0)
 		{
-			if (stat(paths[i], &buf) == 0)
-			{
-				temp = ft_strdup(paths[i]);
-				free_array(paths);
-				execve(temp, args, evs);
-			}
+			temp = ft_strdup(paths[i]);
+			execve(temp, args, evs);
 		}
 		i++;
 	}
@@ -82,8 +76,7 @@ int	execute_bin(char **cmd, t_shell *shell, t_token *token)
 	{
 		paths = ft_split(&((shell->evs)[i][5]), ':');
 		i = 0;
-		if (ft_strcmp("bin", cmd[0]) != 0 && ft_strcmp("usr", cmd[0]) != 0)
-			paths = set_new_env(paths, "/", 0);
+		paths = set_new_env(paths, "/", 0);
 		while (paths[i])
 		{
 			temp = paths[i];
