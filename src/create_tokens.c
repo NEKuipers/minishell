@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:16:49 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 12:41:32 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ int	next_alloc(char *line, int *i)
 	c = ' ';
 	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
 	{
-//		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
-//			c = line[*i + j];
-//		else if (c != ' ' && line[*i + j] == c)
-//		{
-//			count += 2;
-//			c = ' ';
-//		}
 		j++;
 		if (line[*i + j - 1] == '\\')
 			count--;
@@ -53,11 +46,8 @@ t_token	*next_token(char *line, int *i)
 			c = line[(*i)];
 		else if (c != ' ' && line[*i] == c)
 			c = ' ';
-//		else
-//		{
-			token->str[j] = line[(*i)];
-			j++;
-//		}
+		token->str[j] = line[(*i)];
+		j++;
 		(*i)++;
 	}
 	token->str[j] = '\0';
@@ -88,11 +78,10 @@ void	apply_token_type(t_token *token, int separator)
 
 static t_token	*process_token(char *line, int *i, t_shell *shell)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	temp = next_token(line, i);
 	temp->str = repl_process(temp->str, shell);
-	ft_printf_fd(2, "token: %s\n", temp->str);
 	temp->str = strip_quotes(temp->str);
 	return (temp);
 }
@@ -104,7 +93,6 @@ t_token	*create_tokens(char *line, t_shell *shell)
 	int		i;
 	int		separator;
 
-	(void)shell;
 	prev = NULL;
 	token = NULL;
 	i = 0;

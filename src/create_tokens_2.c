@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 11:33:45 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 12:40:03 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	parse_part_two(t_shell *shell, char *line)
 	{
 		if (is_type(token, ARG))
 			apply_token_type(token, 0);
-//		if (is_types(token, "Xx"))
-//			token->str = repl_process(token->str, shell);
 		token = token->next;
 	}	
 }
