@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 13:34:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:39:03 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 14:18:45 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ char	*strip_quotes(char *str)
 	temp[0] = malloc(ft_strlen(str));
 	while (str[i])
 	{
-		if (str[i] == '\\' && (str[i + 1] == '\"' || str[i + 1] == '\''))
-			i++;
-		else if ((str[i] != '\"' && str[i] != '\'') || i < bypass)
+		if ((str[i] != '\"' && str[i] != '\'') || i < bypass)
 		{
+			if (str[i] == '\\' && (str[i + 1] == '\"' || str[i + 1] == '\''))
+				i++;
 			temp[0][len] = str[i];
 			len++;
 		}
