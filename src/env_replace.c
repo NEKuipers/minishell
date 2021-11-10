@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 11:29:25 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 16:09:54 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	repl_env_name(char *in, int i, char **env, char **val)
 	char	*tkn;
 
 	clip = 0;
-	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'\\", in[i + 1 + clip]))
+	while (in[i + 1 + clip] && (ft_isalpha(in[i + 1 + clip]) || \
+		ft_isdigit(in[i + 1 + clip]) || in[i + 1 + clip] == '_'))
 		clip++;
 	tkn = in + i + 1;
 	j = 0;
