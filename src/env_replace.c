@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/04 12:29:07 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 11:29:25 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*repl_process(char *in, t_shell *shell)
 
 	i = 0;
 	inquotes = 0;
-	while (in && in[i])
+	while (in && in[i] && (inquotes || in[i] != ' '))
 	{
 		if (in[i] == '\"' && (i == 0 || (i > 0 && in[i - 1] != '\\')))
 			inquotes = (inquotes + 1) % 2;

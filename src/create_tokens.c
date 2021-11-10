@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 15:22:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/10 12:16:49 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ int	next_alloc(char *line, int *i)
 	c = ' ';
 	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
 	{
-		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
-			c = line[*i + j++];
-		else if (c != ' ' && line[*i + j] == c)
-		{
-			count += 2;
-			c = ' ';
-			j++;
-		}
-		else
-			j++;
+//		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+//			c = line[*i + j];
+//		else if (c != ' ' && line[*i + j] == c)
+//		{
+//			count += 2;
+//			c = ' ';
+//		}
+		j++;
 		if (line[*i + j - 1] == '\\')
 			count--;
 	}
@@ -55,11 +53,11 @@ t_token	*next_token(char *line, int *i)
 			c = line[(*i)];
 		else if (c != ' ' && line[*i] == c)
 			c = ' ';
-		else
-		{
+//		else
+//		{
 			token->str[j] = line[(*i)];
 			j++;
-		}
+//		}
 		(*i)++;
 	}
 	token->str[j] = '\0';
@@ -88,13 +86,25 @@ void	apply_token_type(t_token *token, int separator)
 		token->type = ARG;
 }
 
-t_token	*create_tokens(char *line)
+static t_token	*process_token(char *line, int *i, t_shell *shell)
+{
+	t_token *temp;
+
+	temp = next_token(line, i);
+	temp->str = repl_process(temp->str, shell);
+	ft_printf_fd(2, "token: %s\n", temp->str);
+	temp->str = strip_quotes(temp->str);
+	return (temp);
+}
+
+t_token	*create_tokens(char *line, t_shell *shell)
 {
 	t_token	*token;
 	t_token	*prev;
 	int		i;
 	int		separator;
 
+	(void)shell;
 	prev = NULL;
 	token = NULL;
 	i = 0;
@@ -102,7 +112,7 @@ t_token	*create_tokens(char *line)
 	while (line[i])
 	{
 		separator = find_separator(line, i);
-		token = next_token(line, &i);
+		token = process_token(line, &i, shell);
 		token->prev = prev;
 		if (prev != NULL)
 			prev->next = token;
