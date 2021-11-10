@@ -6,11 +6,19 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 12:05:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 12:09:55 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/08 10:25:02 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+void	stop_heredoc()
+{
+	int	fds[2];
+
+}
+*/
 
 void	signal_int_handler(int code)
 {

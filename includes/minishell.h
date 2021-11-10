@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 10:48:25 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/08 14:28:31 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char				**set_new_env(char **evs, char *arg, int mod);
 int					find_ev(char **evs, char *target);
 size_t				ft_evlen(char *ev);
 char				**copy_evs(char **inputs);
-int					valid_identifier(char *cmd);
+int					valid_identifier(char *cmd, char export);
 
 void				minishell(t_shell *shell);
 void				shell_execute(t_shell *shell, t_token *token);
@@ -152,6 +152,8 @@ void				signal_quit_heredoc(int code);
 
 char				*repl_process(char *in, t_shell *shell);
 int					max(int a, int b);
+int					only_has(char *str, char c);
+char				*env_reform(char *arg);
 extern t_signal	g_signal;
 
 #endif
