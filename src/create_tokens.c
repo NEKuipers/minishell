@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 15:22:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/10 12:01:57 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ int	next_alloc(char *line, int *i)
 	return (j - count + 1);
 }
 
+static t_token	*init_token(char *line, int *i)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	token->squote = 0;
+	token->str = (char *)malloc(sizeof(char) * next_alloc(line, i));
+	return (token);
+}
+
 t_token	*next_token(char *line, int *i)
 {
 	t_token	*token;
@@ -47,10 +57,11 @@ t_token	*next_token(char *line, int *i)
 
 	j = 0;
 	c = ' ';
-	token = malloc(sizeof(t_token));
-	token->str = (char *)malloc(sizeof(char) * next_alloc(line, i));
+	token = init_token(line, i);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
+		if (line[*i] == '\'')
+			token->squote = 1;
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
 			c = line[(*i)];
 		else if (c != ' ' && line[*i] == c)
