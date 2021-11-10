@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:41:32 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/10 14:04:55 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ void	apply_token_type(t_token *token, int separator)
 static t_token	*process_token(char *line, int *i, t_shell *shell)
 {
 	t_token	*temp;
+	char	*temp_str;	
 
 	temp = next_token(line, i);
 	temp->str = repl_process(temp->str, shell);
-	temp->str = strip_quotes(temp->str);
+	temp_str = strip_quotes(temp->str);
+	free(temp->str);
+	temp->str = temp_str;
 	return (temp);
 }
 
