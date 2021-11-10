@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:10:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 14:11:17 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/10 13:53:42 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ char	**set_new_env(char **evs, char *arg, int mod)
 		ret[i] = ft_strdup(evs[i]);
 		i++;
 	}
-	if (ft_strchr(arg, '=') != NULL || ft_strcmp("/", arg) == 0 || mod == 1)
+	if (arg[ft_strlen(arg) - 1] == '=')
+		ret[i] = ft_strjoin(arg, "\'\'");
+	else if (ft_strchr(arg, '=') || !ft_strcmp("/", arg) || mod == 1)
 		ret[i] = ft_strdup(arg);
 	else
 		ret[i] = ft_strjoin(arg, "=''");
