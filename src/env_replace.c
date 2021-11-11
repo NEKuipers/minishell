@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:05:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/11 15:59:36 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	repl_env(int i, char **in, t_shell *shell)
 	}
 }
 
-char	*repl_process(char *in, t_shell *shell, t_token *token)
+char	*repl_process(char *in, t_shell *shell)//, t_token *token)
 {
 	int		i;
 	char	inquotes;
@@ -113,8 +113,8 @@ char	*repl_process(char *in, t_shell *shell, t_token *token)
 		}
 		if (in[i] == '\\' && in[i + 1] == '$')
 			in = repl_change(in, i, 2, ft_strdup("$"));
-		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$'\
-			&& token->squote == 0)
+		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$')
+//			&& token->squote == 0)
 			i += repl_env(i, &in, shell) - 1;
 		i++;
 	}

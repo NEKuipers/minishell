@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:04:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/11 15:57:37 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
-	int				squote;
+	//int				squote;
 	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
@@ -151,7 +151,7 @@ void				init_signal(void);
 void				signal_int_heredoc(int code);
 void				signal_quit_heredoc(int code);
 
-char				*repl_process(char *in, t_shell *shell, t_token *token);
+char				*repl_process(char *in, t_shell *shell);//, t_token *token);
 int					max(int a, int b);
 int					only_has(char *str, char c);
 char				*env_reform(char *arg);

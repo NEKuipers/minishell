@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/11/10 12:43:42 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/11/11 15:57:22 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS            =   main.c \
 					utils.c \
 					utils_2.c
 
-BREW_DIR		=	.brew
+BREW_DIR		=	homebrew
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -g
