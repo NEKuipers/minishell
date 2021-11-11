@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 13:34:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 16:13:17 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/11 10:04:20 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,4 @@ int	is_last_valid_arg(t_token *token)
 	}
 	else
 		return (0);
-}
-
-char	*strip_quotes(char *str)
-{
-	char	*temp[2];
-	int		i;
-	int		len;
-	int		bypass;
-
-	i = 0;
-	len = 0;
-	bypass = 0;
-	temp[0] = malloc(ft_strlen(str));
-	while (str[i])
-	{
-		if ((str[i] != '\"' && str[i] != '\'') || i < bypass)
-		{
-			if (str[i] == '\\' && (str[i + 1] == '\"' || str[i + 1] == '\''))
-				i++;
-			temp[0][len] = str[i];
-			len++;
-		}
-		else
-			bypass = ft_strchr(str + i + 1, str[i]) - str;
-		i++;
-	}
-	temp[1] = ft_substr(temp[0], 0, len);
-	free(temp[0]);
-	return (temp[1]);
 }
