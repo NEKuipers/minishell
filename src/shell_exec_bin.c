@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 15:25:36 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/11 12:53:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ static int	shell_execpath_2(char **paths, char **args, \
 	return (WEXITSTATUS(rv));
 }
 
-int	execute_bin(char **cmd, t_shell *shell, t_token *token)
+int	execute_bin(char **commands, t_shell *shell, t_token *token)
 {
 	char	**paths;
 	int		i;
 	char	*temp;
 	char	*newpath;
 
-	newpath = ft_strjoin("/", cmd[0]);
+	newpath = ft_strjoin("/", commands[0]);
 	i = find_ev(shell->evs, "PATH=");
 	if (i == -1)
-		paths = paths_without_path(cmd);
+		paths = paths_without_path(commands);
 	else
 	{
 		paths = ft_split(&((shell->evs)[i][5]), ':');
@@ -86,5 +86,5 @@ int	execute_bin(char **cmd, t_shell *shell, t_token *token)
 		}
 	}
 	free(newpath);
-	return (shell_execpath_2(paths, cmd, shell->evs, token));
+	return (shell_execpath_2(paths, commands, shell->evs, token));
 }
