@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/11 12:53:40 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/15 13:18:53 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,18 @@ static int	shell_execpath_2(char **paths, char **args, \
 		signal(SIGINT, &signal_dummy);
 	if (ft_strncmp(args[0], "./", 2) == 0)
 		paths = set_new_env(paths, args[0], 1);
-	g_signal.pid = fork();
-	if (g_signal.pid == 0)
+	if (!g_signal.sigint && !g_signal.sigquit)
 	{
-		shell_execpath_3(paths, args, evs);
-		ft_printf("minishell: command not found: %s.\n", args[0]);
-		free_tokens(token);
-		pid_error(paths, args);
+		g_signal.pid = fork();
+		if (g_signal.pid == 0)
+		{
+			shell_execpath_3(paths, args, evs);
+			ft_printf("minishell: command not found: %s.\n", args[0]);
+			free_tokens(token);
+			pid_error(paths, args);
+		}
+		waitpid(g_signal.pid, &rv, 0);
 	}
-	waitpid(g_signal.pid, &rv, 0);
 	free_array(paths);
 	if (g_signal.sigint == 1 || g_signal.sigquit == 1)
 		return (g_signal.exit_status);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:13:53 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/05 11:29:31 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/15 14:11:50 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,30 @@ void	operator_redirect(t_shell *shell, t_token *token, int type)
 
 static char	*heredoc(char *delim)
 {
-	char	*line;
-	char	*out;
-	char	*tmp;
+	char	*tmp[3];
 
-	out = ft_strdup("");
+	tmp[0] = ft_strdup("");
 	while (1)
 	{
-		line = readline("> ");
-		if (!out || g_signal.sigint)
-			return (NULL);
-		if (!line || !ft_strncmp(delim, line, \
-			max(ft_strlen(delim), ft_strlen(line))))
+		tmp[1] = readline("> ");
+		if (!tmp[0] || g_signal.sigint)
+			break ;
+		if (!tmp[1] || !ft_strcmp(delim, tmp[1]))
 		{
-			free(line);
-			return (out);
+			free(tmp[1]);
+			return (tmp[0]);
 		}
-		tmp = ft_strjoin(out, line);
-		if (!tmp)
-			return (NULL);
-		free(line);
-		free(out);
-		out = ft_strjoin(tmp, "\n");
-		free(tmp);
+		tmp[2] = ft_strjoin(tmp[0], tmp[1]);
+		if (!tmp[2])
+			break ;
+		free(tmp[1]);
+		free(tmp[0]);
+		tmp[0] = ft_strjoin(tmp[2], "\n");
+		free(tmp[2]);
 	}
+	free(tmp[0]);
+	free(tmp[1]);
+	return (NULL);
 }
 
 void	operator_heredoc(t_shell *shell, t_token *token)
@@ -106,6 +106,7 @@ int	operator_pipe(t_shell *shell)
 		shell->pid = -1;
 		shell->parent = 0;
 		shell->no_exec = 0;
+		signal(SIGINT, &signal_dummy);
 		return (2);
 	}
 	ft_close(fds[0]);

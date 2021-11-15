@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/11/11 15:57:22 by bmans         ########   odam.nl          #
+#    Updated: 2021/11/15 12:46:57 by bmans         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS            =   main.c \
 					shell_export_utils.c \
 					shell_toggle.c \
 					shell_unset.c \
+					strip_quotes.c \
 					utils.c \
 					utils_2.c
 

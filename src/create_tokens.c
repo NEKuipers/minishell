@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/12 15:20:47 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/15 14:15:50 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,25 +97,26 @@ int	skip_to_quote(char *str, char quote)
 	return (i + 1);
 }
 
-t_token	*make_token(char *line, int *i)
+t_token	*make_token(char *line, int *i, t_shell *shell)
 {
 	t_token	*token;
+	char	*temp[2];
 	int		j;
-	
+
 	j = 0;
 	token = malloc(sizeof(t_token));
 	while (line[*i + j] && (line[*i + j] != ' '))
 	{
-//		ft_printf_fd(2, "%s\n", line + *i + j);
-//		usleep(500000);
-		if (line[*i + j] == '\\' && (line[*i + j + 1] == '\'' || line[*i + j + 1] == '\"'))
+		if (line[*i + j] == '\\' && (line[*i + j + 1] == '\'' \
+			|| line[*i + j + 1] == '\"'))
 			j++;
 		else if (line[*i + j] == '\'' || line[*i + j] == '\"')
 			j += skip_to_quote(line + *i + j + 1, line[*i + j]);
 		j++;
 	}
-//	ft_printf_fd(2, "%i %i\n", (int)ft_strlen(line + *i), j);
-	token->str = ft_substr(line, *i, j);
+	temp[0] = ft_substr(line, *i, j);
+	temp[1] = repl_process(temp[0], shell);
+	token->str = strip_quotes(temp[1]);
 	*i += j;
 	return (token);
 }
@@ -142,7 +143,7 @@ void	apply_token_type(t_token *token, int separator)
 		token->type = ARG;
 }
 
-t_token	*create_tokens(char *line)
+t_token	*create_tokens(char *line, t_shell *shell)
 {
 	t_token	*token;
 	t_token	*prev;
@@ -155,9 +156,8 @@ t_token	*create_tokens(char *line)
 	skip_space(line, &i);
 	while (line[i])
 	{
-	//	ft_printf_fd(2, "%s\n", line + i);
 		separator = find_separator(line, i);
-		token = make_token(line, &i);
+		token = make_token(line, &i, shell);
 		token->prev = prev;
 		if (prev != NULL)
 			prev->next = token;

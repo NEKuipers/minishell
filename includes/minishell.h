@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/11 15:57:37 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/15 12:46:16 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void				arrange_tokens(t_shell *shell);
 void				parse(t_shell *shell);
 int					check_syntax(t_shell *shell, t_token *token);
 char				**paths_without_path(char **commands);
-t_token				*create_tokens(char *line);
+t_token				*create_tokens(char *line, t_shell *shell);
 void				apply_token_type(t_token *token, int separator);
 t_token				*next_token(char *line, int *i);
 int					next_alloc(char *line, int *i);
@@ -155,6 +155,7 @@ char				*repl_process(char *in, t_shell *shell);//, t_token *token);
 int					max(int a, int b);
 int					only_has(char *str, char c);
 char				*env_reform(char *arg);
+char				*strip_quotes(char *str);
 extern t_signal	g_signal;
 
 #endif
