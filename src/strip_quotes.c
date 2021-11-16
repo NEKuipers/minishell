@@ -6,7 +6,7 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/15 11:35:00 by bmans         #+#    #+#                 */
-/*   Updated: 2021/11/16 14:16:13 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 14:46:52 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static void	strip_single_quotes(int *i, int *j, char *str, char *tmp)
 
 static void	strip_quotes_loop(int *i, int *j, char *str, char *tmp)
 {
-	if (!ft_strncmp(str + *i, "\\\'", 2) || !ft_strncmp(str + *i, "\\\"", 2))
-		(*i)++;
 	if (str[*i] == '\"')
 		strip_double_quotes(i, j, str, tmp);
 	else if (str[*i] == '\'')
 		strip_single_quotes(i, j, str, tmp);
 	else
 	{
+		if (!ft_strncmp(str + *i, "\\\'", 2) || !ft_strncmp(str + *i, "\\\"", 2))
+			(*i)++;
 		tmp[*j] = str[*i];
 		(*j)++;
 	}

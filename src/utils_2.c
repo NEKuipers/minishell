@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:10:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/16 13:01:26 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 15:09:46 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,18 @@ char	**set_new_env(char **evs, char *arg, int mod)
 int	find_ev(char **evs, char *target)
 {
 	int		i;
+	int		k;
 
 	i = 0;
-	while (evs[i] && ft_strncmp(evs[i], target, ft_strlen(target)) != 0)
+	while (evs[i])
+	{
+		k = 0;
+		while (evs[i][k] && evs[i][k] != '=')
+			k++;
+		if (ft_strncmp(evs[i], target, max(ft_strlen(target), k)) == 0)
+			break ;
 		i++;
+	}
 	if (evs[i] == NULL)
 		return (-1);
 	return (i);
