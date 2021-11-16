@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/15 12:46:16 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 11:39:33 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ char				*repl_process(char *in, t_shell *shell);//, t_token *token);
 int					max(int a, int b);
 int					only_has(char *str, char c);
 char				*env_reform(char *arg);
+int					skip_to_quote(char *str, char quote);
 char				*strip_quotes(char *str);
 extern t_signal	g_signal;
 

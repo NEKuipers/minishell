@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/15 15:07:43 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 10:52:04 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	skip_to_quote(char *str, char quote)
 	{
 		if (str[i] == '\\')
 			i++;
-		if (str[i] == quote)
+		else if (str[i] == quote)
 			return (i + 1);
 		i++;
 	}
