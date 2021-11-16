@@ -6,22 +6,11 @@
 /*   By: bmans <bmans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/15 11:35:00 by bmans         #+#    #+#                 */
-/*   Updated: 2021/11/16 11:51:40 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 14:16:13 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-\"		"
-"\""	"
-"\'"	\'
-"'"		'
-\'		'
-'\"'	\"
-'\''	\'
-'"'		"
-*/
 
 static void	strip_double_quotes(int *i, int *j, char *str, char *tmp)
 {
@@ -77,6 +66,8 @@ char	*strip_quotes(char *str)
 
 	len = ft_strlen(str);
 	tmp = malloc(len + 1);
+	if (!tmp)
+		return (str);
 	ft_bzero(tmp, len + 1);
 	i = 0;
 	j = 0;
@@ -84,5 +75,6 @@ char	*strip_quotes(char *str)
 		strip_quotes_loop(&i, &j, str, tmp);
 	out = ft_strdup(tmp);
 	free(tmp);
+	free(str);
 	return (out);
 }

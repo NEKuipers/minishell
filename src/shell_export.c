@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/08 14:34:38 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/16 14:13:20 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ static char	*envjoiner(char *dest, char *src)
 	char	*temp;
 
 	i = 0;
-	while (src[i - 1] != '=')
+	while (src[i] != '=')
 		i++;
+	i++;
 	sub = ft_substr(src, i, 2147483647);
 	temp = dest;
 	dest = ft_strjoin(temp, sub);
