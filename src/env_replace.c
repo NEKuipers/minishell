@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/10 12:05:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/15 14:14:48 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	repl_env_name(char *in, int i, char **env, char **val)
 	char	*tkn;
 
 	clip = 0;
-	while (in[i + 1 + clip] && !ft_strchr(" \t$\"\'\\", in[i + 1 + clip]))
+	while (in[i + 1 + clip] && (ft_isalpha(in[i + 1 + clip]) \
+		|| ft_isdigit(in[i + 1 + clip]) || in[i + 1 + clip] == '_'))
 		clip++;
 	tkn = in + i + 1;
 	j = 0;
@@ -93,7 +94,7 @@ int	repl_env(int i, char **in, t_shell *shell)
 	}
 }
 
-char	*repl_process(char *in, t_shell *shell, t_token *token)
+char	*repl_process(char *in, t_shell *shell)
 {
 	int		i;
 	char	inquotes;
@@ -113,8 +114,7 @@ char	*repl_process(char *in, t_shell *shell, t_token *token)
 		}
 		if (in[i] == '\\' && in[i + 1] == '$')
 			in = repl_change(in, i, 2, ft_strdup("$"));
-		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$'\
-			&& token->squote == 0)
+		else if (in[i] == '$' && in[i + 1] && in[i + 1] != '$')
 			i += repl_env(i, &in, shell) - 1;
 		i++;
 	}
