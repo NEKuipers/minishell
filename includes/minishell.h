@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/16 11:39:33 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/17 09:49:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
-	//int				squote;
 	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
