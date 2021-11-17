@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:13:53 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/15 14:11:50 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/17 15:57:54 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	operator_pipe(t_shell *shell)
 		shell->parent = 0;
 		shell->no_exec = 0;
 		signal(SIGINT, &signal_dummy);
+		signal(SIGQUIT, &signal_dummy);
 		return (2);
 	}
 	ft_close(fds[0]);
