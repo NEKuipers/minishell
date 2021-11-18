@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 10:01:32 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/18 13:32:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	skip_to_quote(char *str, char quote)
 t_token	*make_token(char *line, int *i, t_shell *shell)
 {
 	t_token	*token;
-	char	*temp;
 	int		j;
 
 	j = 0;
@@ -45,8 +44,7 @@ t_token	*make_token(char *line, int *i, t_shell *shell)
 			j += skip_to_quote(line + *i + j + 1, line[*i + j]);
 		j++;
 	}
-	temp = repl_process(ft_substr(line, *i, j), shell);
-	token->str = strip_quotes(temp);
+	token->str = repl_process(ft_substr(line, *i, j), shell);
 	*i += j;
 	return (token);
 }
@@ -93,6 +91,7 @@ t_token	*create_tokens(char *line, t_shell *shell)
 			prev->next = token;
 		prev = token;
 		apply_token_type(token, separator);
+		token->str = strip_quotes(token->str);
 		skip_space(line, &i);
 	}
 	if (token)
