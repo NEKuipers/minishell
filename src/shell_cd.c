@@ -6,11 +6,29 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 11:16:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/18 12:47:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	set_new_oldpwd(t_shell *shell, int i, char *old)
+{
+	char	*temp;
+
+	if (i != -1)
+	{
+		temp = shell->evs[i];
+		shell->evs[i] = ft_strjoin("OLDPWD=", old);
+	}
+	else
+	{
+		temp = ft_strjoin("OLDPWD=", old);
+		replace_env(shell, temp, ' ');
+	}
+	free(temp);
+	free(old);
+}
 
 static int	set_new_pwd(t_shell *shell, int i, char *old)
 {
@@ -20,20 +38,19 @@ static int	set_new_pwd(t_shell *shell, int i, char *old)
 
 	j = find_ev(shell->evs, "PWD=");
 	pwd = getcwd(NULL, 1024);
-	free(pwd);
-	temp = shell->evs[j];
-	shell->evs[j] = ft_strjoin("PWD=", pwd);
-	free(temp);
-	if (i != -1)
+	if (j != -1)
 	{
-		temp = shell->evs[i];
-		shell->evs[i] = ft_strjoin("OLDPWD=", old);
-		free(temp);
+		temp = shell->evs[j];
+		shell->evs[j] = ft_strjoin("PWD=", pwd);
 	}
-	temp = ft_strjoin("OLDPWD=", old);
-	replace_env(shell, temp, ' ');
-	free (temp);
-	free(old);
+	else
+	{
+		temp = ft_strjoin("PWD=", pwd);
+		replace_env(shell, temp, ' ');
+	}
+	free(temp);
+	free(pwd);
+	set_new_oldpwd(shell, i, old);
 	return (0);
 }
 
@@ -54,7 +71,7 @@ static int	shell_cd_do(char **c, t_shell *shell)
 	{
 		i = find_ev(shell->evs, "HOME=");
 		chdir(&((shell->evs)[i][5]));
-		return (set_new_pwd(shell, i, old));
+		return (set_new_pwd(shell, find_ev(shell->evs, "OLDPWD="), old));
 	}
 	i = find_ev(shell->evs, "OLDPWD=");
 	if (ft_strcmp(c[1], "-") == 0 && i != -1)
@@ -76,9 +93,7 @@ static int	shell_cd_do(char **c, t_shell *shell)
 int	shell_cd(char **c, t_shell *shell)
 {
 	char	**newcmd;
-	int		oldpwd;
 
-	oldpwd = 1;
 	if (ft_strcmp(c[0], ".") == 0)
 		return (0);
 	if (ft_strcmp(c[0], "..") == 0)
