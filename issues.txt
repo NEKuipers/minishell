@@ -1,5 +1,3 @@
 echo ";" "<<" "|" ">>" werken niet
 
 echo ~ moet expanden naar home
-
-unsetten OLDPWD en dan cd - doen geeft een doublefree

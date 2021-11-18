@@ -6,80 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/16 10:52:04 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/18 10:01:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-int	next_alloc(char *line, int *i)
-{
-	int		count;
-	int		j;
-	char	c;
-
-	count = 0;
-	j = 0;
-	c = ' ';
-	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
-	{
-		//if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
-		if (c == ' ' && line[*i + j] == '\"')
-			c = line[*i + j++];
-		else if (c != ' ' && line[*i + j] == c)
-		{
-			count += 2;
-			c = ' ';
-			j++;
-		}
-		else
-			j++;
-		if (line[*i + j - 1] == '\\')
-			count--;
-	}
-	return (j - count + 1);
-}
-
-static t_token	*init_token(char *line, int *i)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-//	token->squote = 0;
-	token->str = (char *)malloc(sizeof(char) * next_alloc(line, i));
-	return (token);
-}
-
-t_token	*next_token(char *line, int *i)
-{
-	t_token	*token;
-	int		j;
-	char	c;
-
-	j = 0;
-	c = ' ';
-	token = init_token(line, i);
-	while (line[*i] && (line[*i] != ' ' || c != ' '))
-	{
-//		if (line[*i] == '\'')
-//			token->squote = 1;
-//		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
-		if (c == ' ' && line[*i] == '\"')
-			c = line[(*i)];
-		else if (c != ' ' && line[*i] == c)
-			c = ' ';
-		else
-		{
-			token->str[j] = line[(*i)];
-			j++;
-		}
-		(*i)++;
-	}
-	token->str[j] = '\0';
-	return (token);
-}
-*/
 
 int	skip_to_quote(char *str, char quote)
 {

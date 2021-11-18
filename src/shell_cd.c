@@ -6,29 +6,42 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/03 15:22:55 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/18 11:16:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	set_new_pwd(char **evs, int i, char *old)
+static int	set_new_pwd(t_shell *shell, int i, char *old)
 {
 	char	*temp;
 	char	*pwd;
 	int		j;
 
-	j = find_ev(evs, "PWD=");
+	j = find_ev(shell->evs, "PWD=");
 	pwd = getcwd(NULL, 1024);
 	free(pwd);
-	temp = evs[j];
-	evs[j] = ft_strjoin("PWD=", pwd);
+	temp = shell->evs[j];
+	shell->evs[j] = ft_strjoin("PWD=", pwd);
 	free(temp);
-	temp = evs[i];
-	evs[i] = ft_strjoin("OLDPWD=", old);
+	if (i != -1)
+	{
+		temp = shell->evs[i];
+		shell->evs[i] = ft_strjoin("OLDPWD=", old);
+		free(temp);
+	}
+	temp = ft_strjoin("OLDPWD=", old);
+	replace_env(shell, temp, ' ');
+	free (temp);
 	free(old);
-	free(temp);
 	return (0);
+}
+
+static int	shell_previous_fail(char *old)
+{
+	ft_printf_fd(2, "minishell: cd: OLDPWD not set\n");
+	free (old);
+	return (1);
 }
 
 static int	shell_cd_do(char **c, t_shell *shell)
@@ -37,33 +50,35 @@ static int	shell_cd_do(char **c, t_shell *shell)
 	char	*old;
 
 	old = getcwd(NULL, 1024);
-	if (c[1] == NULL || ft_strncmp("~\0", c[1], 2) == 0)
+	if (c[1] == NULL || ft_strcmp("~", c[1]) == 0)
 	{
 		i = find_ev(shell->evs, "HOME=");
 		chdir(&((shell->evs)[i][5]));
+		return (set_new_pwd(shell, i, old));
 	}
 	i = find_ev(shell->evs, "OLDPWD=");
-	if (c[1] != NULL && ft_strncmp("~\0", c[1], 2) != 0)
+	if (ft_strcmp(c[1], "-") == 0 && i != -1)
 	{
-		if (ft_strncmp(c[1], "-", 2) == 0)
-		{
-			chdir(&((shell->evs)[i][7]));
-			shell_pwd();
-		}
-		else if (chdir(c[1]) != 0)
-		{
-			free(old);
-			ft_printf("minishell: cd: %s: No such file or directory\n", c[1]);
-			return (1);
-		}
+		chdir(&((shell->evs)[i][7]));
+		shell_pwd();
 	}
-	return (set_new_pwd(shell->evs, i, old));
+	else if (ft_strcmp(c[1], "-") == 0 && i == -1)
+		return (shell_previous_fail(old));
+	else if (chdir(c[1]) != 0)
+	{
+		free(old);
+		ft_printf("minishell: cd: %s: No such file or directory\n", c[1]);
+		return (1);
+	}
+	return (set_new_pwd(shell, i, old));
 }
 
 int	shell_cd(char **c, t_shell *shell)
 {
 	char	**newcmd;
+	int		oldpwd;
 
+	oldpwd = 1;
 	if (ft_strcmp(c[0], ".") == 0)
 		return (0);
 	if (ft_strcmp(c[0], "..") == 0)

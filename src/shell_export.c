@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/02 11:15:06 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/16 14:13:20 by bmans         ########   odam.nl         */
+/*   Updated: 2021/11/18 10:58:02 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*envjoiner(char *dest, char *src)
 	return (dest);
 }
 
-static void	replace_env(t_shell *shell, char *arg, char op)
+void	replace_env(t_shell *shell, char *arg, char op)
 {
 	int		index;
 	char	*reform;
