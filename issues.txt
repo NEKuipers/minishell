@@ -1,5 +1,3 @@
-echo ";" "<<" "|" ">>" werken niet
 
 echo ~ moet expanden naar home
-
 

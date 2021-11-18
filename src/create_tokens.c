@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:15:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 13:32:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/18 14:43:18 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void	apply_token_type(t_token *token, int separator)
 		token->type = ARG;
 }
 
+static t_token	*scroll_token(t_token *token)
+{
+	while (token && token->prev)
+		token = token->prev;
+	return (token);
+}
+
 t_token	*create_tokens(char *line, t_shell *shell)
 {
 	t_token	*token;
@@ -96,7 +103,5 @@ t_token	*create_tokens(char *line, t_shell *shell)
 	}
 	if (token)
 		token->next = NULL;
-	while (token && token->prev)
-		token = token->prev;
-	return (token);
+	return (scroll_token(token));
 }
