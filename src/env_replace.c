@@ -6,19 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 17:09:46 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 15:26:14 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 15:33:02 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
 
 static char	*repl_change(char *in, int i, int len, char *val)
 {
@@ -94,6 +87,23 @@ int	repl_env(int i, char **in, t_shell *shell)
 	}
 }
 
+static char	*repl_homedir(char *in, t_shell *shell)
+{
+	char	*out;
+	char	*val;
+	int		index;
+
+	index = find_ev(shell->evs, "HOME");
+	if (index < 0)
+		out = repl_change(in, 0, 1, ft_strdup(""));
+	else
+	{
+		val = ft_strchr(shell->evs[index], '=') + 1;
+		out = repl_change(in, 0, 1, ft_strdup(val));
+	}
+	return (out);
+}
+
 char	*repl_process(char *in, t_shell *shell)
 {
 	int		i;
@@ -101,6 +111,8 @@ char	*repl_process(char *in, t_shell *shell)
 
 	i = 0;
 	inquotes = 0;
+	if (in && (!ft_strcmp(in, "~") || !ft_strncmp(in, "~/", 2)))
+		in = repl_homedir(in, shell);
 	while (in && in[i])
 	{
 		if (in[i] == '\"' && (i == 0 || (i > 0 && in[i - 1] != '\\')))
