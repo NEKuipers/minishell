@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 12:47:12 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 10:19:58 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,14 @@ static int	set_new_pwd(t_shell *shell, int i, char *old)
 	return (0);
 }
 
-static int	shell_previous_fail(char *old)
+static int	cd_fail(char *old, char *dest)
 {
-	ft_printf_fd(2, "minishell: cd: OLDPWD not set\n");
-	free (old);
+	free(old);
+	access(dest, R_OK);
+	if (errno == 13)
+		ft_printf("minishell: cd: permission denied: %s\n", dest);
+	else
+		ft_printf("minishell: cd: %s: No such file or directory\n", dest);
 	return (1);
 }
 
@@ -80,13 +84,13 @@ static int	shell_cd_do(char **c, t_shell *shell)
 		shell_pwd();
 	}
 	else if (ft_strcmp(c[1], "-") == 0 && i == -1)
-		return (shell_previous_fail(old));
-	else if (chdir(c[1]) != 0)
 	{
-		free(old);
-		ft_printf("minishell: cd: %s: No such file or directory\n", c[1]);
+		ft_printf_fd(2, "minishell: cd: OLDPWD not set\n");
+		free (old);
 		return (1);
 	}
+	else if (chdir(c[1]) != 0)
+		return (cd_fail(old, c[1]));
 	return (set_new_pwd(shell, i, old));
 }
 
