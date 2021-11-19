@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/21 21:22:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 11:39:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 11:44:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void				signal_int_handler(int code);
 void				signal_quit_handler(int code);
 void				signal_dummy(int code);
 void				init_signal(void);
+void				signals_to_dummy(void);
 
 void				signal_int_heredoc(int code);
 void				signal_quit_heredoc(int code);

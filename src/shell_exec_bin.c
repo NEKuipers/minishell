@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:36:39 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/17 16:00:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 11:45:05 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ static int	shell_execpath_2(char **paths, char **args, \
 	int	rv;
 
 	if (ft_strcmp(args[0], "./minishell") == 0)
-	{
-		signal(SIGQUIT, &signal_dummy);
-		signal(SIGINT, &signal_dummy);
-	}
+		signals_to_dummy();
 	if (ft_strncmp(args[0], "./", 2) == 0)
 		paths = set_new_env(paths, args[0], 1);
 	if (!g_signal.sigint && !g_signal.sigquit)
@@ -55,7 +52,9 @@ static int	shell_execpath_2(char **paths, char **args, \
 		if (g_signal.pid == 0)
 		{
 			shell_execpath_3(paths, args, evs);
-			ft_printf_fd(STDERR, "minishell: %s: command not found\n", args[0]);
+			if (ft_strcmp(args[0], "exit") != 0)
+				ft_printf_fd(STDERR, \
+					"minishell: %s: command not found\n", args[0]);
 			free_tokens(token);
 			pid_error(paths, args);
 		}

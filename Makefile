@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/21 21:22:12 by nkuipers      #+#    #+#                  #
-#    Updated: 2021/11/18 15:21:41 by nkuipers      ########   odam.nl          #
+#    Updated: 2021/11/19 11:45:16 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS            =   main.c \
 					shell_unset.c \
 					strip_quotes.c \
 					utils.c \
-					utils_2.c
+					utils_2.c \
+					utils_3.c
 
 BREW_DIR		=	.brew
 CFILES          =   $(SRCS:%=src/%)
