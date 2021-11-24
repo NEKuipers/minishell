@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/29 16:16:41 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/18 14:46:13 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/24 09:57:40 by bmans         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse(t_shell *shell)
 		ft_putendl_fd("exit", STDERR);
 		line = ft_strdup("");
 	}
-	else
+	else if (ft_strcmp(line, ""))
 		add_history(line);
 	if (g_signal.sigint == 1)
 		shell->rv = g_signal.exit_status;

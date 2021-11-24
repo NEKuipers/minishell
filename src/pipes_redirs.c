@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 16:13:53 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/17 15:57:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 12:10:45 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	operator_heredoc(t_shell *shell, t_token *token)
 	char	*info;
 
 	info = heredoc(token->str);
+	info = repl_process(info, shell);
 	if (!info)
 		return ;
 	ft_close(shell->fdin);

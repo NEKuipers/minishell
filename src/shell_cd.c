@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 09:47:34 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/19 10:19:58 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/19 13:39:09 by brendan       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ static int	set_new_pwd(t_shell *shell, int i, char *old)
 		temp = ft_strjoin("PWD=", pwd);
 		replace_env(shell, temp, ' ');
 	}
+	if (old)
+		set_new_oldpwd(shell, i, old);
+	else
+		set_new_oldpwd(shell, i, ft_strdup(ft_strchr(temp, '=') + 1));
 	free(temp);
 	free(pwd);
-	set_new_oldpwd(shell, i, old);
 	return (0);
 }
 
@@ -58,10 +61,7 @@ static int	cd_fail(char *old, char *dest)
 {
 	free(old);
 	access(dest, R_OK);
-	if (errno == 13)
-		ft_printf("minishell: cd: permission denied: %s\n", dest);
-	else
-		ft_printf("minishell: cd: %s: No such file or directory\n", dest);
+	ft_printf("minishell: cd: %s: %s\n", dest, strerror(errno));
 	return (1);
 }
 
