@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 14:28:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2021/11/19 10:22:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2021/11/24 10:19:34 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	shell_exit(t_shell *shell, char **commands)
 	if (commands[1] && ft_strisnum(commands[1]) == 0)
 	{
 		shell->rv = 255;
-		ft_printf_fd(2, "exit\nminishell:");
+		ft_printf_fd(2, "exit\nminishell: ");
 		ft_printf_fd(2, "exit: %s: numeric argument required\n", commands[1]);
 	}
 	else if (commands[1] && commands[2])
